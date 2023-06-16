@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es5",                           /** 타입스크립트 컴파일 tsc */
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "baseUrl" : "src",
+    "allowJs": true,                           /** TypeScript 컴파일 작업 진행시 js파일도 컴파일 할것(검증)인지 여부 */
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,      /** default export를 쓰지 않은 모듈도 default import가 가능하게 할건지 여부 */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,  /** 파일 이름에 일관된 casing 강제 적용 */
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": [                             /** 타입스크립트가 찾아 헤매는 타입 파일들이 특정한 곳에 있다고 지정 */
+      "./node_modules/@types",
+      "./src/@types" 
+    ],
+    "module": "CommonJS",                      /** CommonJS 형식으로 모듈을 컴파일 */
+    "moduleResolution": "node",                /** Promise 인식 위해서 */
+    "resolveJsonModule": true,  
+    "isolatedModules": true,                   /* 각 파일을 별도 모듈로 변환 ('ts.transpileModule'과 유사) */
+    "downlevelIteration": true,                /* 'ES5' 혹은 'ES3' 타겟 설정 시 Iterables 'for-of', 'spread', 'destructuring' 완벽 지원 설정 */
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "pretty": true,
+    "outDir": "./dist",
+  },
+  "include": [                                 /** src폴더 모든 파일 대상 포함 */
+    "src/**/*"
+  ]
+}
