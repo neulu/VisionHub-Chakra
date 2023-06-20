@@ -52,8 +52,7 @@ export default function MainPage({ children }: { children: ReactNode }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const [isAuthenticated, setIsAuthenticated] = useState<string|null>(sessionStorage.getItem('isAuthenticated'));
 
-  const onLogout = () => { 
-    console.log("Clicked Logout Link ~ ")
+  const onLogout = () => {
     setIsAuthenticated("false");
     sessionStorage.setItem('isAuthenticated', "false");
     navigate("/login");
@@ -136,7 +135,7 @@ const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
     <Link href={linkUrl} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer"
         _hover={{
-          bg: 'cyan.400',
+          bg: 'teal',
           color: 'white',
         }}
         {...rest}>
