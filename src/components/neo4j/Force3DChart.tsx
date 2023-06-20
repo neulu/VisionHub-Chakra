@@ -71,45 +71,44 @@ const Force3DChart: React.FC<GraphVisualizationProps> = ({ driver }) => {
     }
 
     return (
-    <>  
-        <Container p={5} maxW={'max'}>
-            <Flex>
-                <Box flex='1' bg='white' textAlign={'left'}>
-                    <ForceGraph3D 
-                        width={1200}
-                        height={800}
-                        graphData={graphData} 
-                        nodeAutoColorBy={'id'}
-                        nodeVal={`size`}
-                        linkAutoColorBy={'id'}
-                        linkWidth={`size`} 
-                        linkDirectionalParticles={'weight'}
-                        linkDirectionalParticleSpeed={'weight'}
-                        nodeLabel={ (node) => `${node.label}: ${node.id}` }
-                        // onNodeHover={ () => console.log('node hover..')}
-                        onNodeClick={handleNodeClick}
-                    />
-                </Box>
-                <Box flex='1' p={10} bg='white' width={400} >
-                <Flex>
-                    선택 개수: {selectedNodes.length || 0}
-                    <Box flex='1' marginRight={10}></Box>
-                    <Button colorScheme='teal' size='xs' onClick={()=> handleDeselect()}>Deselect</Button>
-                </Flex>
-                {selectedNodes.length > 0 && (
-                    <Box marginLeft={10}>
-                        <ul>
-                            {selectedNodes.map(node => (
-                            <li key={node.id}>{node.id}</li>
-                            ))}
-                        </ul>
+        <>
+            <Container maxW={'max'}>
+                <Flex p={0}>
+                    <Box flex='1' bg='white' textAlign={'left'}>
+                        <ForceGraph3D 
+                            width={900}
+                            height={850}
+                            graphData={graphData} 
+                            nodeAutoColorBy={'id'}
+                            nodeVal={`size`}
+                            linkAutoColorBy={'id'}
+                            linkWidth={`size`} 
+                            linkDirectionalParticles={'weight'}
+                            linkDirectionalParticleSpeed={'weight'}
+                            nodeLabel={ (node) => `${node.label}: ${node.id}` }
+                            // onNodeHover={ () => console.log('node hover..')}
+                            onNodeClick={handleNodeClick}
+                        />
                     </Box>
-                )}
-                </Box>
-            </Flex>
-            
-        </Container>
-    </>        
+                    {/* <Box flex='1' p={10} bg='white' width={'400px'} >
+                        <Flex>
+                            선택 개수: {selectedNodes.length || 0}
+                            <Box flex='1' marginRight={10}></Box>
+                            <Button colorScheme='teal' size='xs' onClick={()=> handleDeselect()}>Deselect</Button>
+                        </Flex>
+                        {selectedNodes.length > 0 && (
+                            <Box marginLeft={10}>
+                                <ul>
+                                    {selectedNodes.map(node => (
+                                    <li key={node.id}>{node.id}</li>
+                                    ))}
+                                </ul>
+                            </Box>
+                        )}
+                    </Box> */}
+                </Flex>
+            </Container>    
+        </>
     )
     
 };
