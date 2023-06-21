@@ -25,8 +25,6 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
 
         <Button
           size={'xs'}
-          fontSize={"5px"}
-          fontWeight={"bold"}
           disabled={isFirstPage}
           onClick={() => handlePageChange(1)}
         >
@@ -65,9 +63,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
         <Button
           size={'xs'}
           disabled={isLastPage}
-          onClick={() => handlePageChange(totalPages)}
-          fontSize={"5px"}
-          fontWeight={"bold"}
+          onClick={() => handlePageChange(totalPages)}          
         >
         &gt;&gt;
         </Button>
