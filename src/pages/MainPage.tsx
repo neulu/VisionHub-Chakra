@@ -38,9 +38,9 @@ interface LinkItemProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome, linkUrl: "/" },
-  { name: 'NeoVis', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
+  { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
+  { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
   { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
-  { name: 'Favourites', icon: FiStar, linkUrl: "/" },
   { name: 'Settings', icon: FiSettings, linkUrl: "/" },
 ];
 

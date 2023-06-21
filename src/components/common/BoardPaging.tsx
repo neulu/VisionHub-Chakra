@@ -1,16 +1,15 @@
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Select, Spacer } from "@chakra-ui/react";
 
 interface BoardPagingProps {
   currentPage: number;
+  cntPerPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-const BoardPaging: React.FC<BoardPagingProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => {
+const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, totalPages, onPageChange }) => {
+// const BoardPaging = ({ children, BoardPagingProps={currentPage, totalPages, onPageChange } } : PropsWithChildren<BoardPagingProps>) => {
+
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
@@ -22,11 +21,14 @@ const BoardPaging: React.FC<BoardPagingProps> = ({
 
   return (
     <Box display="flex" justifyContent="center" mt={6}>
-      <ButtonGroup>
+      <ButtonGroup spacing={0}>
+
         <Button
           size={'xs'}
+          fontSize={"5px"}
+          fontWeight={"bold"}
           disabled={isFirstPage}
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => handlePageChange(1)}
         >
         &lt;&lt;
         </Button>
@@ -38,16 +40,19 @@ const BoardPaging: React.FC<BoardPagingProps> = ({
         >
         &lt;
         </Button>
+
         {[...Array(totalPages)].map((_, index) => (
           <Button
             size={'xs'}
             key={index}
-            variant={currentPage === index + 1 ? "solid" : "ghost"}
+            // variant={currentPage === index + 1 ? "outline" : "ghost"}
+            colorScheme={currentPage === index + 1 ? "blackAlpha" : undefined}
             onClick={() => handlePageChange(index + 1)}
           >
             {index + 1}
           </Button>
         ))}
+
         <Button
           size={'xs'}
           disabled={isLastPage}
@@ -55,14 +60,28 @@ const BoardPaging: React.FC<BoardPagingProps> = ({
         >
         &gt;
         </Button>
+
+
         <Button
           size={'xs'}
           disabled={isLastPage}
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => handlePageChange(totalPages)}
+          fontSize={"5px"}
+          fontWeight={"bold"}
         >
         &gt;&gt;
         </Button>
       </ButtonGroup>
+      
+      
+      <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.200'}>
+        <option value='10'>10</option>
+        <option value='20' selected>20</option>
+        <option value='30'>30</option>
+        <option value='50'>50</option>
+        <option value='100'>100</option>
+      </Select>
+      
     </Box>
   );
 };
