@@ -2,10 +2,8 @@
 import React, { useState } from 'react'
 import {
     Table,
-    Thead,
     Tbody,
     Tr,
-    Th,
     Td,
     TableContainer,
     Box,
@@ -13,21 +11,39 @@ import {
     Text,
     Icon,
     Spacer,
-    Checkbox
+    Checkbox,
+    Button, 
+    useDisclosure
 } from '@chakra-ui/react';
 
 import MainPage from 'pages/MainPage'
 import { MdCircle } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import EditClusterPop from "components/cluster/EditClusterPop"
 
-export default function Cluster() { 
+const ClusterDetail = () : JSX.Element => {
+
+    const navigate = useNavigate();   
+
+    const goClusters = (e: React.MouseEvent<HTMLButtonElement>) => { 
+        e.preventDefault()
+        navigate("/cluster/list")
+    }
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <>
             <MainPage children={<>
-                <Box>
-                    <Text fontSize="2xl">기본정보</Text>
+                <Box maxW={'80%'}>
+                    <Flex>
+                        <Text fontSize="2xl">기본정보</Text>
+                        <Spacer />
+                        <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2} onClick={onOpen}>Modify</Button>
+                        <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"}>Update</Button> 
+                    </Flex>
                 </Box>
-                <TableContainer flex={'1'} maxW={'70%'} marginTop={1} whiteSpace={'nowrap'}>
+                <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
@@ -43,7 +59,7 @@ export default function Cluster() {
                                 Description
                             </Td>
                             <Td>
-                                ASML 로그 분석을 위한 Trino Cluster 제공
+                                <Text marginBottom={0}>ASML 로그 분석을 위한 Trino Cluster</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -61,7 +77,7 @@ export default function Cluster() {
                                 Created
                             </Td>
                             <Td>
-                                Trino-Cluster-1
+                                2023-04-25, 14:56:30 PM UTC+9:00
                             </Td>
                         </Tr>
                         <Tr>
@@ -69,7 +85,7 @@ export default function Cluster() {
                                 Catalog
                             </Td>
                             <Td>
-                                Trino-Cluster-1
+                                <Text marginBottom={0}>asml_log_type_1, asml_log_type_2, asml_log_type_3</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -77,7 +93,7 @@ export default function Cluster() {
                                 Image
                             </Td>
                             <Td>
-                                Trino-Cluster-1
+                                <Text marginBottom={0}>asia-northeast-3-docker.pkg.dev/skt-datahub/emergingdp-registry/trino:405-amd64</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -85,7 +101,7 @@ export default function Cluster() {
                                 Cluster Size
                             </Td>
                             <Td>
-                                Trino-Cluster-1
+                                <Text marginBottom={0}>Custom, Small, Medium, Large, X-Large</Text>
                             </Td>
                         </Tr>
                     </Tbody>
@@ -95,7 +111,7 @@ export default function Cluster() {
                 <Box>
                     <Text fontSize="2xl">세부정보</Text>
                 </Box>
-                <TableContainer flex={'1'} maxW={'70%'} marginTop={1} whiteSpace={'nowrap'}>
+                <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
@@ -103,7 +119,7 @@ export default function Cluster() {
                                 <Text marginBottom={0}>Initial Workers</Text>
                             </Td>
                             <Td>
-                                3
+                                <Text marginBottom={0}>3</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -111,7 +127,7 @@ export default function Cluster() {
                                 Coordinator Heap Size
                             </Td>
                             <Td>
-                                64G
+                                <Text marginBottom={0}>64G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -119,7 +135,7 @@ export default function Cluster() {
                                 Worker Heap Size
                             </Td>
                             <Td>
-                                48G
+                               <Text marginBottom={0}>48G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -127,7 +143,7 @@ export default function Cluster() {
                                 Query Memory
                             </Td>
                             <Td>
-                                32G
+                                <Text marginBottom={0}>32G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -135,15 +151,15 @@ export default function Cluster() {
                                 Query Memory per Worker
                             </Td>
                             <Td>
-                                24G
+                                <Text marginBottom={0}>24G</Text>
                             </Td>
                         </Tr>
                         <Tr>
                             <Td bgColor='gray.300'>
                                 CPU allocation for each coordinator
                             </Td>
-                            <Td>
-                                4
+                            <Td>                                
+                                <Text marginBottom={0}>4</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -151,7 +167,7 @@ export default function Cluster() {
                                 CPU allocation for each worker
                             </Td>
                             <Td>
-                                4
+                                <Text marginBottom={0}>4</Text>
                             </Td>
                         </Tr>
                     </Tbody>
@@ -165,7 +181,7 @@ export default function Cluster() {
                     colorScheme='teal'
                     fontWeight='normal'
                     >Enable Auto Scaling</Checkbox>
-                <TableContainer flex={'1'} maxW={'70%'} marginTop={1} whiteSpace={'nowrap'}>
+                <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
@@ -173,7 +189,7 @@ export default function Cluster() {
                                 <Text marginBottom={0}>Max Workers</Text>
                             </Td>
                             <Td>
-                                10
+                                <Text marginBottom={0}>10</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -181,19 +197,26 @@ export default function Cluster() {
                                 CPU Utilzation Threshold
                             </Td>
                             <Td>
-                                70
+                                <Text marginBottom={0}>70</Text>
                             </Td>
                         </Tr>
                     </Tbody>
                     </Table>
                 </TableContainer>
 
+                <Box maxW={'80%'} marginTop={5}>
+                    <Flex justifyContent="flex-end">
+                        <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Save</Button>
+                        <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"} onClick={(e)=>goClusters(e)}>Discard</Button> 
+                    </Flex>
+                </Box>   
 
-
+                <EditClusterPop isOpen={isOpen} onOpen={onOpen} onClose={onClose} />             
             </>} />
 
         </>
     )
-
-
 }
+
+
+export default ClusterDetail

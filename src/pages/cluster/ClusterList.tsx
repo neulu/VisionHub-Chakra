@@ -21,6 +21,7 @@ import {
     MenuList,
     MenuItem,    
   } from '@chakra-ui/react';
+
   import BoardPaging from 'components/common/BoardPaging'
   import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
   import { BsFillPauseFill } from 'react-icons/bs';
@@ -32,7 +33,7 @@ import {
   import { useNavigate } from 'react-router-dom';
 
   
-export default function Clusters() { 
+const ClusterList = () : JSX.Element => { 
 
     const navigate = useNavigate();
 
@@ -60,16 +61,51 @@ export default function Clusters() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const actionHandler = (e: React.MouseEvent, action: string) => { 
+    /**  */
+    const deleteCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
-        console.log(`> action: ${action}`)
+        if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
+            console.log(`> Deleted cluster_id: ${clusterId}`)
+        }
     }
 
-    const goClusterDetail = (e: React.MouseEvent, clusterId : number) => { 
+    const editCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
-        console.log(`> cluster id: ${clusterId}`)
-        navigate({pathname  : "/cluster/cluster" })
+        console.log(`> Editing cluster_id: ${clusterId}`)
+        navigate({pathname  : `/cluster/detail/${clusterId}` })
     }
+
+
+    const editClusterOwner = (e: React.MouseEvent, clusterId: number) => {
+        e.preventDefault()
+        console.log(`> Editing cluster_owner: ${clusterId}`)
+        navigate({pathname  : `/cluster/detail/${clusterId}` })
+    }
+
+    const restartCluster = (e: React.MouseEvent, clusterId: number) => {
+        e.preventDefault()
+        if(window.confirm("클러스터를 재시작 하시겠습니까?")) {
+            console.log("Restarting Cluster..")
+        }
+    }
+
+    const resumeCluster = (e: React.MouseEvent, clusterId: number) => {
+        e.preventDefault()
+        if(window.confirm("클러스터를 재개 하시겠습니까?")) {
+            console.log("Resuming Cluster..")
+        }
+
+    }
+
+
+    const stopCluster = (e: React.MouseEvent, clusterId: number) => {
+        e.preventDefault()
+        if(window.confirm("클러스터를 정지 하시겠습니까?")) {
+            console.log("Stopping Cluster..")
+        }
+
+    }
+
 
     return ( 
         <>
@@ -80,13 +116,11 @@ export default function Clusters() {
                         <Flex align="center">
                             <Text size={'md'}>Trino Cluster (총x개)</Text>
                             <Spacer />
-                            <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"}>Refresh</Button>&nbsp;&nbsp;
+                            <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Refresh</Button>
                             <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"} onClick={onOpen}>Create</Button> 
                         </Flex>
                     </Box>
-                    
                 </Box>
-
 
                 <TableContainer marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='striped' size={'sm'} colorScheme='blackAlpha'>
@@ -103,17 +137,17 @@ export default function Clusters() {
                         </Thead>
                         <Tbody>
                             <Tr>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 1)}>
-                                    <Text marginBottom={0}>Trino-Cluster-1</Text>
+                                <Td>
+                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>Trino-Cluster-1</Text>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 1)}>
+                                <Td>
                                     <Flex align="center">
                                         <Icon mr="2" fontSize="16" as={RepeatIcon} color={'blue.500'}/>Starting
                                     </Flex>
                                 </Td>
                                 <Td></Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 1)}>Auto scaling, 2 worker</Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 1)}>11s</Td>
+                                <Td>Auto scaling, 2 worker</Td>
+                                <Td>11s</Td>
                                 <Td>
                                     <Menu>
                                         <MenuButton
@@ -125,16 +159,16 @@ export default function Clusters() {
                                             
                                         />
                                         <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => popOverClick(e, 'delete')}>
+                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
                                             Delete Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Edit')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
                                             Edit Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Change')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
                                             Change Owner
                                             </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => popOverClick(e, 'Restart')}>
+                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
                                             Restart
                                             </MenuItem>
                                         </MenuList>
@@ -142,23 +176,23 @@ export default function Clusters() {
                                 </Td>
                             </Tr>
                             <Tr>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 2)}>
-                                    <Text marginBottom={0}>Trino-Cluster-2</Text>
+                                <Td>
+                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 2)}>Trino-Cluster-2</Text>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 2)}>
+                                <Td>
                                     <Flex align="center">
                                         <Icon mr="2" fontSize="17" as={BsFillPauseFill} color={'orange.500'}/>Suspended
                                     </Flex>
                                 </Td>
                                 <Td>
-                                    <Flex align="center" onClick={(e)=>actionHandler(e, 'resume')} cursor="pointer">
+                                    <Flex align="center" onClick={(e)=>resumeCluster(e, 1)} cursor="pointer">
                                         <Icon mr="2" fontSize="17" as={MdPlayCircleOutline} color={'purple.500'} />Resume
                                     </Flex>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 2)}>
+                                <Td>
                                     <Text marginBottom={0}>Auto scaling, 3 worker</Text>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 2)}>3m</Td>
+                                <Td>3m</Td>
                                 <Td>
                                     <Menu>
                                         <MenuButton
@@ -169,16 +203,16 @@ export default function Clusters() {
                                             variant='unstyled'
                                         />
                                         <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => popOverClick(e, 'delete')}>
+                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
                                             Delete Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Edit')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
                                             Edit Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Change')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
                                             Change Owner
                                             </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => popOverClick(e, 'Restart')}>
+                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
                                             Restart
                                             </MenuItem>
                                         </MenuList>
@@ -186,24 +220,24 @@ export default function Clusters() {
                                 </Td>
                             </Tr>
                             <Tr>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 3)}>
-                                    <Text marginBottom={0}>Trino-Cluster-3</Text>
+                                <Td>
+                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 3)}>Trino-Cluster-3</Text>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 3)}>
+                                <Td>
                                     <Flex align="center">
                                         <Icon mr="2" fontSize="16" as={CheckIcon} color={'green.500'} />Running
                                     </Flex>
                                 </Td>
                                 
                                 <Td>
-                                    <Flex align="center" onClick={(e)=>actionHandler(e, 'stop')} cursor="pointer">
+                                    <Flex align="center" onClick={(e)=>stopCluster(e, 1)} cursor="pointer">
                                         <Icon mr="2" fontSize="16" as={MdSquare} color={'red.500'} />Stop
                                     </Flex>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 3)}>
+                                <Td>
                                     <Text marginBottom={0}>Auto scaling, 10 worker</Text>
                                 </Td>
-                                <Td cursor="pointer" onClick={(e)=>goClusterDetail(e, 3)}>2h</Td>
+                                <Td>2h</Td>
                                 <Td>
                                     <Menu>
                                         <MenuButton
@@ -214,16 +248,16 @@ export default function Clusters() {
                                             variant='unstyled'
                                         />
                                         <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => popOverClick(e, 'delete')}>
+                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
                                             Delete Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Edit')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
                                             Edit Cluster
                                             </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => popOverClick(e, 'Change')}>
+                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
                                             Change Owner
                                             </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => popOverClick(e, 'Restart')}>
+                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
                                             Restart
                                             </MenuItem>
                                         </MenuList>
@@ -252,3 +286,5 @@ export default function Clusters() {
         </>
     )
 }
+
+export default ClusterList

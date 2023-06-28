@@ -6,8 +6,8 @@ import LoginForm from "pages/login/LoginForm";
 import PrivateRoute from 'routes/PrivateRoute';
 import DataBoard from "pages/board/DataBoard";
 import NeoVizGraph from "pages/neo4j/NeoVizGraph";
-import Clusters from "pages/cluster/Clusters";
-import Cluster from "pages/cluster/Cluster";
+import ClusterList from "pages/cluster/ClusterList";
+import ClusterDetail from "pages/cluster/ClusterDetail";
 
 export default function Router() { 
     return (
@@ -22,8 +22,9 @@ export default function Router() {
                         <Route path="/neo4j/neoforce" element={ <Force3DGraph />} />
                         <Route path="/neo4j/neovis" element={ <NeoVisGraph />} />
                         <Route path="/neo4j/neoviz" element={ <NeoVizGraph /> } />
-                        <Route path="/cluster/cluster" element={ <Cluster /> } />
-                        <Route path="/cluster/clusters" element={ <Clusters /> } />
+
+                        <Route path="/cluster/list" element={ <ClusterList /> } />
+                        <Route path="/cluster/detail/:cluster_id" element={ <ClusterDetail /> } />
                         
                     </Route>
                     <Route path="/*" element={<NotFound />} />

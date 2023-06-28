@@ -36,7 +36,7 @@ const MultiSelectCatalogs = (props: MultiSelectCatalogProps): JSX.Element => {
             _focus={{
               outline: "none"
             }}
-            width={'367px'}
+            width={'100%'}
             {...buttonProps }
             textAlign="left"
           >

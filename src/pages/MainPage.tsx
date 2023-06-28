@@ -42,11 +42,11 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
   { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
-  { name: 'Clusters', icon: FiServer, linkUrl: "/cluster/clusters"}
+  { name: 'Clusters', icon: FiServer, linkUrl: "/cluster/list"}
   // { name: 'Settings', icon: FiSettings, linkUrl: "/" },
 ];
 
-export default function MainPage({ children }: { children: ReactNode }) {
+const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -177,3 +177,5 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     </Flex>
   );
 };
+
+export default MainPage
