@@ -72,7 +72,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
       
       <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.200'}>
         <option value='10'>10</option>
-        <option value='20' selected>20</option>
+        <option value='20'>20</option>
         <option value='30'>30</option>
         <option value='50'>50</option>
         <option value='100'>100</option>

@@ -23,6 +23,15 @@ import {
 } from '@chakra-ui/react'
 import BoardPaging from 'components/common/BoardPaging'
 import { SearchIcon } from '@chakra-ui/icons'
+import {
+    FiHome,
+    FiTrendingUp,
+    FiCompass,
+    FiStar,
+    FiServer,
+    FiMenu,
+    FiLogOut,
+  } from 'react-icons/fi';
 
 export default function DataBoard() { 
 
@@ -259,10 +268,10 @@ export default function DataBoard() {
                         </Flex>
                     </Box>
 
-                    <TableContainer maxWidth={'100%'} marginTop={1} whiteSpace={'nowrap'} overflowX="hidden">
+                    <TableContainer maxWidth={'100%'} marginTop={1} whiteSpace={'nowrap'}>
                         <Table variant='striped' size={'sm'} colorScheme='blackAlpha'>
                             {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-                            <Thead bgColor={"gray.300"}>
+                            <Thead bgColor={"gray.300"} px={0}>
                             <Tr>
                                 <Th px={2}>ID</Th>
                                 <Th px={0}>Model</Th>
