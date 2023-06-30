@@ -33,6 +33,7 @@ import { LuLoader2 } from 'react-icons/lu';
 import { MdPlayCircleOutline, MdOutlineStopCircle, MdOutlinePause } from 'react-icons/md';
 import { CheckIcon, RepeatIcon, AddIcon, Search2Icon } from '@chakra-ui/icons'
 
+
 import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
 import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
@@ -216,18 +217,19 @@ const ClusterList = () : JSX.Element => {
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
-                                                {
+                                                {cluster.xson_data?.status ?
                                                     {
                                                         Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} />Starting</>,
                                                         Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/>Suspended</>,
                                                         Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} />Running</>,
                                                         
-                                                    }[cluster.xson_data?.status]                                                }
+                                                    }[cluster.xson_data?.status] : '-'
+                                                }
                                             </Flex>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
-                                            {
+                                            {cluster.xson_data?.status ?
                                                 {
                                                     Suspended: <>
                                                         <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.xson_id)} cursor="pointer">
@@ -239,7 +241,7 @@ const ClusterList = () : JSX.Element => {
                                                             <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
                                                         </Flex>
                                                     </>,
-                                                }[cluster.xson_data?.status]
+                                                }[cluster.xson_data?.status] : '-'
                                             }
                                             </Flex>
                                         </Td>

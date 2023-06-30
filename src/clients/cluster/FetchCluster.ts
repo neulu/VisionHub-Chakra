@@ -1,9 +1,9 @@
 import { http } from 'clients/AxiosRequest'
 
 export interface ClusterType {     
-    cluster_name?: string;
+    cluster_name: string;
     description?: string;
-    status: string | 'Running';
+    status?: string;
     created?: string;
     catalogs?: string[];
     cluster_size?: string;

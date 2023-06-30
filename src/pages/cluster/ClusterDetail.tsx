@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Table,
     Tbody,
@@ -13,15 +13,21 @@ import {
     Spacer,
     Checkbox,
     Button, 
-    useDisclosure
+    useDisclosure,
+    useToast,
 } from '@chakra-ui/react';
 
 import MainPage from 'pages/MainPage'
 import { MdCircle } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import EditClusterPop from "components/cluster/EditClusterPop"
 
+import { fetchCluster, ClusterData } from 'clients/cluster/FetchCluster'
+
 const ClusterDetail = () : JSX.Element => {
+
+    const toast = useToast()
+    const params = useParams();
 
     const navigate = useNavigate();
 
@@ -31,6 +37,29 @@ const ClusterDetail = () : JSX.Element => {
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [ cluster, setCluster] = useState<ClusterData>()
+
+    const detailCluster = (cluster_id : string | undefined ) => { 
+        if(cluster_id) { 
+            fetchCluster.findCluster(cluster_id).then((res : any) => {
+                if(res.status === 200)  { 
+                    setCluster(res.data)
+                } else { 
+                    toast({
+                        title: "Error Occurred",
+                        description: "클러스터 조회 중 에러가 발생 했습니다.",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true,
+                    })
+                }
+            })
+        }
+    }
+
+    useEffect(() => {
+        detailCluster(params.cluster_id)
+    }, [params]);
 
     return (
         <>
@@ -54,7 +83,7 @@ const ClusterDetail = () : JSX.Element => {
                                 <Text marginBottom={0}>Name</Text>
                             </Td>
                             <Td>
-                                Trino-Cluster-1
+                                { cluster?.xson_data.cluster_name || '-'}
                             </Td>
                         </Tr>
                         <Tr>
@@ -62,7 +91,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Description
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>ASML 로그 분석을 위한 Trino Cluster</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.description || '-'}</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -71,7 +100,14 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                             <Td>
                                 <Flex align="center">
-                                    <Icon mr="2" fontSize="16" as={MdCircle} color={'green.500'}/>ON
+
+
+
+                                    <Icon mr="2" fontSize="16" as={MdCircle} color={'green.500'}/>{ cluster?.xson_data.status || ''}
+
+
+
+
                                 </Flex>
                             </Td>
                         </Tr>
@@ -80,7 +116,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Created
                             </Td>
                             <Td>
-                                2023-04-25, 14:56:30 PM UTC+9:00
+                            { cluster?.xson_data.created || '-'}
                             </Td>
                         </Tr>
                         <Tr>
@@ -88,7 +124,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Catalog
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>asml_log_type_1, asml_log_type_2, asml_log_type_3</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.catalogs  || '-'}</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -104,7 +140,16 @@ const ClusterDetail = () : JSX.Element => {
                                 Cluster Size
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>Custom, Small, Medium, Large, X-Large</Text>
+                                { cluster?.xson_data.cluster_size ?
+                                    {
+                                        C: <Text marginBottom={0}>Custom</Text>,
+                                        S: <Text marginBottom={0}>Small</Text>,
+                                        M: <Text marginBottom={0}>Medium</Text>,
+                                        L: <Text marginBottom={0}>Large</Text>,
+                                        X: <Text marginBottom={0}>X-Large</Text>
+
+                                    }[cluster?.xson_data.cluster_size] : '-'
+                                }
                             </Td>
                         </Tr>
                     </Tbody>
@@ -122,7 +167,7 @@ const ClusterDetail = () : JSX.Element => {
                                 <Text marginBottom={0}>Initial Workers</Text>
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>3</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.initial_workers || 0 }</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -130,7 +175,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Coordinator Heap Size
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>64G</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.coordinator_heap_size || 0 }G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -138,7 +183,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Worker Heap Size
                             </Td>
                             <Td>
-                               <Text marginBottom={0}>48G</Text>
+                               <Text marginBottom={0}>{ cluster?.xson_data.worker_heap_size || 0 }G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -146,7 +191,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Query Memory
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>32G</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.query_memory || 0 }G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -154,7 +199,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Query Memory per Worker
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>24G</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.query_memory_per_worker || 0 }G</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -162,7 +207,7 @@ const ClusterDetail = () : JSX.Element => {
                                 CPU allocation for each coordinator
                             </Td>
                             <Td>                                
-                                <Text marginBottom={0}>4</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.cpu_allocation_for_each_coordinator || 0 }</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -170,7 +215,7 @@ const ClusterDetail = () : JSX.Element => {
                                 CPU allocation for each worker
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>4</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.cpu_allocation_for_each_worker || 0 }</Text>
                             </Td>
                         </Tr>
                     </Tbody>
@@ -192,7 +237,7 @@ const ClusterDetail = () : JSX.Element => {
                                 <Text marginBottom={0}>Max Workers</Text>
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>10</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.max_workers || 0 }</Text>
                             </Td>
                         </Tr>
                         <Tr>
@@ -200,7 +245,7 @@ const ClusterDetail = () : JSX.Element => {
                                 CPU Utilzation Threshold
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>70</Text>
+                                <Text marginBottom={0}>{ cluster?.xson_data.cpu_utilization_threshold || 0 }</Text>
                             </Td>
                         </Tr>
                     </Tbody>
