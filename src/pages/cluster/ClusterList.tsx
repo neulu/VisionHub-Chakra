@@ -28,7 +28,7 @@ import {
 
 import BoardPaging from 'components/common/BoardPaging'
 import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
-import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine } from 'react-icons/ri';
+import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine, RiEdit2Line, RiUserSettingsLine, RiLoginCircleLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { LuLoader2 } from 'react-icons/lu';
 import { MdPlayCircleOutline, MdOutlineStopCircle, MdOutlinePause } from 'react-icons/md';
 import { CheckIcon, RepeatIcon, AddIcon, Search2Icon } from '@chakra-ui/icons'
@@ -260,17 +260,21 @@ const ClusterList = () : JSX.Element => {
                                                     }}
                                                 />
                                                 <MenuList>
-                                                    <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, cluster.xson_id)}>
-                                                    Delete Cluster
+                                                    <MenuItem p={4} fontSize="14" onClick={(e) => deleteCluster(e, cluster.xson_id)}>
+                                                        <Icon mr="2" fontSize="20" as={RiDeleteBin6Line}  />
+                                                        Delete Cluster
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, cluster.xson_id)}>
-                                                    Edit Cluster
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e)=> editCluster(e, cluster.xson_id)}>
+                                                        <Icon mr="2" fontSize="20" as={RiEdit2Line}  />
+                                                        Edit Cluster
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, cluster.xson_id)}>
-                                                    Change Owner
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => editClusterOwner(e, cluster.xson_id)}>
+                                                        <Icon mr="2" fontSize="20" as={RiUserSettingsLine}  />
+                                                        Change Owner
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, cluster.xson_id)}>
-                                                    Restart
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => restartCluster(e, cluster.xson_id)}>
+                                                        <Icon mr="2" fontSize="20" as={RiLoginCircleLine}  />
+                                                        Restart
                                                     </MenuItem>
                                                 </MenuList>
                                             </Menu>
