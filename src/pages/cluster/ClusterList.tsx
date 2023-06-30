@@ -23,6 +23,7 @@ import {
     Input ,
     InputGroup,
     InputLeftElement,   
+    useToast,
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
@@ -39,6 +40,7 @@ import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchClu
 const ClusterList = () : JSX.Element => { 
 
     const navigate = useNavigate();
+    const toast = useToast()
 
     const totalPages : number = 1;
     const cntPerPage : number = 10;
@@ -63,9 +65,32 @@ const ClusterList = () : JSX.Element => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     /** 클러스터 삭제 이벤트  */
-    const deleteCluster = (e: React.MouseEvent, clusterId: number) => {
+    const deleteCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
+
+            fetchCluster.deleteCluster(clusterId).then((res : any) => { 
+                if(res.status === 200) {
+                    toast({
+                        title: "Cluster deleted.",
+                        description: "클러스터가 정상 삭제 되었습니다.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    })
+
+                    loadClusters()
+                } else { 
+                    toast({
+                        title: "Error Occurred",
+                        description: "클러스터가 삭제 중 에러가 발생 했습니다.",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true,
+                    })
+                }
+            })
+
             console.log(`> Deleted cluster_id: ${clusterId}`)
         }
     }
@@ -232,7 +257,7 @@ const ClusterList = () : JSX.Element => {
                                                     }}
                                                 />
                                                 <MenuList>
-                                                    <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
+                                                    <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, cluster.xson_id)}>
                                                     Delete Cluster
                                                     </MenuItem>
                                                     <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>

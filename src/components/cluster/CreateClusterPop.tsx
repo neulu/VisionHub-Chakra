@@ -18,7 +18,8 @@ import {
     Checkbox,
     FormLabel,
     Divider,
-    AbsoluteCenter
+    AbsoluteCenter,
+    useToast
 } from '@chakra-ui/react'
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -37,6 +38,7 @@ interface props {
 
 const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) : JSX.Element => {
 
+    const toast = useToast()
     const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
 
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
@@ -52,9 +54,23 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
        
         fetchCluster.postCluster(formData).then((res:any) => { 
             if(res.status === 200) {
+
+                toast({
+                    title: "Cluster created.",
+                    description: "클러스터가 정상 등록 되었습니다.",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+
+
                 loadClusters()
                 setSelectedOptions([])
                 reset()
+                
+
+
+
                 onClose()
             } else { 
                 console.error(res.message)
