@@ -36,18 +36,21 @@ const ClusterDetail = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Box maxW={'80%'}>
-                    <Flex>
-                        <Text fontSize="2xl">기본정보</Text>
-                        <Spacer />
-                        <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2} onClick={onOpen}>Modify</Button>
-                        <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"}>Update</Button> 
+                    <Flex align="center" justifyContent={'space-between'} >
+                        <Text fontSize="2xl" fontWeight={'bold'}>기본정보</Text>
+                        <Flex>
+                            <Button size={'sm'} colorScheme={'blue'} borderRadius={'md'} width={"100px"} height={'32px'} marginRight={2} onClick={onOpen} bg="blue.500">Modify</Button>
+                            <Button colorScheme={'blackAlpha.100'} color='#fff' background='#333' borderRadius={'md'} width={"100px"} height={'32px'} fontSize={'14px'} onClick={onOpen} _hover={{ bg: '#444'}}>
+                                Update
+                            </Button>
+                        </Flex>
                     </Flex>
                 </Box>
                 <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
-                    <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
+                    <Table variant='simple' size={'md'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
-                            <Td bgColor='gray.300' width={'2xs'}>
+                            <Td bgColor='#f0f0f0' width={'300px'}>
                                 <Text marginBottom={0}>Name</Text>
                             </Td>
                             <Td>
@@ -55,7 +58,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Description
                             </Td>
                             <Td>
@@ -63,7 +66,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Status
                             </Td>
                             <Td>
@@ -73,7 +76,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Created
                             </Td>
                             <Td>
@@ -81,7 +84,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Catalog
                             </Td>
                             <Td>
@@ -89,7 +92,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Image
                             </Td>
                             <Td>
@@ -97,7 +100,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Cluster Size
                             </Td>
                             <Td>
@@ -109,13 +112,13 @@ const ClusterDetail = () : JSX.Element => {
                 </TableContainer>
                 <Spacer p={5}/>
                 <Box>
-                    <Text fontSize="2xl">세부정보</Text>
+                    <Text fontSize="2xl" fontWeight={'bold'}>세부정보</Text>
                 </Box>
                 <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
-                    <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
+                    <Table variant='simple' size={'md'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
-                            <Td bgColor='gray.300' width={'2xs'}>
+                            <Td bgColor='#f0f0f0' width={'300px'}>
                                 <Text marginBottom={0}>Initial Workers</Text>
                             </Td>
                             <Td>
@@ -123,7 +126,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Coordinator Heap Size
                             </Td>
                             <Td>
@@ -131,7 +134,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Worker Heap Size
                             </Td>
                             <Td>
@@ -139,7 +142,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Query Memory
                             </Td>
                             <Td>
@@ -147,7 +150,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 Query Memory per Worker
                             </Td>
                             <Td>
@@ -155,7 +158,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 CPU allocation for each coordinator
                             </Td>
                             <Td>                                
@@ -163,7 +166,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 CPU allocation for each worker
                             </Td>
                             <Td>
@@ -182,10 +185,10 @@ const ClusterDetail = () : JSX.Element => {
                     fontWeight='normal'
                     >Enable Auto Scaling</Checkbox>
                 <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
-                    <Table variant='simple' size={'sm'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
+                    <Table variant='simple' size={'md'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
                         <Tr>
-                            <Td bgColor='gray.300' width={'2xs'}>
+                            <Td bgColor='#f0f0f0' width={'300px'}>
                                 <Text marginBottom={0}>Max Workers</Text>
                             </Td>
                             <Td>
@@ -193,7 +196,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                         </Tr>
                         <Tr>
-                            <Td bgColor='gray.300'>
+                            <Td bgColor='#f0f0f0'>
                                 CPU Utilzation Threshold
                             </Td>
                             <Td>
@@ -206,7 +209,7 @@ const ClusterDetail = () : JSX.Element => {
 
                 <Box maxW={'80%'} marginTop={5}>
                     <Flex justifyContent="flex-end">
-                        <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Save</Button>
+                        <Button size={'sm'} colorScheme={'blue'} borderRadius={'md'} width={"120px"} marginRight={2}>Save</Button>
                         <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"} onClick={(e)=>goClusters(e)}>Discard</Button> 
                     </Flex>
                 </Box>   

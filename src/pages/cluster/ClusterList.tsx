@@ -28,10 +28,10 @@ import {
 
 import BoardPaging from 'components/common/BoardPaging'
 import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
-import { BsFillPauseFill } from 'react-icons/bs';
-
-import { MdSquare, MdPlayCircleOutline } from 'react-icons/md';
-import { CheckIcon, RepeatIcon } from '@chakra-ui/icons'
+import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine } from 'react-icons/ri';
+import { LuLoader2 } from 'react-icons/lu';
+import { MdPlayCircleOutline, MdOutlineStopCircle, MdOutlinePause } from 'react-icons/md';
+import { CheckIcon, RepeatIcon, AddIcon, Search2Icon } from '@chakra-ui/icons'
 
 import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
@@ -171,7 +171,10 @@ const ClusterList = () : JSX.Element => {
                 <Box>
                     <Flex align="center" justifyContent={'space-between'} pb={4}>
                         <Text fontSize="3xl" fontWeight={'bold'}>Cluster</Text>
-                        <Button colorScheme={'black.500'} color='#fff' background='#333' borderRadius={'md'} width={"180px"} height={'40px'} fontSize={'14px'} onClick={onOpen} _hover={{ bg: '#444'}}>Create Cluster</Button>
+                        <Button colorScheme={'black.500'} color='#fff' background='#333' borderRadius={'md'} width={"170px"} height={'40px'} fontSize={'14px'} onClick={onOpen} _hover={{ bg: '#444'}}>
+                            <AddIcon mr={2} />
+                            Create Cluster
+                        </Button>
                     </Flex>
                     
                     <Box pb={2}>
@@ -180,7 +183,7 @@ const ClusterList = () : JSX.Element => {
                             <Flex>
                             <InputGroup>
                                 <InputLeftElement pointerEvents='none'>
-                                {/* <PhoneIcon color='gray.300' /> */}
+                                    <Search2Icon />
                                 </InputLeftElement>
                                 <Input type='text' placeholder='Search Clusters' />
                             </InputGroup>
@@ -208,16 +211,16 @@ const ClusterList = () : JSX.Element => {
                             clusters && clusters.map(cluster => {
                                 return ( 
                                     <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.xson_id}>
-                                        <Td pt={5} pb={5} borderBottom="2px" borderBottomColor={'#f2f2f2'}>
+                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>{cluster.xson_data?.cluster_name || ''}</Text>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
                                                 {
                                                     {
-                                                        Starting: <><Icon mr="2" fontSize="16" as={RepeatIcon} color={'blue.500'}/>Starting</>,
-                                                        Suspended: <><Icon mr="2" fontSize="17" as={BsFillPauseFill} color={'orange.500'}/>Suspended</>,
-                                                        Running: <><Icon mr="2" fontSize="16" as={CheckIcon} color={'green.500'} />Running</>,
+                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} />Starting</>,
+                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/>Suspended</>,
+                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} />Running</>,
                                                         
                                                     }[cluster.xson_data?.status]                                                }
                                             </Flex>
@@ -228,12 +231,12 @@ const ClusterList = () : JSX.Element => {
                                                 {
                                                     Suspended: <>
                                                         <Flex align="center" onClick={(e)=>resumeCluster(e, 1)} cursor="pointer">
-                                                            <Icon mr="2" fontSize="17" as={MdPlayCircleOutline} color={'purple.500'} />Resume
+                                                            <Icon mr="2" fontSize="25" as={RiPlayCircleLine} color={'#0acf83'} />Resume
                                                         </Flex>
                                                     </>,
                                                     Running: <>
                                                         <Flex align="center" onClick={(e)=>stopCluster(e, 1)} cursor="pointer">
-                                                            <Icon mr="2" fontSize="16" as={MdSquare} color={'red.500'} />Stop
+                                                            <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
                                                         </Flex>
                                                     </>,
                                                 }[cluster.xson_data?.status]
@@ -245,13 +248,13 @@ const ClusterList = () : JSX.Element => {
                                         <Td>
                                             <Menu>
                                                 <MenuButton
-                                                    size="10px"
-                                                    p={1}
+                                                    p={0}
+                                                    fontSize="22"
                                                     as={IconButton}
                                                     aria-label='Options'
                                                     icon={<FiMoreVertical />}
-                                                    variant='unstyled'
                                                     borderRadius={'full'}
+                                                    bg={'none'}
                                                     _hover={{  
                                                         bg: '#bbb',  
                                                     }}
