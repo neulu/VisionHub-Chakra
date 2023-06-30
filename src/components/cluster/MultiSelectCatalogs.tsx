@@ -3,9 +3,6 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  MenuDivider,
-  MenuGroup,
   MenuOptionGroup,
   MenuItemOption,
   MenuButtonProps,
@@ -13,9 +10,8 @@ import {
 
 const MultiSelectCatalogs = (props: MultiSelectCatalogProps): JSX.Element => {
 
-  const { label, options, buttonProps } = props;
-  const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
-
+  const { label, options, buttonProps, selectedOptions, setSelectedOptions} = props;
+  
   return (
     <Menu closeOnSelect={false}>
       {({ onClose }) => (
@@ -101,8 +97,10 @@ MultiSelectCatalogs.displayName = "MultiSelectCatalogs";
 export type MultiSelectCatalogProps = {
   label: string;
   options: string[];
-  onChange?: (selectedValues: string[]) => void;
+  onChange?: (setSelectedOptions: string[]) => void;
   buttonProps?: MenuButtonProps;
+  selectedOptions: string[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default MultiSelectCatalogs;

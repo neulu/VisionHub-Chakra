@@ -40,7 +40,6 @@ Content-Type: application/json
 		"desciption": "ASML 로그 분석을 위한 Trino Cluster3333333",
 		"status": "Running",
 		"enable_auto_scaling": "True",
-		"workers": 3,
 		"created": "2023-06-03, 14:56:30",
 		"catalogs": [ 1 ],
 		"cluster_size": "C",
@@ -62,7 +61,7 @@ GET https://apis.techux.link:5150/tux-svc2/xson/xson_detail?xson_id=eum_cluster_
 
 
 ###  X-Json 단건 삭제 by ID
-POST https://apis.techux.link:5150/tux-svc2/xson/delete_xson?xson_id=eum_cluster_1687981539 HTTP/1.1
+POST https://apis.techux.link:5150/tux-svc2/xson/delete_xson?xson_id=eum_cluster_1688110263 HTTP/1.1
 
 
 ### X-Json 전체 삭제 by GR

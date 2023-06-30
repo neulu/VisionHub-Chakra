@@ -1,12 +1,11 @@
 import { http } from 'clients/AxiosRequest'
 
-interface ClusterType {     
+export interface ClusterType {     
     cluster_name?: string;
-    desciption?: string;
-    status: string;
-    workers?: number;
+    description?: string;
+    status: string | 'Running';
     created?: string;
-    catalogs?: number[];
+    catalogs?: string[];
     cluster_size?: string;
     initial_workers?: number;
     coordinator_heap_size?: number;
@@ -15,15 +14,9 @@ interface ClusterType {
     query_memory_per_worker?: number;
     cpu_allocation_for_each_coordinator?: number;
     cpu_allocation_for_each_worker?: number;
-    enable_auto_scaling?: string;
+    enable_auto_scaling?: boolean;
     max_workers?: number;
-    cpu_utilization_threshold?: number
-}
-
-interface CatalogType { 
-    catalog_id: number;
-    catalog_name: string;
-    created: string;
+    cpu_utilization_threshold?: number;
 }
 
 export interface ClusterData { 
@@ -31,6 +24,12 @@ export interface ClusterData {
     user_id: string;
     xson_gr: string;
     xson_data: ClusterType;
+}
+
+export interface CatalogType { 
+    catalog_id: number;
+    catalog_name: string;
+    created: string;
 }
 
 export interface CatalogData { 

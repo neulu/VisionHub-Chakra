@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Modal,
@@ -23,49 +23,64 @@ import {
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
+import { fetchCluster, ClusterData, ClusterType  } from 'clients/cluster/FetchCluster';
 
+import _ from "lodash";
+import moment from "moment";
 
-interface props { 
+interface props {
     isOpen : boolean;
     onClose : () => void ;
+    catalogs : string[];
+    loadClusters: () => void;
 }
 
-const CreateClusterPop = ({ isOpen, onClose } : props) : JSX.Element => {
+const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) : JSX.Element => {
 
-    interface FormData {
-        cluster_name: string;
-        description?: string;
-        catalogs: number[];
-        cluster_size: string;
-        initial_workers?: number;
-        coordinator_heap_size?: number;
-        worker_heap_size?: number;
-        query_memory?: number;
-        query_memory_per_worker?: number;
-        cpu_allocation_for_each_coordinator?: number;
-        cpu_allocation_for_each_worker?: number;
-        enable_auto_scaling: boolean;
-        max_workers?: number;
-        cpu_utilization_threshold?: number;
+    const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
+
+        selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
+        _.set(data, "status", 'Running')
+        _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
+
+        const formData : ClusterData = { 
+            xson_id: `eum_cluster_${Math.floor(Date.now() / 1000)}`,
+            user_id: 'calvin',
+            xson_gr: 'eum_cluster',
+            xson_data: data
+        }   
+       
+        fetchCluster.postCluster(formData).then((res:any) => { 
+            if(res.status === 200) {
+                loadClusters()
+                setSelectedOptions([])
+                reset()
+                onClose()
+            } else { 
+                console.error(res.message)
+            }
+        }) 
     }
 
-    const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
-        console.log(JSON.stringify(data))
+    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset } = useForm<ClusterType>();
 
+    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
+    
+    const modelClose = () => { 
+        reset()
+        setSelectedOptions([])
+        onClose()
     }
-    const { register, handleSubmit, watch, clearErrors, formState: { errors } } = useForm<FormData>();
-
 
     return ( 
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={modelClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
             <ModalOverlay />
             <ModalContent>
                 <ModalCloseButton _focus={{boxShadow: "none"}} />
                 <ModalBody>
-                <Box flex='1' bg='white' marginTop={5}>   
-                    
+                <Box flex='1' bg='white' marginTop={5}>
                     <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
 
                         <FormControl>
@@ -77,15 +92,13 @@ const CreateClusterPop = ({ isOpen, onClose } : props) : JSX.Element => {
 
                         <FormControl>
                             <InputGroup>
-                            <Input { ...register("description", { required: true } )} type="text" name="description" autoComplete="off" placeholder="Description" onBlur={()=>clearErrors()} />
+                            <Input { ...register("description", { required: false } )} type="text" name="description" autoComplete="off" placeholder="Description" onBlur={()=>clearErrors()} />
                             </InputGroup>
                             {errors.description && errors.description.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a description</Text>) }
                         </FormControl>
 
                         <FormControl>
-                            <MultiSelectCatalogs label="Catalogs" options={
-                                ["sample {us-east-1, us-east-2, ap-northeast-1, eu-central-1, eu-west-1, us-west-1 }", "tpcds", "tpch"]
-                            } />
+                            <MultiSelectCatalogs label="Catalogs" options={catalogs} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
                         </FormControl>
 
                         <FormControl>
@@ -160,14 +173,14 @@ const CreateClusterPop = ({ isOpen, onClose } : props) : JSX.Element => {
                         </FormControl>
                             
                         <FormControl variant="floating" id="max_workers">
-                            <Input { ...register("max_workers", { required: true } )} type="text" name="max_workers" autoComplete="off" placeholder=" " />
+                            <Input { ...register("max_workers", { required: false } )} type="text" name="max_workers" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Max Workers</FormLabel>
                         </FormControl>
 
 
                         <FormControl variant="floating" id="cpu_utilization_threshold">
-                            <Input { ...register("cpu_utilization_threshold", { required: true } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " />
+                            <Input { ...register("cpu_utilization_threshold", { required: false } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU Utilization Threshold</FormLabel>
                         </FormControl>
@@ -178,7 +191,7 @@ const CreateClusterPop = ({ isOpen, onClose } : props) : JSX.Element => {
                 <Spacer />
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={onClose}>Close</Button>
+                    <Button colorScheme='blue' mr={3} onClick={modelClose}>Close</Button>
                     <Button colorScheme='teal' type='submit'>Submit</Button>
                 </ModalFooter>
             </ModalContent>

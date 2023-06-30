@@ -24,12 +24,12 @@ import {
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
 
-const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
+const EditClusterPop = ({ isOpen, onClose, catalogs } : any) : JSX.Element => {
 
     interface FormData {
         cluster_name: string;
         description?: string;
-        catalogs: number[];
+        catalogs: string[];
         cluster_size: string;
         initial_workers?: number;
         coordinator_heap_size?: number;
@@ -48,6 +48,8 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
     }
 
     const { register, handleSubmit, watch, clearErrors, formState: { errors } } = useForm<FormData>();
+
+    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
 
     return ( 
         <>
@@ -73,11 +75,7 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
                         
 
                         <FormControl>
-
-                            <MultiSelectCatalogs label="Catalogs" options={
-                                ["asml_log_type_1", "asml_log_type_2", "asml_log_type_3"]
-                            } />
-
+                            <MultiSelectCatalogs label="Catalogs" options={catalogs} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
                         </FormControl>
 
 
