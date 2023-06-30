@@ -96,21 +96,21 @@ const ClusterList = () : JSX.Element => {
     }
 
     /** 클러스터 수정 이벤트 */
-    const editCluster = (e: React.MouseEvent, clusterId: number) => {
+    const editCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         console.log(`> Editing cluster_id: ${clusterId}`)
         navigate({pathname  : `/cluster/detail/${clusterId}` })
     }
 
     /** 클러스터 Owner 수정 이벤트 */
-    const editClusterOwner = (e: React.MouseEvent, clusterId: number) => {
+    const editClusterOwner = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         console.log(`> Editing cluster_owner: ${clusterId}`)
         navigate({pathname  : `/cluster/detail/${clusterId}` })
     }
 
     /** 클러스터 재기동 이벤트 */
-    const restartCluster = (e: React.MouseEvent, clusterId: number) => {
+    const restartCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 재시작 하시겠습니까?")) {
             console.log("Restarting Cluster..")
@@ -118,7 +118,7 @@ const ClusterList = () : JSX.Element => {
     }
 
     /** 클러스터 재게 이벤트 */
-    const resumeCluster = (e: React.MouseEvent, clusterId: number) => {
+    const resumeCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 재개 하시겠습니까?")) {
             console.log("Resuming Cluster..")
@@ -127,7 +127,7 @@ const ClusterList = () : JSX.Element => {
     }
 
     /** 클러스터 정지 이벤트 */
-    const stopCluster = (e: React.MouseEvent, clusterId: number) => {
+    const stopCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 정지 하시겠습니까?")) {
             console.log("Stopping Cluster..")
@@ -212,7 +212,7 @@ const ClusterList = () : JSX.Element => {
                                 return ( 
                                     <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.xson_id}>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
-                                            <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>{cluster.xson_data?.cluster_name || ''}</Text>
+                                            <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, cluster.xson_id)}>{cluster.xson_data?.cluster_name || ''}</Text>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
@@ -230,12 +230,12 @@ const ClusterList = () : JSX.Element => {
                                             {
                                                 {
                                                     Suspended: <>
-                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, 1)} cursor="pointer">
+                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.xson_id)} cursor="pointer">
                                                             <Icon mr="2" fontSize="25" as={RiPlayCircleLine} color={'#0acf83'} />Resume
                                                         </Flex>
                                                     </>,
                                                     Running: <>
-                                                        <Flex align="center" onClick={(e)=>stopCluster(e, 1)} cursor="pointer">
+                                                        <Flex align="center" onClick={(e)=>stopCluster(e, cluster.xson_id)} cursor="pointer">
                                                             <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
                                                         </Flex>
                                                     </>,
@@ -263,13 +263,13 @@ const ClusterList = () : JSX.Element => {
                                                     <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, cluster.xson_id)}>
                                                     Delete Cluster
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
+                                                    <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, cluster.xson_id)}>
                                                     Edit Cluster
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
+                                                    <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, cluster.xson_id)}>
                                                     Change Owner
                                                     </MenuItem>
-                                                    <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
+                                                    <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, cluster.xson_id)}>
                                                     Restart
                                                     </MenuItem>
                                                 </MenuList>
