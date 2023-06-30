@@ -20,11 +20,12 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
   };
 
   return (
-    <Box display="flex" justifyContent="center" mt={6}>
-      <ButtonGroup spacing={0}>
+    <Box display="flex" justifyContent="center" alignItems={"center"} mt={6}>
+      <ButtonGroup spacing={1} m={1}>
 
         <Button
           size={'xs'}
+          
           disabled={isFirstPage}
           onClick={() => handlePageChange(1)}
         >
@@ -33,6 +34,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
 
         <Button
           size={'xs'}
+          
           disabled={isFirstPage}
           onClick={() => handlePageChange(currentPage - 1)}
         >
@@ -42,6 +44,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
         {[...Array(totalPages)].map((_, index) => (
           <Button
             size={'xs'}
+            
             key={index}
             // variant={currentPage === index + 1 ? "outline" : "ghost"}
             colorScheme={currentPage === index + 1 ? "blackAlpha" : undefined}
@@ -53,6 +56,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
 
         <Button
           size={'xs'}
+          
           disabled={isLastPage}
           onClick={() => handlePageChange(currentPage + 1)}
         >
@@ -70,7 +74,7 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
       </ButtonGroup>
       
       
-      <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.200'}>
+      <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.300'}  ml={3} borderRadius={"md"}>
         <option value='10'>10</option>
         <option value='20'>20</option>
         <option value='30'>30</option>

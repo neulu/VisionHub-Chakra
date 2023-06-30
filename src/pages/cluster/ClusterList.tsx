@@ -19,7 +19,10 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem,    
+    MenuItem, 
+    Input ,
+    InputGroup,
+    InputLeftElement,   
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
@@ -141,28 +144,37 @@ const ClusterList = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Box>
-                    <Text fontSize="3xl">Cluster</Text>
-                    <Box p={3} textAlign='left' bgColor={'#e6eced'}>
-                        <Flex align="center">
-                            <Text size={'md'}>Trino Cluster (총{clusters.length || 0}개)</Text>
-                            <Spacer />
-                            <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Refresh</Button>
-                            <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"} onClick={onOpen}>Create</Button> 
+                    <Flex align="center" justifyContent={'space-between'} pb={4}>
+                        <Text fontSize="3xl" fontWeight={'bold'}>Cluster</Text>
+                        <Button colorScheme={'black.500'} color='#fff' background='#333' borderRadius={'md'} width={"180px"} height={'40px'} fontSize={'14px'} onClick={onOpen} _hover={{ bg: '#444'}}>Create Cluster</Button>
+                    </Flex>
+                    
+                    <Box pb={2}>
+                        <Flex align="center" justifyContent={'space-between'}>
+                            <Text size={'md'} fontWeight={'bold'} m={0}>Trino Cluster (총{clusters.length || 0}개)</Text>
+                            <Flex>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents='none'>
+                                {/* <PhoneIcon color='gray.300' /> */}
+                                </InputLeftElement>
+                                <Input type='text' placeholder='Search Clusters' />
+                            </InputGroup>
+                            </Flex>
                         </Flex>
                     </Box>
                 </Box>
 
                 <TableContainer marginTop={1} whiteSpace={'nowrap'}>
-                    <Table variant='striped' size={'sm'} colorScheme='blackAlpha'>
+                    <Table variant="simple" >
                         {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
-                        <Thead bgColor={"gray.300"}>
-                        <Tr h={'35px'}>
-                            <Th>Cluster Name</Th>
-                            <Th>Status</Th>
-                            <Th>Action</Th>
-                            <Th>Worker Status</Th>
-                            <Th>Created</Th>
-                            <Th>Edit</Th>
+                        <Thead bgColor={"#333"}>
+                        <Tr h={'25px'} >
+                            <Th color={'white'}>Cluster Name</Th>
+                            <Th color={'white'}>Status</Th>
+                            <Th color={'white'}>Action</Th>
+                            <Th color={'white'}>Worker Status</Th>
+                            <Th color={'white'}>Created</Th>
+                            <Th color={'white'} w={'80px'}>Edit</Th>
                         </Tr>
                         </Thead>
                         <Tbody>
@@ -170,11 +182,11 @@ const ClusterList = () : JSX.Element => {
                         {
                             clusters && clusters.map(cluster => {
                                 return ( 
-                                    <Tr key={cluster.xson_id}>
-                                        <Td>
+                                    <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.xson_id}>
+                                        <Td pt={5} pb={5} borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>{cluster.xson_data?.cluster_name || ''}</Text>
                                         </Td>
-                                        <Td>
+                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
                                                 {
                                                     {
@@ -185,7 +197,7 @@ const ClusterList = () : JSX.Element => {
                                                     }[cluster.xson_data?.status]                                                }
                                             </Flex>
                                         </Td>
-                                        <Td>
+                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
                                             {
                                                 {
@@ -208,12 +220,16 @@ const ClusterList = () : JSX.Element => {
                                         <Td>
                                             <Menu>
                                                 <MenuButton
-                                                    size="xs"
+                                                    size="10px"
+                                                    p={1}
                                                     as={IconButton}
                                                     aria-label='Options'
                                                     icon={<FiMoreVertical />}
                                                     variant='unstyled'
-                                                    
+                                                    borderRadius={'full'}
+                                                    _hover={{  
+                                                        bg: '#bbb',  
+                                                    }}
                                                 />
                                                 <MenuList>
                                                     <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
@@ -237,7 +253,7 @@ const ClusterList = () : JSX.Element => {
                         }
                         {!clusters || (!clusters.length && (
                             <Tr>
-                                <Td colSpan={6} style={{textAlign: 'center'}}>
+                                <Td  borderBottom="2px" borderBottomColor={'#f2f2f2'} colSpan={6} style={{textAlign: 'center'}}>
                                     No cluster has been created
                                 </Td>
                             </Tr>
