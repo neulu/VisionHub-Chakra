@@ -49,13 +49,13 @@ export default function LoginForm() {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      backgroundColor="gray.100"
       justifyContent="center"
       alignItems="center"
     >
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">DataMesh</Heading>
+        <Avatar bg="blue.700" />
+        <Heading color="blue.600">DataMesh</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" >
@@ -81,7 +81,7 @@ export default function LoginForm() {
                   <Link>forgot password?</Link>
                 </FormHelperText>
               </FormControl>
-              <Button type="submit" borderRadius={0} variant="solid" colorScheme="teal" width="full">
+              <Button type="submit" borderRadius={5} variant="solid" colorScheme="blue" width="full">
                 Login
               </Button>
             </Stack>
@@ -90,7 +90,7 @@ export default function LoginForm() {
       </Stack>
       <Box>
         Create new account?{" "}
-        <Link color="teal.500" href="#">
+        <Link color="blue.600" href="#">
           Sign Up
         </Link>
       </Box>

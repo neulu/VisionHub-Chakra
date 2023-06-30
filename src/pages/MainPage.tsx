@@ -27,6 +27,7 @@ import {
   FiLogOut,
 } from 'react-icons/fi';
 
+
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { useNavigate } from 'react-router';
@@ -61,7 +62,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
   }
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} onLogout={onLogout} />
       <Drawer
         autoFocus={false}
@@ -92,14 +93,19 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
   return (
     <Box
-      bg={useColorModeValue('white', 'gray.900')}
-      borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+      // bg={useColorModeValue('white', 'gray.900')}
+      backgroundImage="url('/assets/images/bg-lnb.png')"
+      backgroundPosition="right 0"
+      backgroundRepeat="repeat-y"
+      // boxShadow='xl' 
+      // borderRight="1px"
+      // borderRightColor={useColorModeValue('gray.100', 'gray.100')}
+      // w='255px'
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="10" justifyContent="space-between">
+      <Flex h="20" alignItems="center" mx="10" justifyContent={'space-between'}>
         <Image src="https://demo.datahubproject.io/assets/platforms/datahublogo.png" width={25} />
         <Text fontSize="lg" fontWeight="bold" marginTop={3}>IDP-Datamesh</Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
@@ -111,7 +117,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       ))}
 
       {/* Logout Button */}
-      <Box position="absolute" textAlign="center" w={"100%"} bottom={10} backgroundColor="cyon">
+      <Box position="absolute" textAlign="center" w={"240px"} bottom={10} backgroundColor="cyon">
         <Text>administrator</Text>
         <Center>
           <Box w={"50%"} h={"30px"} bgColor={"teal"} borderRadius="md" style={{cursor:'pointer'}} onClick={()=>onLogout()}>
@@ -134,15 +140,15 @@ interface NavItemProps extends FlexProps {
 
 const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
   return (
-    <Link href={linkUrl} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-      <Flex align="center" p="4" mx="4" borderRadius="lg" role="group" cursor="pointer"
+    <Link href={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} >
+      <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.400'}
         _hover={{
-          bg: 'teal',
-          color: 'white',
+          bg: '#efefef',
+          color: 'black',
         }}
         {...rest}>
         {icon && (
-          <Icon mr="4" fontSize="16" _groupHover={{ color: 'white',}} as={icon} />
+          <Icon mr="4" pl={0} fontSize="16" _groupHover={{ color: 'black',}} as={icon} />
         )}
         {children}
       </Flex>
