@@ -27,11 +27,11 @@ import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
 import { BsFillPauseFill } from 'react-icons/bs';
 
 import { MdSquare, MdPlayCircleOutline } from 'react-icons/md';
-import { CheckIcon, RepeatIcon, AddIcon } from '@chakra-ui/icons'
+import { CheckIcon, RepeatIcon } from '@chakra-ui/icons'
 
 import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
-import { fetchCluster, ClusterData } from 'clients/cluster/FetchCluster'
+import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
   
 const ClusterList = () : JSX.Element => { 
 
@@ -40,7 +40,6 @@ const ClusterList = () : JSX.Element => {
     const totalPages : number = 1;
     const cntPerPage : number = 10;
     const currentPage: number = 1;
-
 
     const handlePageChange = (page: number) => {
         // 현재 페이지를 상태로 업데이트하거나 다른 동작을 수행합니다.
@@ -109,15 +108,33 @@ const ClusterList = () : JSX.Element => {
     }
 
     const [ clusters, setClusters] = useState<ClusterData[]>([])
+    const [ catalogs, setCatalogs ] = useState<string[]>([])
 
-    useEffect(() => {
+    const loadClusters = () => { 
         fetchCluster.findClusters().then((res : any) => {            
             if(res.status === 200) { 
                 setClusters(res.data)
             } else { 
                 console.error(res.message)
             }
+            fetchCluster.findCatalogs().then((res : any) => { 
+                if(res.status === 200) { 
+
+                    const refineCatalogs : string[] = []
+                    res.data.map((data : CatalogData) => { 
+                        refineCatalogs.push(data.xson_data.catalog_name)
+                    })
+
+                    setCatalogs(refineCatalogs)
+                } else { 
+                    console.error(res.message)
+                }
+            })
         })
+    }
+
+    useEffect(() => {
+        loadClusters()
     }, []);
 
     return ( 
@@ -186,7 +203,7 @@ const ClusterList = () : JSX.Element => {
                                             }
                                             </Flex>
                                         </Td>
-                                        <Td>{ cluster.xson_data?.workers || 0} </Td>
+                                        <Td>{ cluster.xson_data?.initial_workers || 0} </Td>
                                         <Td>{ cluster.xson_data?.created || ''}</Td>
                                         <Td>
                                             <Menu>
@@ -236,7 +253,7 @@ const ClusterList = () : JSX.Element => {
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                 />
-                <CreateClusterPop isOpen={isOpen} onClose={onClose} />
+                <CreateClusterPop isOpen={isOpen} onClose={onClose} catalogs={catalogs} loadClusters={loadClusters}/>
             </>} />
         </>
     )
