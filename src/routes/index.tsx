@@ -18,11 +18,13 @@ export default function Router() {
                         <Route path="/login" element={ <LoginForm /> } />    
                     </Route>
                     <Route element={<PrivateRoute authentication={true}/>}>
-                        <Route index element={ <DataBoard /> }/>
+                        {/* <Route index element={ <DataBoard /> }/> */}
+                        <Route index element={ <ClusterList /> }/>
                         <Route path="/neo4j/neoforce" element={ <Force3DGraph />} />
                         <Route path="/neo4j/neovis" element={ <NeoVisGraph />} />
                         <Route path="/neo4j/neoviz" element={ <NeoVizGraph /> } />
-
+                        
+                        <Route path="/cluster" element={ <ClusterList /> } />
                         <Route path="/cluster/list" element={ <ClusterList /> } />
                         <Route path="/cluster/detail/:cluster_id" element={ <ClusterDetail /> } />
                         

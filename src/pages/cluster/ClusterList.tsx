@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainPage from 'pages/MainPage'
 import {
     IconButton,
@@ -20,25 +20,32 @@ import {
     MenuButton,
     MenuList,
     MenuItem,    
-  } from '@chakra-ui/react';
+} from '@chakra-ui/react';
 
-  import BoardPaging from 'components/common/BoardPaging'
-  import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
-  import { BsFillPauseFill } from 'react-icons/bs';
+import BoardPaging from 'components/common/BoardPaging'
+import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
+import { BsFillPauseFill } from 'react-icons/bs';
 
-  import { MdSquare, MdPlayCircleOutline } from 'react-icons/md';
-  import { CheckIcon, RepeatIcon, AddIcon } from '@chakra-ui/icons'
-  
-  import CreateClusterPop from 'components/cluster/CreateClusterPop'
-  import { useNavigate } from 'react-router-dom';
+import { MdSquare, MdPlayCircleOutline } from 'react-icons/md';
+import { CheckIcon, RepeatIcon, AddIcon } from '@chakra-ui/icons'
 
+import CreateClusterPop from 'components/cluster/CreateClusterPop'
+import { useNavigate } from 'react-router-dom';
+import { fetchCluster, ClusterData } from 'clients/cluster/FetchCluster'
   
 const ClusterList = () : JSX.Element => { 
+
+    interface Response { 
+        status?: number | undefined,
+        data?: any | undefined,
+        method?: string | undefined,
+        headers?: string | undefined
+    }
 
     const navigate = useNavigate();
 
     const totalPages : number = 1;
-    const cntPerPage : number = 20;
+    const cntPerPage : number = 10;
     const currentPage: number = 1;
 
 
@@ -58,10 +65,9 @@ const ClusterList = () : JSX.Element => {
     const popOverClose = () : void => setIsPopOverOpen(false);
 
     /** modal 작업 */
-
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    /**  */
+    /** 클러스터 삭제 이벤트  */
     const deleteCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
@@ -69,19 +75,21 @@ const ClusterList = () : JSX.Element => {
         }
     }
 
+    /** 클러스터 수정 이벤트 */
     const editCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         console.log(`> Editing cluster_id: ${clusterId}`)
         navigate({pathname  : `/cluster/detail/${clusterId}` })
     }
 
-
+    /** 클러스터 Owner 수정 이벤트 */
     const editClusterOwner = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         console.log(`> Editing cluster_owner: ${clusterId}`)
         navigate({pathname  : `/cluster/detail/${clusterId}` })
     }
 
+    /** 클러스터 재기동 이벤트 */
     const restartCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         if(window.confirm("클러스터를 재시작 하시겠습니까?")) {
@@ -89,6 +97,7 @@ const ClusterList = () : JSX.Element => {
         }
     }
 
+    /** 클러스터 재게 이벤트 */
     const resumeCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         if(window.confirm("클러스터를 재개 하시겠습니까?")) {
@@ -97,7 +106,7 @@ const ClusterList = () : JSX.Element => {
 
     }
 
-
+    /** 클러스터 정지 이벤트 */
     const stopCluster = (e: React.MouseEvent, clusterId: number) => {
         e.preventDefault()
         if(window.confirm("클러스터를 정지 하시겠습니까?")) {
@@ -106,6 +115,17 @@ const ClusterList = () : JSX.Element => {
 
     }
 
+    const [ clusters, setClusters] = useState<ClusterData[]>([])
+
+    useEffect(() => {
+        fetchCluster.findClusters().then((res : any) => {            
+            if(res.status === 200) { 
+                setClusters(res.data)
+            } else { 
+                console.error(res.message)
+            }
+        })
+    }, []);
 
     return ( 
         <>
@@ -114,7 +134,7 @@ const ClusterList = () : JSX.Element => {
                     <Text fontSize="3xl">Cluster</Text>
                     <Box p={3} textAlign='left' bgColor={'#e6eced'}>
                         <Flex align="center">
-                            <Text size={'md'}>Trino Cluster (총x개)</Text>
+                            <Text size={'md'}>Trino Cluster (총{clusters.length || 0}개)</Text>
                             <Spacer />
                             <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Refresh</Button>
                             <Button size={'sm'} colorScheme={'blackAlpha'} borderRadius={'md'} width={"120px"} onClick={onOpen}>Create</Button> 
@@ -136,46 +156,96 @@ const ClusterList = () : JSX.Element => {
                         </Tr>
                         </Thead>
                         <Tbody>
+
+                        {
+                            clusters && clusters.map(cluster => {
+                                return ( 
+                                    <Tr key={cluster.xson_id}>
+                                        <Td>
+                                            <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>{cluster.xson_data?.cluster_name || ''}</Text>
+                                        </Td>
+                                        <Td>
+                                            <Flex align="center">
+                                                {
+                                                    {
+                                                        Starting: <><Icon mr="2" fontSize="16" as={RepeatIcon} color={'blue.500'}/>Starting</>,
+                                                        Suspended: <><Icon mr="2" fontSize="17" as={BsFillPauseFill} color={'orange.500'}/>Suspended</>,
+                                                        Running: <><Icon mr="2" fontSize="16" as={CheckIcon} color={'green.500'} />Running</>,
+                                                        
+                                                    }[cluster.xson_data.status]
+                                                }
+                                            </Flex>
+                                        </Td>
+                                        <Td>
+                                            <Flex align="center">
+                                            {
+                                                {
+                                                    Suspended: <>
+                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, 1)} cursor="pointer">
+                                                            <Icon mr="2" fontSize="17" as={MdPlayCircleOutline} color={'purple.500'} />Resume
+                                                        </Flex>
+                                                    </>,
+                                                    Running: <>
+                                                        <Flex align="center" onClick={(e)=>stopCluster(e, 1)} cursor="pointer">
+                                                            <Icon mr="2" fontSize="16" as={MdSquare} color={'red.500'} />Stop
+                                                        </Flex>
+                                                    </>,
+                                                }[cluster.xson_data.status]
+                                            }
+                                            </Flex>
+                                        </Td>
+                                        <Td>{ cluster.xson_data.workers || 0} </Td>
+                                        <Td>{ cluster.xson_data.created || ''}</Td>
+                                        <Td>
+                                            <Menu>
+                                                <MenuButton
+                                                    size="xs"
+                                                    as={IconButton}
+                                                    aria-label='Options'
+                                                    icon={<FiMoreVertical />}
+                                                    variant='unstyled'
+                                                    
+                                                />
+                                                <MenuList>
+                                                    <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
+                                                    Delete Cluster
+                                                    </MenuItem>
+                                                    <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
+                                                    Edit Cluster
+                                                    </MenuItem>
+                                                    <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
+                                                    Change Owner
+                                                    </MenuItem>
+                                                    <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
+                                                    Restart
+                                                    </MenuItem>
+                                                </MenuList>
+                                            </Menu>
+                                        </Td>
+                                    </Tr>
+                                );
+                            })
+                        }
+                        {!clusters || (!clusters.length && (
                             <Tr>
-                                <Td>
-                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 1)}>Trino-Cluster-1</Text>
-                                </Td>
-                                <Td>
-                                    <Flex align="center">
-                                        <Icon mr="2" fontSize="16" as={RepeatIcon} color={'blue.500'}/>Starting
-                                    </Flex>
-                                </Td>
-                                <Td></Td>
-                                <Td>Auto scaling, 2 worker</Td>
-                                <Td>11s</Td>
-                                <Td>
-                                    <Menu>
-                                        <MenuButton
-                                            size="xs"
-                                            as={IconButton}
-                                            aria-label='Options'
-                                            icon={<FiMoreVertical />}
-                                            variant='unstyled'
-                                            
-                                        />
-                                        <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
-                                            Delete Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
-                                            Edit Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
-                                            Change Owner
-                                            </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
-                                            Restart
-                                            </MenuItem>
-                                        </MenuList>
-                                    </Menu>
+                                <Td colSpan={6} style={{textAlign: 'center'}}>
+                                    No cluster has been created
                                 </Td>
                             </Tr>
-                            <Tr>
+                        ))}
+
+
+
+
+                            
+
+
+
+
+
+
+
+                            {/* <Tr>
                                 <Td>
                                     <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 2)}>Trino-Cluster-2</Text>
                                 </Td>
@@ -219,6 +289,11 @@ const ClusterList = () : JSX.Element => {
                                     </Menu>
                                 </Td>
                             </Tr>
+
+
+
+
+
                             <Tr>
                                 <Td>
                                     <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 3)}>Trino-Cluster-3</Text>
@@ -263,7 +338,10 @@ const ClusterList = () : JSX.Element => {
                                         </MenuList>
                                     </Menu>
                                 </Td>
-                            </Tr>
+                            </Tr> */}
+
+
+
                         </Tbody>
                         {/* <Tfoot>
                         <Tr>
