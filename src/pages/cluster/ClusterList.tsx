@@ -19,7 +19,10 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem,    
+    MenuItem, 
+    Input ,
+    InputGroup,
+    InputLeftElement,   
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
@@ -124,13 +127,21 @@ const ClusterList = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Box>
-                    <Text fontSize="3xl" fontWeight={'bold'}>Cluster</Text>
-                    <Box pb={3}>
+                    <Flex align="center" justifyContent={'space-between'} pb={4}>
+                        <Text fontSize="3xl" fontWeight={'bold'}>Cluster</Text>
+                        <Button colorScheme={'black.500'} color='#fff' background='#333' borderRadius={'md'} width={"180px"} height={'40px'} fontSize={'14px'} onClick={onOpen} _hover={{ bg: '#444'}}>Create Cluster</Button>
+                    </Flex>
+                    
+                    <Box pb={2}>
                         <Flex align="center" justifyContent={'space-between'}>
                             <Text size={'md'} fontWeight={'bold'} m={0}>Trino Cluster (총{clusters.length || 0}개)</Text>
                             <Flex>
-                                <Button size={'sm'} colorScheme={'teal'} borderRadius={'md'} width={"120px"} marginRight={2}>Refresh</Button>
-                                <Button size={'sm'} colorScheme={'black.500'} color='#fff' background='#000' borderRadius={'md'} width={"120px"} onClick={onOpen} _hover={{ bg: '#444'}}>Create Cluster</Button> 
+                            <InputGroup>
+                                <InputLeftElement pointerEvents='none'>
+                                {/* <PhoneIcon color='gray.300' /> */}
+                                </InputLeftElement>
+                                <Input type='text' placeholder='Search Clusters' />
+                            </InputGroup>
                             </Flex>
                         </Flex>
                     </Box>
