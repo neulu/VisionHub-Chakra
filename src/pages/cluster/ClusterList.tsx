@@ -83,7 +83,7 @@ const ClusterList = () : JSX.Element => {
                 } else { 
                     toast({
                         title: "Error Occurred",
-                        description: "클러스터가 삭제 중 에러가 발생 했습니다.",
+                        description: "클러스터 삭제 중 에러가 발생 했습니다.",
                         status: "error",
                         duration: 5000,
                         isClosable: true,

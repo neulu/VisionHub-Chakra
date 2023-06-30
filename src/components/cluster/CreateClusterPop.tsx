@@ -101,9 +101,17 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
 
                         <FormControl>
                             <InputGroup>
-                                <Input {...register("cluster_name", { required: true } )} type="text" name="cluster_name" autoComplete="off" placeholder="Cluster Name" onBlur={()=>clearErrors()} />
-                            </InputGroup>     
+                                <Input {...register("cluster_name", { 
+                                  required: true,
+                                  pattern: {
+                                    value: /^(?!.*[-]{3}|.*[-]$|[-].*[-]|[-].*[-]$)[a-zA-Z0-9][-a-zA-Z0-9]{1,61}[a-zA-Z0-9]$/,
+                                    message: "invalid cluster name pattern"
+                                  }})} 
+                                  type="text" name="cluster_name" autoComplete="off" placeholder="Cluster Name" onBlur={()=>clearErrors()} 
+                                />
+                            </InputGroup>
                             {errors.cluster_name && errors.cluster_name.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a cluster name</Text>) }
+                            {errors.cluster_name && errors.cluster_name.type === "pattern" && (<Text fontSize='xs' marginBottom={0}>{errors.cluster_name.message}</Text>) }
                         </FormControl>   
 
                         <FormControl>
@@ -135,43 +143,43 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                         </Box>
 
                         <FormControl variant="floating" id="initial_workers">
-                            <Input { ...register("initial_workers", { required: false } )} type="text" name="initial_workers" autoComplete="off" placeholder=" " />
+                            <Input { ...register("initial_workers", { required: false } )} type="number" name="initial_workers" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Initial Workers</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="coordinator_heap_size">
-                            <Input { ...register("coordinator_heap_size", { required: false } )} type="text" name="coordinator_heap_size" autoComplete="off" placeholder=" " />
+                            <Input { ...register("coordinator_heap_size", { required: false } )} type="number" name="coordinator_heap_size" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Coordinator Heap Size (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="worker_heap_size">
-                            <Input { ...register("worker_heap_size", { required: false } )} type="text" name="worker_heap_size" autoComplete="off" placeholder=" " />
+                            <Input { ...register("worker_heap_size", { required: false } )} type="number" name="worker_heap_size" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Worker Heap Size (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="query_memory">
-                            <Input { ...register("query_memory", { required: false } )} type="text" name="query_memory" autoComplete="off" placeholder=" " />
+                            <Input { ...register("query_memory", { required: false } )} type="number" name="query_memory" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="query_memory_per_worker">
-                            <Input { ...register("query_memory_per_worker", { required: false } )} type="text" name="query_memory_per_worker" autoComplete="off" placeholder=" " />
+                            <Input { ...register("query_memory_per_worker", { required: false } )} type="number" name="query_memory_per_worker" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory per Worker (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="cpu_allocation_for_each_coordinator">
-                            <Input { ...register("cpu_allocation_for_each_coordinator", { required: false } )} type="text" name="cpu_allocation_for_each_coordinator" autoComplete="off" placeholder=" " />
+                            <Input { ...register("cpu_allocation_for_each_coordinator", { required: false } )} type="number" name="cpu_allocation_for_each_coordinator" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each cpu</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="cpu_allocation_for_each_worker">
-                            <Input { ...register("cpu_allocation_for_each_worker", { required: false } )} type="text" name="cpu_allocation_for_each_worker" autoComplete="off" placeholder=" " />
+                            <Input { ...register("cpu_allocation_for_each_worker", { required: false } )} type="number" name="cpu_allocation_for_each_worker" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each worker</FormLabel>
                         </FormControl>
@@ -189,14 +197,14 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                         </FormControl>
                             
                         <FormControl variant="floating" id="max_workers">
-                            <Input { ...register("max_workers", { required: false } )} type="text" name="max_workers" autoComplete="off" placeholder=" " />
+                            <Input { ...register("max_workers", { required: false } )} type="number" name="max_workers" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Max Workers</FormLabel>
                         </FormControl>
 
 
                         <FormControl variant="floating" id="cpu_utilization_threshold">
-                            <Input { ...register("cpu_utilization_threshold", { required: false } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " />
+                            <Input { ...register("cpu_utilization_threshold", { required: false } )} type="number" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU Utilization Threshold</FormLabel>
                         </FormControl>

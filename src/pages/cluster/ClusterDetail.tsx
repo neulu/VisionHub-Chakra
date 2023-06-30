@@ -23,7 +23,7 @@ import EditClusterPop from "components/cluster/EditClusterPop"
 
 const ClusterDetail = () : JSX.Element => {
 
-    const navigate = useNavigate();   
+    const navigate = useNavigate();
 
     const goClusters = (e: React.MouseEvent<HTMLButtonElement>) => { 
         e.preventDefault()
