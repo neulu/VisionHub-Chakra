@@ -26,11 +26,21 @@ import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
 
 const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
 
-    type FormData = {
-        clusterName: string
-        description: string
-        catalogs: string[]
-        clusterSize: string
+    interface FormData {
+        cluster_name: string;
+        description?: string;
+        catalogs: number[];
+        cluster_size: string;
+        initial_workers?: number;
+        coordinator_heap_size?: number;
+        worker_heap_size?: number;
+        query_memory?: number;
+        query_memory_per_worker?: number;
+        cpu_allocation_for_each_coordinator?: number;
+        cpu_allocation_for_each_worker?: number;
+        enable_auto_scaling: boolean;
+        max_workers?: number;
+        cpu_utilization_threshold?: number;
     }
 
     const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
@@ -57,8 +67,10 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
                             <InputGroup>
                             <Input { ...register("description", { required: true } )} type="text" name="description" autoComplete="off" placeholder="Description" onBlur={()=>clearErrors()} defaultValue={"ASML 로그 분석을 위한 Trino Cluster"}/>
                             </InputGroup>
-                            {errors.description && errors.description.type === "required" && (<Text fontSize='xs'>Please enter a description</Text>) }
+                            {errors.description && errors.description.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a description</Text>) }
                         </FormControl>
+
+                        
 
                         <FormControl>
 
@@ -70,7 +82,7 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
 
 
                         <FormControl>
-                            <Select { ...register("clusterSize", { required: true } )} name="clusterSize" width={'auto'} placeholder={'Cluster Size'}> 
+                            <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'}> 
                                 <option value='custom' selected>Custom</option>
                                 <option value='small'>Small</option>
                                 <option value='medium'>Medium</option>
@@ -86,52 +98,53 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
                         </AbsoluteCenter>
                         </Box>
 
-                        <FormControl variant="floating" id="initialWorkers">
-                            <Input placeholder=" " defaultValue={"3"}/>
+                        <FormControl variant="floating" id="initial_workers">
+                            <Input { ...register("initial_workers", { required: false } )} type="text" name="initial_workers" autoComplete="off" placeholder=" " defaultValue={"3"} />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Initial Workers</FormLabel>
                         </FormControl>
 
-                        <FormControl variant="floating" id="coordinatorHeapSize">
-                            <Input placeholder=" " defaultValue={"64G"}/>
+                        <FormControl variant="floating" id="coordinator_heap_size">
+                            <Input { ...register("coordinator_heap_size", { required: false } )} type="text" name="coordinator_heap_size" autoComplete="off" placeholder=" " defaultValue={"64G"}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Coordinator Heap Size (GB)</FormLabel>
                         </FormControl>
 
-                        <FormControl variant="floating" id="workerHeapSize">
-                            <Input placeholder=" " defaultValue={"48G"}/>
+                        <FormControl variant="floating" id="worker_heap_size">
+                            <Input { ...register("worker_heap_size", { required: false } )} type="text" name="worker_heap_size" autoComplete="off" placeholder=" " defaultValue={"48G"}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Worker Heap Size (GB)</FormLabel>
                         </FormControl>
 
-                        <FormControl variant="floating" id="queryMemory">
-                            <Input placeholder=" " defaultValue={"32G"} />
+                        <FormControl variant="floating" id="query_memory">
+                        <Input { ...register("query_memory", { required: false } )} type="text" name="query_memory" autoComplete="off" placeholder=" " defaultValue={"32G"}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory (GB)</FormLabel>
                         </FormControl>
 
-                        <FormControl variant="floating" id="queryMemoryPerWorker">
-                            <Input placeholder=" " defaultValue={"24G"}/>
+                        <FormControl variant="floating" id="query_memory_per_worker">
+                            <Input { ...register("query_memory_per_worker", { required: false } )} type="text" name="query_memory_per_worker" autoComplete="off" placeholder=" " defaultValue={"24G"} />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory per Worker (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="cpuAllocationForEachCpu">
-                            <Input placeholder=" " defaultValue={"4"} />
+                        <Input { ...register("cpu_allocation_for_each_coordinator", { required: false } )} type="text" name="cpu_allocation_for_each_coordinator" autoComplete="off" placeholder=" " defaultValue={"4"} />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each cpu</FormLabel>
                         </FormControl>
 
-                        <FormControl variant="floating" id="cpuAllocationForEachWorker">
-                            <Input placeholder=" " defaultValue={"4"} />
+                        <FormControl variant="floating" id="cpu_allocation_for_each_worker">
+                        <Input { ...register("cpu_allocation_for_each_worker", { required: false } )} type="text" name="cpu_allocation_for_each_worker" autoComplete="off" placeholder=" " defaultValue={"4"} />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each worker</FormLabel>
                         </FormControl>
                         
                         <FormControl>
 
-                            <Checkbox size='md' 
-                                      name='enableAutoScaling'
+                            <Checkbox { ...register("enable_auto_scaling", { required: false } )}
+                                      size='md' 
+                                      name='enable_auto_scaling'
                                       border={1}
                                       borderStyle={'none'}
                                       borderColor={'gray.400'}
@@ -141,15 +154,15 @@ const EditClusterPop = ({ isOpen, onClose } : any) : JSX.Element => {
                                       
                         </FormControl>
                             
-                        <FormControl variant="floating" id="maxWorkers">
-                            <Input placeholder=" " defaultValue={"10"} />
+                        <FormControl variant="floating" id="max_workers">
+                        <Input { ...register("max_workers", { required: true } )} type="text" name="max_workers" autoComplete="off" placeholder=" " defaultValue={10}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Max Workers</FormLabel>
                         </FormControl>
 
 
-                        <FormControl variant="floating" id="cpuUtilizationThreshold">
-                            <Input placeholder=" " defaultValue={"70"} />
+                        <FormControl variant="floating" id="cpu_utilization_threshold">
+                        <Input { ...register("cpu_utilization_threshold", { required: true } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " defaultValue={70}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU Utilization Threshold</FormLabel>
                         </FormControl>

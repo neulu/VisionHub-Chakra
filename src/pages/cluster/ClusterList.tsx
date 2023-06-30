@@ -35,13 +35,6 @@ import { fetchCluster, ClusterData } from 'clients/cluster/FetchCluster'
   
 const ClusterList = () : JSX.Element => { 
 
-    interface Response { 
-        status?: number | undefined,
-        data?: any | undefined,
-        method?: string | undefined,
-        headers?: string | undefined
-    }
-
     const navigate = useNavigate();
 
     const totalPages : number = 1;
@@ -173,8 +166,7 @@ const ClusterList = () : JSX.Element => {
                                                         Suspended: <><Icon mr="2" fontSize="17" as={BsFillPauseFill} color={'orange.500'}/>Suspended</>,
                                                         Running: <><Icon mr="2" fontSize="16" as={CheckIcon} color={'green.500'} />Running</>,
                                                         
-                                                    }[cluster.xson_data.status]
-                                                }
+                                                    }[cluster.xson_data?.status]                                                }
                                             </Flex>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
@@ -191,13 +183,13 @@ const ClusterList = () : JSX.Element => {
                                                             <Icon mr="2" fontSize="16" as={MdSquare} color={'red.500'} />Stop
                                                         </Flex>
                                                     </>,
-                                                }[cluster.xson_data.status]
+                                                }[cluster.xson_data?.status]
                                             }
                                             </Flex>
                                         </Td>
-                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>{ cluster.xson_data.workers || 0} </Td>
-                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>{ cluster.xson_data.created || ''}</Td>
-                                        <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
+                                        <Td>{ cluster.xson_data?.workers || 0} </Td>
+                                        <Td>{ cluster.xson_data?.created || ''}</Td>
+                                        <Td>
                                             <Menu>
                                                 <MenuButton
                                                     size="10px"
@@ -239,122 +231,7 @@ const ClusterList = () : JSX.Element => {
                             </Tr>
                         ))}
 
-
-
-
-                            
-
-
-
-
-
-
-
-                            {/* <Tr>
-                                <Td>
-                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 2)}>Trino-Cluster-2</Text>
-                                </Td>
-                                <Td>
-                                    <Flex align="center">
-                                        <Icon mr="2" fontSize="17" as={BsFillPauseFill} color={'orange.500'}/>Suspended
-                                    </Flex>
-                                </Td>
-                                <Td>
-                                    <Flex align="center" onClick={(e)=>resumeCluster(e, 1)} cursor="pointer">
-                                        <Icon mr="2" fontSize="17" as={MdPlayCircleOutline} color={'purple.500'} />Resume
-                                    </Flex>
-                                </Td>
-                                <Td>
-                                    <Text marginBottom={0}>Auto scaling, 3 worker</Text>
-                                </Td>
-                                <Td>3m</Td>
-                                <Td>
-                                    <Menu>
-                                        <MenuButton
-                                            size="xs"
-                                            as={IconButton}
-                                            aria-label='Options'
-                                            icon={<FiMoreVertical />}
-                                            variant='unstyled'
-                                        />
-                                        <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
-                                            Delete Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
-                                            Edit Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
-                                            Change Owner
-                                            </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
-                                            Restart
-                                            </MenuItem>
-                                        </MenuList>
-                                    </Menu>
-                                </Td>
-                            </Tr>
-
-
-
-
-
-                            <Tr>
-                                <Td>
-                                    <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, 3)}>Trino-Cluster-3</Text>
-                                </Td>
-                                <Td>
-                                    <Flex align="center">
-                                        <Icon mr="2" fontSize="16" as={CheckIcon} color={'green.500'} />Running
-                                    </Flex>
-                                </Td>
-                                
-                                <Td>
-                                    <Flex align="center" onClick={(e)=>stopCluster(e, 1)} cursor="pointer">
-                                        <Icon mr="2" fontSize="16" as={MdSquare} color={'red.500'} />Stop
-                                    </Flex>
-                                </Td>
-                                <Td>
-                                    <Text marginBottom={0}>Auto scaling, 10 worker</Text>
-                                </Td>
-                                <Td>2h</Td>
-                                <Td>
-                                    <Menu>
-                                        <MenuButton
-                                            size="xs"
-                                            as={IconButton}
-                                            aria-label='Options'
-                                            icon={<FiMoreVertical />}
-                                            variant='unstyled'
-                                        />
-                                        <MenuList>
-                                            <MenuItem icon={<FiDelete />} onClick={(e) => deleteCluster(e, 1)}>
-                                            Delete Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e)=> editCluster(e, 1)}>
-                                            Edit Cluster
-                                            </MenuItem>
-                                            <MenuItem icon={<FiEdit />} onClick={(e) => editClusterOwner(e, 1)}>
-                                            Change Owner
-                                            </MenuItem>
-                                            <MenuItem icon={<FiRepeat />} onClick={(e) => restartCluster(e, 1)}>
-                                            Restart
-                                            </MenuItem>
-                                        </MenuList>
-                                    </Menu>
-                                </Td>
-                            </Tr> */}
-
-
-
                         </Tbody>
-                        {/* <Tfoot>
-                        <Tr>
-                            <Th>To convert</Th>
-                            <Th>into</Th>
-                            <Th isNumeric>multiply by</Th>
-                        </Tr>
-                        </Tfoot> */}
                     </Table>
                 </TableContainer>
 
@@ -364,7 +241,7 @@ const ClusterList = () : JSX.Element => {
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                 />
-                <CreateClusterPop isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+                <CreateClusterPop isOpen={isOpen} onClose={onClose} />
             </>} />
         </>
     )
