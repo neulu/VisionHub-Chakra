@@ -27,6 +27,8 @@ import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
 import { fetchCluster, ClusterData, ClusterType  } from 'clients/cluster/FetchCluster';
 
 import _ from "lodash";
+import debounce from "lodash.debounce";
+
 import moment from "moment";
 
 interface props {
@@ -39,6 +41,7 @@ interface props {
 const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) : JSX.Element => {
 
     const toast = useToast()
+    
     const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
 
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
@@ -63,14 +66,9 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                     isClosable: true,
                 })
 
-
                 loadClusters()
                 setSelectedOptions([])
                 reset()
-                
-
-
-
                 onClose()
             } else { 
                 console.error(res.message)
@@ -78,7 +76,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
         }) 
     }
 
-    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset } = useForm<ClusterType>();
+    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset, trigger, setError } = useForm<ClusterType>();
 
     const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
     
@@ -87,6 +85,17 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
         setSelectedOptions([])
         onClose()
     }
+
+    const validHandler = debounce((e : React.ChangeEvent<HTMLInputElement>) => {   
+        if(e.target.name === "cluster_name") {
+            // (?![-])(?!.*[-]{2})(?!.*[-]$)
+            if(!e.target.value.match(/^(?![-])(?!.[-](3,4))(?!.*[-]$)[a-zA-Z0-9][-a-zA-Z0-9]{1,61}[a-zA-Z0-9]$/)) { 
+                setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' });
+            } else { 
+                clearErrors("cluster_name")
+            }
+        }
+    },500)
 
     return ( 
         <>
@@ -102,16 +111,17 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                         <FormControl>
                             <InputGroup>
                                 <Input {...register("cluster_name", { 
-                                  required: true,
-                                  pattern: {
-                                    value: /^(?!.*[-]{3}|.*[-]$|[-].*[-]|[-].*[-]$)[a-zA-Z0-9][-a-zA-Z0-9]{1,61}[a-zA-Z0-9]$/,
-                                    message: "invalid cluster name pattern"
-                                  }})} 
-                                  type="text" name="cluster_name" autoComplete="off" placeholder="Cluster Name" onBlur={()=>clearErrors()} 
+                                        required: "Please enter a cluster name",
+                                        // pattern: {
+                                        //     value: /^(?!.*[-]{3}|.*[-]$|[-].*[-]|[-].*[-]$)[a-zA-Z0-9][-a-zA-Z0-9]{1,61}[a-zA-Z0-9]$/,
+                                        //     message: "invalid cluster name pattern"
+                                        // }
+                                        })} 
+                                  type="text" name="cluster_name" autoComplete="off" placeholder="Cluster Name" 
+                                  onChange={e => validHandler(e)}
                                 />
                             </InputGroup>
-                            {errors.cluster_name && errors.cluster_name.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a cluster name</Text>) }
-                            {errors.cluster_name && errors.cluster_name.type === "pattern" && (<Text fontSize='xs' marginBottom={0}>{errors.cluster_name.message}</Text>) }
+                            {!!errors.cluster_name && (errors.cluster_name.type === "required" || errors.cluster_name.type === "pattern" )&& (<Text fontSize='xs' marginBottom={0}>{errors.cluster_name.message}</Text>) }
                         </FormControl>   
 
                         <FormControl>
