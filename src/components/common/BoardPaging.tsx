@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Select, Spacer } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Text, Flex, Select, Spacer } from "@chakra-ui/react";
 
 interface BoardPagingProps {
   currentPage: number;
@@ -21,27 +21,28 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
 
   return (
     <Box display="flex" justifyContent="center" alignItems={"center"} mt={6}>
+      <Flex align="center" justifyContent={'space-between'}>
       <ButtonGroup spacing={1} m={1}>
 
-        <Button
+        {/* <Button
           size={'xs'}
           
           disabled={isFirstPage}
           onClick={() => handlePageChange(1)}
         >
         &lt;&lt;
-        </Button>
-
+        </Button> */}
+        
         <Button
-          size={'xs'}
-          
+          size={'sm'}
           disabled={isFirstPage}
+          bgColor={'white'}
           onClick={() => handlePageChange(currentPage - 1)}
         >
         &lt;
         </Button>
 
-        {[...Array(totalPages)].map((_, index) => (
+        {/* {[...Array(totalPages)].map((_, index) => (
           <Button
             size={'xs'}
             
@@ -52,35 +53,37 @@ const BoardPaging: React.FC<BoardPagingProps> = ({ currentPage, cntPerPage, tota
           >
             {index + 1}
           </Button>
-        ))}
+        ))} */}
+
+        <Text size={'sm'}>Page {currentPage} / {totalPages}</Text>
 
         <Button
-          size={'xs'}
-          
+          size={'sm'}
+          bgColor={'white'}
           disabled={isLastPage}
           onClick={() => handlePageChange(currentPage + 1)}
         >
         &gt;
         </Button>
-
-
-        <Button
+        
+        {/* <Button
           size={'xs'}
           disabled={isLastPage}
           onClick={() => handlePageChange(totalPages)}          
         >
         &gt;&gt;
-        </Button>
+        </Button> */}
       </ButtonGroup>
+      </Flex>
       
       
-      <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.300'}  ml={3} borderRadius={"md"}>
+      {/* <Select name="cntPerPage" size={'xs'} width={'auto'} borderColor={'gray'} borderStyle={'hidden'} bgColor={'gray.300'}  ml={3} borderRadius={"md"}>
         <option value='10'>10</option>
         <option value='20'>20</option>
         <option value='30'>30</option>
         <option value='50'>50</option>
         <option value='100'>100</option>
-      </Select>
+      </Select> */}
       
     </Box>
   );

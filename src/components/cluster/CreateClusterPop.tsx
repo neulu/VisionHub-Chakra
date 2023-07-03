@@ -38,10 +38,17 @@ interface props {
     loadClusters: () => void;
 }
 
+
+
 const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) : JSX.Element => {
 
     const toast = useToast()
-    
+
+    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset, setError, setValue, setFocus } = useForm<ClusterType>();
+
+    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
+    const [ clusterSize, setClusterSize ] = useState<boolean>(false)
+
     const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
 
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
@@ -54,7 +61,13 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
             xson_gr: 'eum_cluster',
             xson_data: data
         }   
-       
+
+        if(!validClusterName(data.cluster_name)) { 
+            setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' })
+            setFocus("cluster_name")
+            return
+        }
+
         fetchCluster.postCluster(formData).then((res:any) => { 
             if(res.status === 200) {
 
@@ -76,25 +89,29 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
         }) 
     }
 
-    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset, trigger, setError, setValue } = useForm<ClusterType>();
-
-    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
-    const [ clusterSize, setClusterSize ] = useState<boolean>(false)
-
     const modelClose = () => { 
         reset()
         setSelectedOptions([])
         onClose()
     }
 
-    const validHandler = debounce((e : React.ChangeEvent<HTMLInputElement>) => {   
-        if(e.target.name === "cluster_name") {
-            if(!e.target.value.match(/^[a-zA-Z0-9](?!.-)(?!...-)[a-zA-Z0-9][a-zA-Z0-9-]{1,59}(?<!-)$/)) { 
-                setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' });
-            } else { 
-                clearErrors("cluster_name")
-            }
+    const validClusterName = (cn : string) : boolean => { 
+        if(!cn.match(/^[a-zA-Z0-9](?!.-)(?!..-)[a-zA-Z0-9][a-zA-Z0-9-]{1,59}(?<!-)$/)) { 
+            return false
+        } else { 
+            return true
         }
+    }
+
+    const validHandler = debounce((e : React.ChangeEvent<HTMLInputElement>) => {   
+        validClusterName(e.target.value) ? clearErrors("cluster_name") : setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' })
+        // if(e.target.name === "cluster_name") {
+        //     if(!e.target.value.match(/^[a-zA-Z0-9](?!.-)(?!..-)[a-zA-Z0-9][a-zA-Z0-9-]{1,59}(?<!-)$/)) { 
+        //         setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' });
+        //     } else { 
+        //         clearErrors("cluster_name")
+        //     }
+        // }
     },500)
 
     const chgClusterSize = (e : React.ChangeEvent<HTMLSelectElement>) => {

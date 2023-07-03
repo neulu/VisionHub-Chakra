@@ -114,6 +114,9 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         <NavItem key={link.name} icon={link.icon} linkUrl={link.linkUrl}>
           {link.name}
         </NavItem>
+        // <NavItem key={link.name} icon={link.icon}>
+        //   <Link to={link.linkUrl}>{link.name}</Link>
+        // </NavItem>
       ))}
 
       {/* Logout Button */}

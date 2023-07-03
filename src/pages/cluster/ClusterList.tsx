@@ -27,40 +27,27 @@ import {
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
-import { FiMoreVertical, FiEdit, FiDelete, FiRepeat } from 'react-icons/fi';
+import { FiMoreVertical } from 'react-icons/fi';
 import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine, RiEdit2Line, RiUserSettingsLine, RiLoginCircleLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { LuLoader2 } from 'react-icons/lu';
-import { MdPlayCircleOutline, MdOutlineStopCircle, MdOutlinePause } from 'react-icons/md';
-import { CheckIcon, RepeatIcon, AddIcon, Search2Icon } from '@chakra-ui/icons'
-
+import { AddIcon, Search2Icon } from '@chakra-ui/icons'
 
 import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
 import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
-  
+import _ from "lodash"  
 const ClusterList = () : JSX.Element => { 
 
     const navigate = useNavigate();
     const toast = useToast()
 
-    const totalPages : number = 1;
-    const cntPerPage : number = 10;
-    const currentPage: number = 1;
-
-    const handlePageChange = (page: number) => {
-        // 현재 페이지를 상태로 업데이트하거나 다른 동작을 수행합니다.
+    /** Paging 관련 */
+    const cntPerPage : number = 10
+    const [totalPages, setTotalPages] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (page: number) : void => {
+        setCurrentPage(page);
     };
-
-    const popOverClick = (e: React.MouseEvent, menu : string) => {
-        e.preventDefault()
-        console.log(`popOverClick: ${menu}`)
-        popOverClose()
-    }
-
-    const [isPopOverOpen, setIsPopOverOpen] = useState(false);
-
-    const popOverOpen = () => setIsPopOverOpen(true);
-    const popOverClose = () : void => setIsPopOverOpen(false);
 
     /** modal 작업 */
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -91,8 +78,6 @@ const ClusterList = () : JSX.Element => {
                     })
                 }
             })
-
-            console.log(`> Deleted cluster_id: ${clusterId}`)
         }
     }
 
@@ -139,22 +124,23 @@ const ClusterList = () : JSX.Element => {
     const [ clusters, setClusters] = useState<ClusterData[]>([])
     const [ catalogs, setCatalogs ] = useState<string[]>([])
 
-    const loadClusters = () => { 
-        fetchCluster.findClusters().then((res : any) => {            
+    const loadClusters = () : void => { 
+        fetchCluster.findClusters().then((res : any) => {       
+            
+            setTotalPages(Math.ceil(res.data.length / cntPerPage))
+            
             if(res.status === 200) { 
-                setClusters(res.data)
+                const offset = (currentPage - 1) * cntPerPage;
+                setClusters(_.sortBy(res.data.slice(offset, offset + cntPerPage), "created"));
+                // setClusters(res.data)
             } else { 
                 console.error(res.message)
             }
             fetchCluster.findCatalogs().then((res : any) => { 
                 if(res.status === 200) { 
-
                     const refineCatalogs : string[] = []
-                    res.data.map((data : CatalogData) => { 
-                        refineCatalogs.push(data.xson_data.catalog_name)
-                    })
-
-                    setCatalogs(refineCatalogs)
+                    res.data.map((data : CatalogData) => refineCatalogs.push(data.xson_data.catalog_name))
+                    setCatalogs(_.sortBy(refineCatalogs))
                 } else { 
                     console.error(res.message)
                 }
@@ -164,7 +150,7 @@ const ClusterList = () : JSX.Element => {
 
     useEffect(() => {
         loadClusters()
-    }, []);
+    }, [currentPage]);
 
     return ( 
         <>
