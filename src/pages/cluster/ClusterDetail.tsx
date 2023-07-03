@@ -24,6 +24,7 @@ import EditClusterPop from "components/cluster/EditClusterPop"
 
 import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
 import _ from "lodash"
+
 const ClusterDetail = () : JSX.Element => {
 
     const toast = useToast()
@@ -39,6 +40,7 @@ const ClusterDetail = () : JSX.Element => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [ cluster, setCluster] = useState<ClusterData>()
     const [ catalogs, setCatalogs ] = useState<string[]>([])
+    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
 
     const detailCluster = (cluster_id : string | undefined ) => { 
         if(cluster_id) { 
@@ -69,6 +71,8 @@ const ClusterDetail = () : JSX.Element => {
 
     useEffect(() => {
         detailCluster(params.cluster_id)
+        console.log(cluster?.xson_data.catalogs)
+        if(cluster?.xson_data.catalogs !== undefined) setSelectedOptions(cluster?.xson_data.catalogs)
     }, [params]);
 
     return (
@@ -110,14 +114,7 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                             <Td>
                                 <Flex align="center">
-
-
-
                                     <Icon mr="2" fontSize="16" as={MdCircle} color={'green.500'}/>{ cluster?.xson_data.status || ''}
-
-
-
-
                                 </Flex>
                             </Td>
                         </Tr>
@@ -238,6 +235,7 @@ const ClusterDetail = () : JSX.Element => {
                     borderColor={'gray.400'}
                     colorScheme='teal'
                     fontWeight='normal'
+                    isChecked={cluster?.xson_data.enable_auto_scaling}
                 >Enable Auto Scaling</Checkbox>
                 <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='simple' size={'md'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
