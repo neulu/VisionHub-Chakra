@@ -161,15 +161,15 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.xlarge.cpu_utilization_threshold)
         } else { 
             setClusterSize(false)
-            setValue("initial_workers", undefined)
-            setValue("coordinator_heap_size", undefined)
-            setValue("query_memory", undefined)
-            setValue("worker_heap_size", undefined)
-            setValue("query_memory_per_worker", undefined)
-            setValue("cpu_allocation_for_each_worker", undefined)
-            setValue("cpu_allocation_for_each_coordinator", undefined)
-            setValue("max_workers", undefined)
-            setValue("cpu_utilization_threshold", undefined)
+            setValue("initial_workers", CLUSTER_SIZE.medium.initial_workers)
+            setValue("coordinator_heap_size", CLUSTER_SIZE.medium.coordinator_heap_size)
+            setValue("query_memory", CLUSTER_SIZE.medium.query_memory)
+            setValue("worker_heap_size", CLUSTER_SIZE.medium.worker_heap_size)
+            setValue("query_memory_per_worker", CLUSTER_SIZE.medium.query_memory_per_worker)
+            setValue("cpu_allocation_for_each_worker", CLUSTER_SIZE.medium.cpu_allocation_for_each_worker)
+            setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.medium.cpu_allocation_for_each_coordinator)
+            setValue("max_workers", CLUSTER_SIZE.medium.max_workers)
+            setValue("cpu_utilization_threshold", CLUSTER_SIZE.medium.cpu_utilization_threshold)
         }
     }
 
