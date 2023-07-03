@@ -20,11 +20,19 @@ import {
     Divider,
     AbsoluteCenter
 } from '@chakra-ui/react'
-
+import { fetchCluster, ClusterData,  ClusterType } from 'clients/cluster/FetchCluster';
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
 
-const EditClusterPop = ({ isOpen, onClose, catalogs } : any) : JSX.Element => {
+interface props {
+    isOpen : boolean;
+    onClose : () => void ;
+    catalogs : string[];
+    cluster : ClusterData | undefined;
+    detailCluster: (cluster_id: string | undefined) => void;
+}
+
+const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : props) : JSX.Element => {
 
     interface FormData {
         cluster_name: string;
@@ -47,7 +55,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs } : any) : JSX.Element => {
         console.log("submit click")
     }
 
-    const { register, handleSubmit, watch, clearErrors, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, clearErrors, formState: { errors } } = useForm<FormData>();
 
     const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
 
@@ -80,8 +88,8 @@ const EditClusterPop = ({ isOpen, onClose, catalogs } : any) : JSX.Element => {
 
 
                         <FormControl>
-                            <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'}> 
-                                <option value='custom' selected>Custom</option>
+                            <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'} defaultValue=""> 
+                                <option value='custom'>Custom</option>
                                 <option value='small'>Small</option>
                                 <option value='medium'>Medium</option>
                                 <option value='large'>Large</option>

@@ -99,46 +99,48 @@ class Http {
   }
 
   private handleError(error : any) {
-    const { status } = error;
-
-    switch (status) {
-      case StatusCode.BadRequest: { 
-        /** BadRequest 에러 처리 */
-        console.error("'BadRequest' Occurred")
-        break;
+    if(error){ 
+      const { status } = error;
+      switch (status) {
+        case StatusCode.BadRequest: { 
+          /** BadRequest 에러 처리 */
+          console.error("'BadRequest' Occurred")
+          break;
+        }
+        case StatusCode.InternalServerError: {
+          /** InternalServer 에러 처리 */
+          console.error("'InternalServer' Occurred")
+          break;
+        }
+        case StatusCode.Forbidden: {
+          /** Forbidden 에러 처리 */
+          console.error("'Forbidden' Occurred")
+          break;
+        }
+        case StatusCode.Unauthorized: {
+          /** Unauthorized 에러 처리 */
+          console.error("'Unauthorized' Occurred")
+          break;
+        }
+        case StatusCode.TooManyRequests: {
+          /** TooManyRequests 에러 처리 */
+          console.error("'TooManyRequests' Occurred")
+          break;
+        }
+        case StatusCode.BadGateway: { 
+          /** BadGateway 에러 처리 */
+          console.error("'BadGateway' Occurred")
+          break;
+        }
+        case StatusCode.ServiceUnavailable: {
+          /** ServiceUnavailable 에러 처리 */ 
+          console.error("'ServiceUnavailable' Occurred")
+          break;
+        }
       }
-      case StatusCode.InternalServerError: {
-        /** InternalServer 에러 처리 */
-        console.error("'InternalServer' Occurred")
-        break;
-      }
-      case StatusCode.Forbidden: {
-        /** Forbidden 에러 처리 */
-        console.error("'Forbidden' Occurred")
-        break;
-      }
-      case StatusCode.Unauthorized: {
-        /** Unauthorized 에러 처리 */
-        console.error("'Unauthorized' Occurred")
-        break;
-      }
-      case StatusCode.TooManyRequests: {
-        /** TooManyRequests 에러 처리 */
-        console.error("'TooManyRequests' Occurred")
-        break;
-      }
-      case StatusCode.BadGateway: { 
-        /** BadGateway 에러 처리 */
-        console.error("'BadGateway' Occurred")
-        break;
-      }
-      case StatusCode.ServiceUnavailable: {
-        /** ServiceUnavailable 에러 처리 */ 
-        console.error("'ServiceUnavailable' Occurred")
-        break;
-      }
+    } else { 
+      return Promise.reject("Error occurred with Network (May Be Cors) ")
     }
-
     return Promise.reject(error)
   }
 }

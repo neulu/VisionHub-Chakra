@@ -32,16 +32,16 @@ POST https://apis.techux.link:5150/tux-svc2/xson/add_xson HTTP/1.1
 Content-Type: application/json
 
 {
-	"xson_id": "eum_cluster_1687981839",
+	"xson_id": "eum_cluster_1687981539",
 	"user_id": "calvin",
 	"xson_gr": "eum_cluster",
 	"xson_data": { 
-		"cluster_name": "Trino-Cluster-3",
-		"desciption": "ASML 로그 분석을 위한 Trino Cluster3333333",
+		"cluster_name": "Trino-Cluster-1",
+		"desciption": "ASML 로그 분석을 위한 Trino Cluster11111111",
 		"status": "Running",
 		"enable_auto_scaling": "True",
-		"created": "2023-06-03, 14:56:30",
-		"catalogs": [ 1 ],
+		"created": "2023-06-01 14:56:30",
+		"catalogs": [ 1, 2, 3 ],
 		"cluster_size": "C",
 		"initial_workers": 3,
 		"coordinator_heap_size": 64,

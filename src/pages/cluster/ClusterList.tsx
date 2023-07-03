@@ -36,6 +36,7 @@ import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
 import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
 import _ from "lodash"  
+
 const ClusterList = () : JSX.Element => { 
 
     const navigate = useNavigate();
@@ -58,7 +59,7 @@ const ClusterList = () : JSX.Element => {
         if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
 
             fetchCluster.deleteCluster(clusterId).then((res : any) => { 
-                if(res.status === 200) {
+                if(res && res.status === 200) {
                     toast({
                         title: "Cluster deleted.",
                         description: "클러스터가 정상 삭제 되었습니다.",

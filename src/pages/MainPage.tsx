@@ -6,7 +6,7 @@ import {
   Flex,
   Icon,
   useColorModeValue,
-  Link,
+  // Link,
   Drawer,
   DrawerContent,
   Text,
@@ -27,15 +27,15 @@ import {
   FiLogOut,
 } from 'react-icons/fi';
 
-
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from "react-router-dom";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
-  linkUrl: string | undefined;
+  linkUrl: string;
 }
 
 const LinkItems: Array<LinkItemProps> = [
@@ -114,9 +114,6 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         <NavItem key={link.name} icon={link.icon} linkUrl={link.linkUrl}>
           {link.name}
         </NavItem>
-        // <NavItem key={link.name} icon={link.icon}>
-        //   <Link to={link.linkUrl}>{link.name}</Link>
-        // </NavItem>
       ))}
 
       {/* Logout Button */}
@@ -137,14 +134,15 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
-  linkUrl: string | undefined;
+  linkUrl: string;
   children: ReactText;
 }
 
 const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
   return (
-    <Link href={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} >
-      <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.400'}
+    <Link to={linkUrl}  style={{ textDecoration: 'none'}}>
+      {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
+      <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
         _hover={{
           bg: '#efefef',
           color: 'black',

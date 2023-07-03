@@ -22,8 +22,8 @@ import { MdCircle } from 'react-icons/md';
 import { useParams, useNavigate } from 'react-router-dom';
 import EditClusterPop from "components/cluster/EditClusterPop"
 
-import { fetchCluster, ClusterData } from 'clients/cluster/FetchCluster'
-
+import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
+import _ from "lodash"
 const ClusterDetail = () : JSX.Element => {
 
     const toast = useToast()
@@ -38,12 +38,22 @@ const ClusterDetail = () : JSX.Element => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [ cluster, setCluster] = useState<ClusterData>()
+    const [ catalogs, setCatalogs ] = useState<string[]>([])
 
     const detailCluster = (cluster_id : string | undefined ) => { 
         if(cluster_id) { 
             fetchCluster.findCluster(cluster_id).then((res : any) => {
                 if(res.status === 200)  { 
                     setCluster(res.data)
+                    fetchCluster.findCatalogs().then((res : any) => { 
+                        if(res.status === 200) { 
+                            const refineCatalogs : string[] = []
+                            res.data.map((data : CatalogData) => refineCatalogs.push(data.xson_data.catalog_name))
+                            setCatalogs(_.sortBy(refineCatalogs))
+                        } else { 
+                            console.error(res.message)
+                        }
+                    })
                 } else { 
                     toast({
                         title: "Error Occurred",
@@ -228,7 +238,7 @@ const ClusterDetail = () : JSX.Element => {
                     borderColor={'gray.400'}
                     colorScheme='teal'
                     fontWeight='normal'
-                    >Enable Auto Scaling</Checkbox>
+                >Enable Auto Scaling</Checkbox>
                 <TableContainer flex={'1'} maxW={'80%'} marginTop={1} whiteSpace={'nowrap'}>
                     <Table variant='simple' size={'md'} colorScheme='blackAlpha' bgColor={'white'} borderWidth={1}>
                     <Tbody>
@@ -259,7 +269,7 @@ const ClusterDetail = () : JSX.Element => {
                     </Flex>
                 </Box>   
 
-                <EditClusterPop isOpen={isOpen} onOpen={onOpen} onClose={onClose} />             
+                <EditClusterPop isOpen={isOpen} onClose={onClose} catalogs={catalogs} cluster={cluster} detailCluster={detailCluster} />             
             </>} />
 
         </>

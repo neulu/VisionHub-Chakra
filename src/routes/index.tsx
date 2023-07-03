@@ -8,7 +8,7 @@ import DataBoard from "pages/board/DataBoard";
 import NeoVizGraph from "pages/neo4j/NeoVizGraph";
 import ClusterList from "pages/cluster/ClusterList";
 import ClusterDetail from "pages/cluster/ClusterDetail";
-
+import ErrorPage from "pages/common/ErrorPage";
 export default function Router() { 
     return (
         <>
@@ -27,7 +27,7 @@ export default function Router() {
                         <Route path="/cluster" element={ <ClusterList /> } />
                         <Route path="/cluster/list" element={ <ClusterList /> } />
                         <Route path="/cluster/detail/:cluster_id" element={ <ClusterDetail /> } />
-                        
+                        <Route path="/errorpage" element={<ErrorPage /> } />
                     </Route>
                     <Route path="/*" element={<NotFound />} />
                 </Routes>
