@@ -18,11 +18,15 @@ import {
     Checkbox,
     FormLabel,
     Divider,
-    AbsoluteCenter
+    AbsoluteCenter,
+    useToast
 } from '@chakra-ui/react'
-import { ClusterData, CLUSTER_SIZE } from 'clients/cluster/FetchCluster';
+import { fetchCluster, ClusterType, ClusterData, CLUSTER_SIZE } from 'clients/cluster/FetchCluster';
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
+import moment from "moment";
+
+import _ from "lodash";
 
 interface props {
     isOpen : boolean;
@@ -34,33 +38,14 @@ interface props {
 
 const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : props) : JSX.Element => {
 
-    interface FormData {
-        cluster_name: string;
-        description?: string;
-        catalogs: string[];
-        cluster_size: string;
-        initial_workers?: number;
-        coordinator_heap_size?: number;
-        worker_heap_size?: number;
-        query_memory?: number;
-        query_memory_per_worker?: number;
-        cpu_allocation_for_each_coordinator?: number;
-        cpu_allocation_for_each_worker?: number;
-        enable_auto_scaling: boolean;
-        max_workers?: number;
-        cpu_utilization_threshold?: number;
-    }
+    const toast = useToast()
 
     useEffect(() => {
         cluster?.xson_data.enable_auto_scaling && setEnableAutoScaling(cluster?.xson_data.enable_auto_scaling)
         if(cluster?.xson_data.catalogs !== undefined) setSelectedOptions(cluster.xson_data.catalogs)
     }, [cluster]);
 
-    const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
-        console.log("submit click")
-    }
-
-    const { register, handleSubmit, clearErrors, formState: { errors }, setValue } = useForm<FormData>();
+    const { register, handleSubmit, clearErrors, formState: { errors }, setValue } = useForm<ClusterType>();
 
     const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
     const [ clusterSize, setClusterSize ] = useState<boolean>(false)
@@ -137,6 +122,41 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
         }
     }
 
+
+    const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
+
+        selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
+        _.set(data, "status", 'Running')
+        _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
+
+        const formData : ClusterData = { 
+            xson_id: cluster?.xson_id || '',
+            user_id: 'calvin',
+            xson_gr: 'eum_cluster',
+            xson_data: data
+        }
+
+
+        fetchCluster.postCluster(formData).then((res:any) => { 
+            if(res.status === 200) {
+
+                toast({
+                    title: "Cluster modified.",
+                    description: "클러스터가 정상 수정 되었습니다.",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+
+                detailCluster(cluster?.xson_id)
+                onClose()
+            } else { 
+                console.error(res.message)
+            }
+        }) 
+    }
+
+
     return ( 
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -157,8 +177,6 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
                             </InputGroup>
                             {errors.description && errors.description.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a description</Text>) }
                         </FormControl>
-
-                        
 
                         <FormControl>
                             <MultiSelectCatalogs label="Catalogs" options={catalogs} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />

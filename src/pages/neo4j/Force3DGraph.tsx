@@ -4,7 +4,7 @@ import MainPage from "pages/MainPage";
 
 export default function MeshGraph() { 
 
-    const neo4jUri = 'bolt://localhost:7687';
+    const neo4jUri = 'bolt://183.102.73.77:7687';
     const neo4jUser = 'neo4j';
     const neo4jPassword = '!dlatl00';
 

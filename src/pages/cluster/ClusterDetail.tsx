@@ -131,7 +131,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Catalog
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>{ cluster?.xson_data.catalogs  || '-'}</Text>
+                                <Text marginBottom={0}>{ _.toString(cluster?.xson_data.catalogs)  || '-'}</Text>
                             </Td>
                         </Tr>
                         <Tr>

@@ -41,7 +41,7 @@ Content-Type: application/json
 		"status": "Running",
 		"enable_auto_scaling": "True",
 		"created": "2023-06-01 14:56:30",
-		"catalogs": [ 1, 2, 3 ],
+		"catalogs": [ "asml_log_type_1","asml_log_type_2","asml_log_type_3" ],
 		"cluster_size": "C",
 		"initial_workers": 3,
 		"coordinator_heap_size": 64,

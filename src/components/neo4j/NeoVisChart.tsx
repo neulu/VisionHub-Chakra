@@ -10,7 +10,7 @@ export default function NeoVisChart() {
 
             containerId: 'graph-container',
             neo4j: {
-                serverUrl: "bolt://localhost:7687",
+                serverUrl: "bolt://183.102.73.77:7687",
                 serverUser: "neo4j",
                 serverPassword: "!dlatl00"
             },
