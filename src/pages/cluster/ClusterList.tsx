@@ -28,7 +28,7 @@ import {
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
-import { FiMoreVertical } from 'react-icons/fi';
+import { FiMoreHorizontal } from 'react-icons/fi';
 import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine, RiEdit2Line, RiUserSettingsLine, RiLoginCircleLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { LuLoader2 } from 'react-icons/lu';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons'
@@ -215,9 +215,9 @@ const ClusterList = () : JSX.Element => {
                                             <Flex align="center">
                                                 {cluster.xson_data?.status ?
                                                     {
-                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} /><Tooltip hasArrow label='Cluster is starting' bg='gray.300' color='black'>Starting</Tooltip></>,
-                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/><Tooltip hasArrow label='Cluster is suspended' bg='gray.300' color='black'>Suspended</Tooltip></>,
-                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} /><Tooltip hasArrow label='Cluster is running' bg='gray.300' color='black'>Running</Tooltip></>,
+                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} /><Tooltip hasArrow label='Cluster is starting' bg='#101230' color='white'>Starting</Tooltip></>,
+                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/><Tooltip hasArrow label='Cluster is suspended' bg='#101230' color='white'>Suspended</Tooltip></>,
+                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} /><Tooltip hasArrow label='Cluster is running' bg='#101230'color='white'>Running</Tooltip></>,
                                                         
                                                     }[cluster.xson_data?.status] : '-'
                                                 }
@@ -250,7 +250,7 @@ const ClusterList = () : JSX.Element => {
                                                     fontSize="22"
                                                     as={IconButton}
                                                     aria-label='Options'
-                                                    icon={<FiMoreVertical />}
+                                                    icon={<FiMoreHorizontal />}
                                                     borderRadius={'full'}
                                                     bg={'none'}
                                                     _hover={{  
