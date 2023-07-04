@@ -169,7 +169,11 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
                     
                         <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
 
-                        <Input type="text" name="clusterName" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.xson_data.cluster_name || ''} readOnly />
+                        <FormControl>
+                            <InputGroup>
+                            <Input type="text" { ...register("cluster_name", { required: false } )} name="clusterName" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.xson_data.cluster_name || ''} readOnly />
+                            </InputGroup>
+                        </FormControl>
                         
                         <FormControl>
                             <InputGroup>
