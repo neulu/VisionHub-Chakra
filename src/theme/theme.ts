@@ -23,7 +23,10 @@ const theme = extendTheme(
       global: {
         'html, body': {
           fontSize: 'md',
-        }
+        },
+        Th: {
+          textTransform: "none",
+        },
       },
     },
   },

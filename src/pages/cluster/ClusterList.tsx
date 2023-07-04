@@ -24,6 +24,7 @@ import {
     InputGroup,
     InputLeftElement,   
     useToast,
+    Tooltip
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
@@ -153,6 +154,14 @@ const ClusterList = () : JSX.Element => {
         loadClusters()
     }, [currentPage]);
 
+    const ClsuterStatus = (status : string) : JSX.Element => { 
+
+        return (
+            <></>
+        )
+
+    }
+
     return ( 
         <>
             <MainPage children={<>
@@ -185,12 +194,12 @@ const ClusterList = () : JSX.Element => {
                         {/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
                         <Thead bgColor={"#333"}>
                         <Tr h={'25px'} >
-                            <Th color={'white'}>Cluster Name</Th>
-                            <Th color={'white'}>Status</Th>
-                            <Th color={'white'}>Action</Th>
-                            <Th color={'white'}>Worker Status</Th>
-                            <Th color={'white'}>Created</Th>
-                            <Th color={'white'} w={'80px'}>Edit</Th>
+                            <Th color={'white'} textTransform="none">Cluster Name</Th>
+                            <Th color={'white'} textTransform="none">Status</Th>
+                            <Th color={'white'} textTransform="none">Action</Th>
+                            <Th color={'white'} textTransform="none">Worker</Th>
+                            <Th color={'white'} textTransform="none">Created</Th>
+                            <Th color={'white'} textTransform="none" w={'80px'}></Th>
                         </Tr>
                         </Thead>
                         <Tbody>
@@ -206,9 +215,9 @@ const ClusterList = () : JSX.Element => {
                                             <Flex align="center">
                                                 {cluster.xson_data?.status ?
                                                     {
-                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} />Starting</>,
-                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/>Suspended</>,
-                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} />Running</>,
+                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} /><Tooltip hasArrow label='Cluster is starting' bg='gray.300' color='black'>Starting</Tooltip></>,
+                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/><Tooltip hasArrow label='Cluster is suspended' bg='gray.300' color='black'>Suspended</Tooltip></>,
+                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} /><Tooltip hasArrow label='Cluster is running' bg='gray.300' color='black'>Running</Tooltip></>,
                                                         
                                                     }[cluster.xson_data?.status] : '-'
                                                 }

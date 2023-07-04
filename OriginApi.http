@@ -1,0 +1,79 @@
+###  클러스터 생성시 charts 조회
+https://api-dev.idp.sktai.io/v1/client/charts
+
+### 클러스터 생성시 catalogs 조회
+https://api-dev.idp.sktai.io/v1/client/catalogs
+
+
+###  클러스터 리스트 조회 (이름 = data.name, 생성일자 = data.created_at, worker = data.settings.values.server.workers)  staus!!
+### workers 
+https://api-dev.idp.sktai.io/v1/client/clusters
+
+
+### 클러스터 단건 조회
+https://api-dev.idp.sktai.io/v1/client/clusters?name=demo_cluster
+
+### progress : cluster 상태 변경  https://api-dev.idp.sktai.io/v1/client/clusters/{cluster_name}/on%7Coff   PUT으로 변경예정
+GET https://api-dev.idp.sktai.io/v1/client/clusters/demo_cluster/on
+
+### progress : cluster 삭제
+DELETE https://api-dev.idp.sktai.io/v1/client/clusters?name=Trino-Cluster-3
+
+
+### progress : cluster 생성
+POST https://api-dev.idp.sktai.io/v1/client/clusters
+Content-Type: application/json
+
+{
+  "name": "Trino-Cluster-3",
+  "chart_id": 2,
+  "catalog_list": [
+    1,
+    2
+  ],
+  "cluster_view_data": {
+    "description": "trino cluster test",
+    "cluster_size": "Medium"
+  },
+  "settings": {
+    "namespace": "idp-dev",
+    "values": {
+      "image": {
+        "repository": "asia-northeast3-docker.pkg.dev/skt-datahub/emergingdp-registry/trino",
+        "tag": "405-amd64"
+      },
+      "imagePullSecrets": [
+        {
+          "name": "idp-registry"
+        }
+      ],
+      "additionalConfigProperties": [
+        "plugin.load_type: DYNAMIC"
+      ],
+      "server": {
+        "workers": 3,
+        "config": {
+          "query": {
+            "maxMemory": "8GB",
+            "maxMemoryPerNode": "4GB"
+          }
+        },
+        "autoscaling": {
+          "enabled": "true",
+          "maxReplicas": 5,
+          "targetCPUUtilizationPercentage": 70
+        }
+      },
+      "coordinator": {
+        "jvm": {
+          "maxHeapSize": "16G"
+        }
+      },
+      "worker": {
+        "jvm": {
+          "maxHeapSize": "16G"
+        }
+      }
+    }
+  }
+}
