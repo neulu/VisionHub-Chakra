@@ -9,6 +9,7 @@ import NeoVizGraph from "pages/neo4j/NeoVizGraph";
 import ClusterList from "pages/cluster/ClusterList";
 import ClusterDetail from "pages/cluster/ClusterDetail";
 import ErrorPage from "pages/common/ErrorPage";
+import CatalogList from "pages/catalogs/CatalogList";
 export default function Router() { 
     return (
         <>
@@ -20,13 +21,12 @@ export default function Router() {
                     <Route element={<PrivateRoute authentication={true}/>}>
                         {/* <Route index element={ <DataBoard /> }/> */}
                         <Route index element={ <ClusterList /> }/>
+                        <Route path="/clusters" element={ <ClusterList /> } />
+                        <Route path="/cluster/:cluster_id" element={ <ClusterDetail /> } />
+                        <Route path="/catalogs" element={ <CatalogList />} />
                         <Route path="/neo4j/neoforce" element={ <Force3DGraph />} />
                         <Route path="/neo4j/neovis" element={ <NeoVisGraph />} />
                         <Route path="/neo4j/neoviz" element={ <NeoVizGraph /> } />
-                        
-                        <Route path="/cluster" element={ <ClusterList /> } />
-                        <Route path="/cluster/list" element={ <ClusterList /> } />
-                        <Route path="/cluster/detail/:cluster_id" element={ <ClusterDetail /> } />
                         <Route path="/errorpage" element={<ErrorPage /> } />
                     </Route>
                     <Route path="/*" element={<NotFound />} />

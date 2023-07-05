@@ -46,11 +46,11 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: RiBarChartBoxLine, linkUrl: "/" },
+  { name: 'Clusters', icon: LuNetwork, linkUrl: "/clusters"},
+  { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
   // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
   // { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
-  { name: 'Clusters', icon: LuNetwork, linkUrl: "/cluster/list"}
   // { name: 'Settings', icon: FiSettings, linkUrl: "/" },
 ];
 
@@ -60,7 +60,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
 
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
-  const [isAuthenticated, setIsAuthenticated] = useState<string|null>(sessionStorage.getItem('isAuthenticated'));
+  const [ isAuthenticated, setIsAuthenticated ] = useState<string|null>(sessionStorage.getItem('isAuthenticated'));
 
   const onLogout = () => {
     setIsAuthenticated("false");
@@ -146,20 +146,38 @@ interface NavItemProps extends FlexProps {
 }
 
 const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
+  const pathname = window.location.pathname.split("/")[1];
+
   return (
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}>
       {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
-      <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
+        {children.toString().toLowerCase().indexOf(pathname) > -1 ? (
+          <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
+          _hover={{
+            bg: '#efefef',
+            color: 'black',
+          }}
+          fontWeight='bold'
+          bg='#efefef'
+          {...rest}>
+            {icon && (
+              <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
+            )}
+            {children}
+          </Flex>
+        ) : (
+          <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
         _hover={{
           bg: '#efefef',
           color: 'black',
         }}
         {...rest}>
-        {icon && (
-          <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
+            {icon && (
+              <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
+            )}
+            {children}
+          </Flex>
         )}
-        {children}
-      </Flex>
     </Link>
   );
 };

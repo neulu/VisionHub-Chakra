@@ -88,14 +88,14 @@ const ClusterList = () : JSX.Element => {
     const editCluster = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         console.log(`> Editing cluster_id: ${clusterId}`)
-        navigate({pathname  : `/cluster/detail/${clusterId}` })
+        navigate({pathname  : `/cluster/${clusterId}` })
     }
 
     /** 클러스터 Owner 수정 이벤트 */
     const editClusterOwner = (e: React.MouseEvent, clusterId: string) => {
         e.preventDefault()
         console.log(`> Editing cluster_owner: ${clusterId}`)
-        navigate({pathname  : `/cluster/detail/${clusterId}` })
+        navigate({pathname  : `/cluster/${clusterId}` })
     }
 
     /** 클러스터 재기동 이벤트 */

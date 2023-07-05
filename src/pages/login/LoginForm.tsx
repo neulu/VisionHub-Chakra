@@ -41,7 +41,7 @@ export default function LoginForm() {
 
   const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
     sessionStorage.setItem('isAuthenticated', 'true');
-    navigate("/")
+    navigate("/clusters")
   }
 
   return (
