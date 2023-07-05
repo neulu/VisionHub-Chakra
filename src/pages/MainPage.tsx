@@ -26,6 +26,13 @@ import {
   FiMenu,
   FiLogOut,
 } from 'react-icons/fi';
+import {
+  RiBarChartBoxLine,
+  RiCloseFill,
+} from 'react-icons/ri';
+import {
+  LuNetwork,
+} from 'react-icons/lu';
 
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
@@ -39,11 +46,11 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, linkUrl: "/" },
+  { name: 'Home', icon: RiBarChartBoxLine, linkUrl: "/" },
   // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
   // { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
-  { name: 'Clusters', icon: FiServer, linkUrl: "/cluster/list"}
+  { name: 'Clusters', icon: LuNetwork, linkUrl: "/cluster/list"}
   // { name: 'Settings', icon: FiSettings, linkUrl: "/" },
 ];
 
@@ -149,7 +156,7 @@ const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
         }}
         {...rest}>
         {icon && (
-          <Icon mr="4" pl={0} fontSize="16" _groupHover={{ color: 'black',}} as={icon} />
+          <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
         )}
         {children}
       </Flex>
