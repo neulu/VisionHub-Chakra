@@ -23,12 +23,12 @@ DELETE https://api-dev.idp.sktai.io/v1/client/clusters?name=Trino-Cluster-3
 
 
 ### progress : cluster 생성
-POST https://api-dev.idp.sktai.io/v1/client/clusters
+POST https://api-dev.idp.sktai.io/v1/client/clusters?direct_on=true
 Content-Type: application/json
 
 {
-  "name": "Trino-Cluster-3",
-  "chart_id": 2,
+  "name": "Trino-Cluster-119",
+  "chart_id": 1,
   "catalog_list": [
     1,
     2

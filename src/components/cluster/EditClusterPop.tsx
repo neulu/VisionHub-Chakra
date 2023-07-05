@@ -21,7 +21,7 @@ import {
     AbsoluteCenter,
     useToast
 } from '@chakra-ui/react'
-import { fetchCluster, ClusterType, ClusterData, CLUSTER_SIZE } from 'clients/cluster/FetchCluster';
+import { fetchCluster, ClusterType, CatalogType, ChartType, REQ_SETTINGS, CatalogData, FormData, CLUSTER_SIZE } from 'clients/cluster/FetchClusterClient';
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
 import moment from "moment";
@@ -31,21 +31,34 @@ import _ from "lodash";
 interface props {
     isOpen : boolean;
     onClose : () => void ;
-    catalogs : string[];
-    cluster : ClusterData | undefined;
-    detailCluster: (cluster_id: string | undefined) => void;    
+    catalogs : CatalogType[];
+    cluster : ClusterType | undefined;
+    charts : ChartType[];
+    detailCluster: (cluster_name: string | undefined) => void;    
 }
 
-const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : props) : JSX.Element => {
+const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailCluster } : props) : JSX.Element => {
 
     const toast = useToast()
 
+    const catalogs_name : string[] = catalogs.map(({ name }) => name)
+
     useEffect(() => {
-        cluster?.xson_data.enable_auto_scaling && setEnableAutoScaling(cluster?.xson_data.enable_auto_scaling)
-        if(cluster?.xson_data.catalogs !== undefined) setSelectedOptions(cluster.xson_data.catalogs)
+        cluster?.settings.values.server.autoscaling.enabled && setEnableAutoScaling(cluster?.settings.values.server.autoscaling.enabled === "true" ? true : false)
+
+        // 기 선택 된 catalog name 을 넘김
+        if(cluster?.catalog_list!== undefined) { 
+            fetchCluster.findCatalogs().then((res : CatalogData)=> { 
+                const arrCatalogs : string[] = []
+                res.data.data.map((catalog : CatalogType) =>  
+                    cluster?.catalog_list.includes(catalog.id) && arrCatalogs.push(catalog.name)
+                )
+                setSelectedOptions(arrCatalogs)
+            })
+        }
     }, [cluster]);
 
-    const { register, handleSubmit, clearErrors, formState: { errors }, setValue } = useForm<ClusterType>();
+    const { register, handleSubmit, clearErrors, formState: { errors }, setValue } = useForm<FormData>();
 
     const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
     const [ clusterSize, setClusterSize ] = useState<boolean>(false)
@@ -123,17 +136,24 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
     }
 
 
-    const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
+    const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
+
+        // catalog id 로 변환해서 등록
+        const catalogs : number[] = []
 
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
         _.set(data, "status", 'Running')
         _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
 
-        const formData : ClusterData = { 
-            xson_id: cluster?.xson_id || '',
-            user_id: 'calvin',
-            xson_gr: 'eum_cluster',
-            xson_data: data
+        const formData : ClusterType = { 
+            name: data.name,
+            chart_id: 1,
+            catalog_list: catalogs,
+            cluster_view_data: { 
+                description: data.description,
+                cluster_size: data.cluster_size
+            },
+            settings: REQ_SETTINGS
         }
 
 
@@ -148,14 +168,13 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
                     isClosable: true,
                 })
 
-                detailCluster(cluster?.xson_id)
+                detailCluster(cluster?.name)
                 onClose()
             } else { 
                 console.error(res.message)
             }
         }) 
     }
-
 
     return ( 
         <>
@@ -171,29 +190,41 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
 
                         <FormControl>
                             <InputGroup>
-                            <Input type="text" { ...register("cluster_name", { required: false } )} name="clusterName" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.xson_data.cluster_name || ''} readOnly />
+                            <Input type="text" { ...register("name", { required: false } )} name="name" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.name || ''} readOnly />
                             </InputGroup>
                         </FormControl>
                         
                         <FormControl>
                             <InputGroup>
-                            <Input { ...register("description", { required: false } )} type="text" name="description" autoComplete="off" placeholder="Description" onBlur={()=>clearErrors()} defaultValue={cluster?.xson_data.description || ''}/>
+                            <Input { ...register("description", { required: false } )} type="text" name="description" autoComplete="off" placeholder="Description" onBlur={()=>clearErrors()} defaultValue={cluster?.cluster_view_data.description || ''}/>
                             </InputGroup>
                             {errors.description && errors.description.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a description</Text>) }
                         </FormControl>
 
                         <FormControl>
-                            <MultiSelectCatalogs label="Catalogs" options={catalogs} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
+                            <MultiSelectCatalogs label="Catalogs" options={catalogs_name} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
+                        </FormControl>
+
+                        <FormControl>
+                            <Select { ...register("chart_id", { required: true } )} name="chart_id" width={'auto'} placeholder={'Charts'} defaultValue={cluster?.chart_id}> 
+                            {
+                                charts && charts.map(chart => {
+                                    return ( 
+                                        <option value={chart.id}>{chart.name}</option>
+                                    )
+                                })
+                            }
+                            </Select>
                         </FormControl>
 
 
                         <FormControl>
-                            <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'} defaultValue={cluster?.xson_data.cluster_size || ''} onChange={(e)=>chgClusterSize(e)}> 
-                                <option value='C'>Custom</option>
-                                <option value='S'>Small</option>
-                                <option value='M'>Medium</option>
-                                <option value='L'>Large</option>
-                                <option value='X'>X-Large</option>
+                            <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'} defaultValue={cluster?.cluster_view_data.cluster_size || ''} onChange={(e)=>chgClusterSize(e)}> 
+                                <option value='Custom'>Custom</option>
+                                <option value='Small'>Small</option>
+                                <option value='Medium'>Medium</option>
+                                <option value='Large'>Large</option>
+                                <option value='X-Large'>X-Large</option>
                             </Select>
                         </FormControl>
                         
@@ -205,43 +236,43 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
                         </Box>
 
                         <FormControl variant="floating" id="initial_workers">
-                            <Input { ...register("initial_workers", { required: false } )} type="text" name="initial_workers" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.initial_workers || undefined}  readOnly={clusterSize}/>
+                            <Input { ...register("initial_workers", { required: false } )} type="text" name="initial_workers" autoComplete="off" placeholder=" " defaultValue={""}  readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Initial Workers</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="coordinator_heap_size">
-                            <Input { ...register("coordinator_heap_size", { required: false } )} type="text" name="coordinator_heap_size" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.coordinator_heap_size || undefined} readOnly={clusterSize}/>
+                            <Input { ...register("coordinator_heap_size", { required: false } )} type="text" name="coordinator_heap_size" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.coordinator.jvm.maxHeapSize || undefined} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Coordinator Heap Size (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="worker_heap_size">
-                            <Input { ...register("worker_heap_size", { required: false } )} type="text" name="worker_heap_size" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.worker_heap_size || undefined} readOnly={clusterSize}/>
+                            <Input { ...register("worker_heap_size", { required: false } )} type="text" name="worker_heap_size" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.worker.jvm.maxHeapSize || undefined} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Worker Heap Size (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="query_memory">
-                        <Input { ...register("query_memory", { required: false } )} type="text" name="query_memory" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.query_memory || undefined} readOnly={clusterSize}/>
+                        <Input { ...register("query_memory", { required: false } )} type="text" name="query_memory" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.server.config.query.maxMemory || undefined} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="query_memory_per_worker">
-                            <Input { ...register("query_memory_per_worker", { required: false } )} type="text" name="query_memory_per_worker" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.query_memory_per_worker || undefined} readOnly={clusterSize} />
+                            <Input { ...register("query_memory_per_worker", { required: false } )} type="text" name="query_memory_per_worker" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.server.config.query.maxMemoryPerNode || undefined} readOnly={clusterSize} />
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Query Memory per Worker (GB)</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="cpuAllocationForEachCpu">
-                        <Input { ...register("cpu_allocation_for_each_coordinator", { required: false } )} type="text" name="cpu_allocation_for_each_coordinator" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.cpu_allocation_for_each_coordinator || undefined} readOnly={clusterSize}/>
+                        <Input { ...register("cpu_allocation_for_each_coordinator", { required: false } )} type="text" name="cpu_allocation_for_each_coordinator" autoComplete="off" placeholder=" " defaultValue={""} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each cpu</FormLabel>
                         </FormControl>
 
                         <FormControl variant="floating" id="cpu_allocation_for_each_worker">
-                        <Input { ...register("cpu_allocation_for_each_worker", { required: false } )} type="text" name="cpu_allocation_for_each_worker" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.cpu_allocation_for_each_worker || undefined} readOnly={clusterSize}/>
+                        <Input { ...register("cpu_allocation_for_each_worker", { required: false } )} type="text" name="cpu_allocation_for_each_worker" autoComplete="off" placeholder=" " defaultValue={""} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU allocation for each worker</FormLabel>
                         </FormControl>
@@ -263,14 +294,14 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, detailCluster } : 
                         </FormControl>
                             
                         <FormControl variant="floating" id="max_workers">
-                        <Input { ...register("max_workers", { required: true } )} type="text" name="max_workers" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.max_workers || undefined} readOnly={clusterSize}/>
+                        <Input { ...register("max_workers", { required: true } )} type="text" name="max_workers" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.server.autoscaling.maxReplicas || undefined} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>Max Workers</FormLabel>
                         </FormControl>
 
 
                         <FormControl variant="floating" id="cpu_utilization_threshold">
-                        <Input { ...register("cpu_utilization_threshold", { required: true } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " defaultValue={cluster?.xson_data.cpu_utilization_threshold || undefined} readOnly={clusterSize}/>
+                        <Input { ...register("cpu_utilization_threshold", { required: true } )} type="text" name="cpu_utilization_threshold" autoComplete="off" placeholder=" " defaultValue={cluster?.settings.values.server.autoscaling.targetCPUUtilizationPercentage || undefined} readOnly={clusterSize}/>
                             {/* It is important that the Label comes after the Control due to css selectors */}
                             <FormLabel fontWeight='normal'>CPU Utilization Threshold</FormLabel>
                         </FormControl>

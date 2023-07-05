@@ -24,7 +24,7 @@ import {
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import MultiSelectCatalogs from  'components/cluster/MultiSelectCatalogs'
-import { fetchCluster, ClusterData, ClusterType, CLUSTER_SIZE  } from 'clients/cluster/FetchCluster';
+import { fetchCluster, ClusterType,  CatalogType, FormData, CLUSTER_SIZE, REQ_SETTINGS, ChartType  } from 'clients/cluster/FetchClusterClient';
 
 import _ from "lodash";
 import debounce from "lodash.debounce";
@@ -34,43 +34,58 @@ import moment from "moment";
 interface props {
     isOpen : boolean;
     onClose : () => void ;
-    catalogs : string[];
+    catalogs : CatalogType[];
+    charts: ChartType[];
     loadClusters: () => void;
 }
 
-
-
-const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) : JSX.Element => {
+const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : props) : JSX.Element => {
 
     const toast = useToast()
 
-    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset, setError, setValue, setFocus } = useForm<ClusterType>();
+    const { register, handleSubmit, watch, clearErrors, formState: { errors }, reset, setError, setValue, setFocus } = useForm<FormData>();
 
     const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
-    const [ clusterSize, setClusterSize ] = useState<boolean>(false)
+    const [ clusterSize, setClusterSize ] = useState<boolean>(false)        //readOnly 용
 
-    const onSubmit : SubmitHandler<ClusterType> = (data : ClusterType) => {
+    // Catalog 명 추출
+    const catalogs_name : string[] = catalogs.map(({ name }) => name)
 
+    const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
+
+        // catalog id 로 변환해서 등록
+        const arr_catalogs : number[] = []
+
+        catalogs.map((catalog : CatalogType) =>  
+            selectedOptions.includes(catalog.name) && arr_catalogs.push(catalog.id)
+        )
+
+        // catalog id 로 변환해서 등록
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
         _.set(data, "status", 'Running')
         _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
 
-        const formData : ClusterData = { 
-            xson_id: `eum_cluster_${Math.floor(Date.now() / 1000)}`,
-            user_id: 'calvin',
-            xson_gr: 'eum_cluster',
-            xson_data: data
-        }   
+        const formData : ClusterType = { 
+            name: data.name,
+            chart_id: data.chart_id,
+            catalog_list: arr_catalogs,
+            cluster_view_data: { 
+                description: data.description,
+                cluster_size: data.cluster_size
+            },
+            settings: REQ_SETTINGS
+        }
 
-        if(!validClusterName(data.cluster_name)) { 
-            setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' })
-            setFocus("cluster_name")
+        if(!validClusterName(data.name)) { 
+            setError('name', { type: 'pattern', message: 'invalid cluster name pattern' })
+            setFocus("name")
             return
         }
 
-        fetchCluster.postCluster(formData).then((res:any) => { 
-            if(res.status === 200) {
+        console.log(JSON.stringify(formData))
 
+        fetchCluster.postCluster(formData).then((res:any) => { 
+            if(res.message === "OK") {
                 toast({
                     title: "Cluster created.",
                     description: "클러스터가 정상 등록 되었습니다.",
@@ -84,7 +99,13 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                 reset()
                 onClose()
             } else { 
-                console.error(res.message)
+                toast({
+                    title: "Error Occurred with Creating",
+                    description: `클러스터 등록 중 에러가 발생 했습니다. [ ${res.message} ]`,
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
             }
         }) 
     }
@@ -104,7 +125,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
     }
 
     const validHandler = debounce((e : React.ChangeEvent<HTMLInputElement>) => {   
-        validClusterName(e.target.value) ? clearErrors("cluster_name") : setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' })
+        validClusterName(e.target.value) ? clearErrors("name") : setError('name', { type: 'pattern', message: 'invalid cluster name pattern' })
         // if(e.target.name === "cluster_name") {
         //     if(!e.target.value.match(/^[a-zA-Z0-9](?!.-)(?!..-)[a-zA-Z0-9][a-zA-Z0-9-]{1,59}(?<!-)$/)) { 
         //         setError('cluster_name', { type: 'pattern', message: 'invalid cluster name pattern' });
@@ -197,18 +218,18 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
 
                         <FormControl>
                             <InputGroup>
-                                <Input {...register("cluster_name", { 
+                                <Input {...register("name", { 
                                         required: "Please enter a cluster name",
                                         // pattern: {
                                         //     value: /^(?!.*[-]{3}|.*[-]$|[-].*[-]|[-].*[-]$)[a-zA-Z0-9][-a-zA-Z0-9]{1,61}[a-zA-Z0-9]$/,
                                         //     message: "invalid cluster name pattern"
                                         // }
                                         })} 
-                                  type="text" name="cluster_name" autoComplete="off" placeholder="Cluster Name" 
+                                  type="text" name="name" autoComplete="off" placeholder="Cluster Name" 
                                   onChange={e => validHandler(e)}
                                 />
                             </InputGroup>
-                            {!!errors.cluster_name && (errors.cluster_name.type === "required" || errors.cluster_name.type === "pattern" )&& (<Text fontSize='xs' marginBottom={0}>{errors.cluster_name.message}</Text>) }
+                            {!!errors.name && (errors.name.type === "required" || errors.name.type === "pattern" )&& (<Text fontSize='xs' marginBottom={0}>{errors.name.message}</Text>) }
                         </FormControl>   
 
                         <FormControl>
@@ -217,9 +238,21 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, loadClusters } : props) :
                             </InputGroup>
                             {errors.description && errors.description.type === "required" && (<Text fontSize='xs' marginBottom={0}>Please enter a description</Text>) }
                         </FormControl>
-
+                        
                         <FormControl>
-                            <MultiSelectCatalogs label="Catalogs" options={catalogs} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
+                            <MultiSelectCatalogs label="Catalogs" options={catalogs_name} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
+                        </FormControl>
+                        
+                        <FormControl>
+                            <Select { ...register("chart_id", { required: true } )} name="chart_id" width={'auto'} placeholder={'Charts'}> 
+                            {
+                                charts && charts.map(chart => {
+                                    return ( 
+                                        <option value={chart.id}>{chart.name}</option>
+                                    )
+                                })
+                            }
+                            </Select>
                         </FormControl>
 
                         <FormControl>

@@ -36,7 +36,8 @@ import { AddIcon, Search2Icon } from '@chakra-ui/icons'
 
 import CreateClusterPop from 'components/cluster/CreateClusterPop'
 import { useNavigate } from 'react-router-dom';
-import { fetchCluster, ClusterData, CatalogData } from 'clients/cluster/FetchCluster'
+import { fetchCluster, ClusterType, CatalogType, ChartData, ChartType } from 'clients/cluster/FetchClusterClient'
+import moment from "moment"
 import _ from "lodash"  
 
 const ClusterList = () : JSX.Element => { 
@@ -54,13 +55,53 @@ const ClusterList = () : JSX.Element => {
 
     /** modal 작업 */
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [ charts, setCharts ] = useState<ChartType[]>([])
+
+    const loadClusters = () : void => { 
+
+        fetchCluster.findClusters().then((res) => { 
+            setTotalPages(Math.ceil(res.data.data.length / cntPerPage))
+            
+            if(res.data.message === "OK") { 
+                const offset = (currentPage - 1) * cntPerPage;
+                setClusters(_.sortBy(res.data.data.slice(offset, offset + cntPerPage), "id"));
+                // setClusters(res.data)
+            } else { 
+                console.error(res.data.message)
+            }
+            
+            fetchCluster.findCatalogs().then((res) => { 
+                console.log(JSON.stringify(res.data))
+                if(res.data.message === "OK") { 
+                    const refineCatalogs : CatalogType[] = res.data.data
+                    setCatalogs(_.sortBy(refineCatalogs, ['id']))
+                } else { 
+                    console.error(res.data.message)
+                }
+    
+                fetchCluster.findCharts().then((res : ChartData) => { 
+                    if(res.data.message === "OK") { 
+                        setCharts(res.data.data)
+                    }
+                })
+    
+            })
+
+        })
+    }
+
+    useEffect(() => {
+        loadClusters()
+    }, [currentPage]);
+
+
 
     /** 클러스터 삭제 이벤트  */
-    const deleteCluster = (e: React.MouseEvent, clusterId: string) => {
+    const deleteCluster = (e: React.MouseEvent, cluster_name: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
 
-            fetchCluster.deleteCluster(clusterId).then((res : any) => { 
+            fetchCluster.delCluster(cluster_name).then((res : any) => { 
                 if(res && res.status === 200) {
                     toast({
                         title: "Cluster deleted.",
@@ -124,36 +165,10 @@ const ClusterList = () : JSX.Element => {
 
     }
 
-    const [ clusters, setClusters] = useState<ClusterData[]>([])
-    const [ catalogs, setCatalogs ] = useState<string[]>([])
+    const [ clusters, setClusters] = useState<ClusterType[]>([])
+    const [ catalogs, setCatalogs ] = useState<CatalogType[]>([])
 
-    const loadClusters = () : void => { 
-        fetchCluster.findClusters().then((res : any) => {       
-            
-            setTotalPages(Math.ceil(res.data.length / cntPerPage))
-            
-            if(res.status === 200) { 
-                const offset = (currentPage - 1) * cntPerPage;
-                setClusters(_.sortBy(res.data.slice(offset, offset + cntPerPage), "created"));
-                // setClusters(res.data)
-            } else { 
-                console.error(res.message)
-            }
-            fetchCluster.findCatalogs().then((res : any) => { 
-                if(res.status === 200) { 
-                    const refineCatalogs : string[] = []
-                    res.data.map((data : CatalogData) => refineCatalogs.push(data.xson_data.catalog_name))
-                    setCatalogs(_.sortBy(refineCatalogs))
-                } else { 
-                    console.error(res.message)
-                }
-            })
-        })
-    }
-
-    useEffect(() => {
-        loadClusters()
-    }, [currentPage]);
+    
 
     const ClsuterStatus = (status : string) : JSX.Element => { 
 
@@ -211,42 +226,42 @@ const ClusterList = () : JSX.Element => {
                         {
                             clusters && clusters.map(cluster => {
                                 return ( 
-                                    <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.xson_id}>
+                                    <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.id}>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
-                                            <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, cluster.xson_id)}>{cluster.xson_data?.cluster_name || ''}</Text>
+                                            <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, cluster.name)}>{cluster.name || ''}</Text>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
-                                                {cluster.xson_data?.status ?
+                                                {cluster.cluster_status ?
                                                     {
-                                                        Starting: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} /><Tooltip hasArrow label='Cluster is starting' bg='#101230' color='white'>Starting</Tooltip></>,
-                                                        Suspended: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/><Tooltip hasArrow label='Cluster is suspended' bg='#101230' color='white'>Suspended</Tooltip></>,
-                                                        Running: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} /><Tooltip hasArrow label='Cluster is running' bg='#101230'color='white'>Running</Tooltip></>,
+                                                        PROCESS: <><Icon mr="2" fontSize="24" as={LuLoader2} color={'#1abcfe'} /><Tooltip hasArrow label='Cluster is starting' bg='#101230' color='white'>Starting</Tooltip></>,
+                                                        OFF: <><Icon mr="2" fontSize="25" as={RiPauseMiniLine} color={'#f24e1e'}/><Tooltip hasArrow label='Cluster is suspended' bg='#101230' color='white'>Suspended</Tooltip></>,
+                                                        ON: <><Icon mr="2" fontSize="25" as={RiCheckDoubleLine} color={'#0acf83'} /><Tooltip hasArrow label='Cluster is running' bg='#101230'color='white'>Running</Tooltip></>,
                                                         
-                                                    }[cluster.xson_data?.status] : '-'
+                                                    }[cluster.cluster_status] : '-'
                                                 }
                                             </Flex>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Flex align="center">
-                                            {cluster.xson_data?.status ?
+                                            {cluster.cluster_status ?
                                                 {
-                                                    Suspended: <>
-                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.xson_id)} cursor="pointer">
+                                                    OFF: <>
+                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.name)} cursor="pointer">
                                                             <Icon mr="2" fontSize="25" as={RiPlayCircleLine} color={'#0acf83'} />Resume
                                                         </Flex>
                                                     </>,
-                                                    Running: <>
-                                                        <Flex align="center" onClick={(e)=>stopCluster(e, cluster.xson_id)} cursor="pointer">
+                                                    ON: <>
+                                                        <Flex align="center" onClick={(e)=>stopCluster(e, cluster.name)} cursor="pointer">
                                                             <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
                                                         </Flex>
                                                     </>,
-                                                }[cluster.xson_data?.status] : '-'
+                                                }[cluster.cluster_status] : '-'
                                             }
                                             </Flex>
                                         </Td>
-                                        <Td>{ cluster.xson_data?.initial_workers || 0} </Td>
-                                        <Td>{ cluster.xson_data?.created || ''}</Td>
+                                        <Td>{ cluster.settings.values.server.workers || 0} </Td>
+                                        <Td>{ moment.utc(cluster.created_at).local().format('YYYY-MM-DD HH:mm:ss') || ''}</Td>
                                         <Td>
                                             <Menu>
                                                 <MenuButton
@@ -262,19 +277,19 @@ const ClusterList = () : JSX.Element => {
                                                     }}
                                                 />
                                                 <MenuList>
-                                                    <MenuItem p={4} fontSize="14" onClick={(e) => deleteCluster(e, cluster.xson_id)}>
+                                                    <MenuItem p={4} fontSize="14" onClick={(e) => deleteCluster(e, cluster.name)}>
                                                         <Icon mr="2" fontSize="20" as={RiDeleteBin6Line}  />
                                                         Delete Cluster
                                                     </MenuItem>
-                                                    <MenuItem p={4} fontSize="14"  onClick={(e)=> editCluster(e, cluster.xson_id)}>
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e)=> editCluster(e, cluster.name)}>
                                                         <Icon mr="2" fontSize="20" as={RiEdit2Line}  />
                                                         Edit Cluster
                                                     </MenuItem>
-                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => editClusterOwner(e, cluster.xson_id)}>
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => editClusterOwner(e, cluster.name)}>
                                                         <Icon mr="2" fontSize="20" as={RiUserSettingsLine}  />
                                                         Change Owner
                                                     </MenuItem>
-                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => restartCluster(e, cluster.xson_id)}>
+                                                    <MenuItem p={4} fontSize="14"  onClick={(e) => restartCluster(e, cluster.name)}>
                                                         <Icon mr="2" fontSize="20" as={RiLoginCircleLine}  />
                                                         Restart
                                                     </MenuItem>
@@ -303,7 +318,7 @@ const ClusterList = () : JSX.Element => {
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                 />
-                <CreateClusterPop isOpen={isOpen} onClose={onClose} catalogs={catalogs} loadClusters={loadClusters}/>
+                <CreateClusterPop isOpen={isOpen} onClose={onClose} catalogs={catalogs} charts={charts} loadClusters={loadClusters}/>
             </>} />
         </>
     )

@@ -22,7 +22,7 @@ export default function Router() {
                         {/* <Route index element={ <DataBoard /> }/> */}
                         <Route index element={ <ClusterList /> }/>
                         <Route path="/clusters" element={ <ClusterList /> } />
-                        <Route path="/cluster/:cluster_id" element={ <ClusterDetail /> } />
+                        <Route path="/cluster/:cluster_name" element={ <ClusterDetail /> } />
                         <Route path="/catalogs" element={ <CatalogList />} />
                         <Route path="/neo4j/neoforce" element={ <Force3DGraph />} />
                         <Route path="/neo4j/neovis" element={ <NeoVisGraph />} />
