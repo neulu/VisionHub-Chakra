@@ -29,7 +29,7 @@ import {
 } from '@chakra-ui/react';
 
 import BoardPaging from 'components/common/BoardPaging'
-import { FiMoreHorizontal } from 'react-icons/fi';
+import { FiMoreHorizontal , FiMoreVertical} from 'react-icons/fi';
 import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine, RiEdit2Line, RiUserSettingsLine, RiLoginCircleLine, RiDeleteBin6Line, RiCloseFill } from 'react-icons/ri';
 import { LuLoader2 } from 'react-icons/lu';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons'
@@ -242,22 +242,24 @@ const ClusterList = () : JSX.Element => {
                                             </Flex>
                                         </Td>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
-                                            <Flex align="center">
-                                            {cluster.cluster_status ?
-                                                {
-                                                    OFF: <>
-                                                        <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.name)} cursor="pointer">
-                                                            <Icon mr="2" fontSize="25" as={RiPlayCircleLine} color={'#0acf83'} />Resume
-                                                        </Flex>
-                                                    </>,
-                                                    ON: <>
-                                                        <Flex align="center" onClick={(e)=>stopCluster(e, cluster.name)} cursor="pointer">
-                                                            <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
-                                                        </Flex>
-                                                    </>,
-                                                }[cluster.cluster_status] : '-'
-                                            }
-                                            </Flex>
+                                            <Box display={'inline-flex'} padding={'5px 20px 5px 10px'}  _hover={{ bg: '#e0e0e0', borderRadius: '5px', }}>
+                                                <Flex align="center">
+                                                {cluster.cluster_status ?
+                                                    {
+                                                        OFF: <>
+                                                            <Flex align="center" onClick={(e)=>resumeCluster(e, cluster.name)} cursor="pointer">
+                                                                <Icon mr="2" fontSize="25" as={RiPlayCircleLine} color={'#0acf83'} />Resume
+                                                            </Flex>
+                                                        </>,
+                                                        ON: <>
+                                                            <Flex align="center" onClick={(e)=>stopCluster(e, cluster.name)} cursor="pointer">
+                                                                <Icon mr="2" fontSize="25" as={RiStopCircleLine} color={'#f24e1e'} />Stop
+                                                            </Flex>
+                                                        </>,
+                                                    }[cluster.cluster_status] : '-'
+                                                }
+                                                </Flex>
+                                            </Box>
                                         </Td>
                                         <Td>{ cluster.settings.values.server.workers || 0} </Td>
                                         <Td>{ moment.utc(cluster.created_at).local().format('YYYY-MM-DD HH:mm:ss') || ''}</Td>
@@ -268,7 +270,7 @@ const ClusterList = () : JSX.Element => {
                                                     fontSize="22"
                                                     as={IconButton}
                                                     aria-label='Options'
-                                                    icon={<FiMoreHorizontal />}
+                                                    icon={<FiMoreVertical />}
                                                     borderRadius={'full'}
                                                     bg={'none'}
                                                     _hover={{  

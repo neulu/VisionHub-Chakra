@@ -3,6 +3,7 @@ import {
     Button,
     Modal,
     ModalOverlay,
+    ModalHeader,
     ModalContent,
     ModalFooter,
     ModalBody,
@@ -222,14 +223,15 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
 
     return ( 
         <>
-            <Modal isOpen={isOpen} onClose={modelClose}>
+            <Modal isOpen={isOpen} onClose={modelClose} scrollBehavior={"inside"}>
             <form onSubmit={handleSubmit(onSubmit)}>
             <ModalOverlay />
             <ModalContent>
+                <ModalHeader>Create Cluster</ModalHeader>
                 <ModalCloseButton _focus={{boxShadow: "none"}} />
                 <ModalBody>
-                <Box flex='1' bg='white' marginTop={5}>
-                    <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
+                <Box flex='1' bg='white'>
+                    <Stack spacing={4} backgroundColor="whiteAlpha.900" >
 
                         <FormControl>
                             <InputGroup>
