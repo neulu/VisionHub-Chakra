@@ -3,6 +3,7 @@ import {
     Button,
     Modal,
     ModalOverlay,
+    ModalHeader,
     ModalContent,
     ModalFooter,
     ModalBody,
@@ -196,19 +197,20 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
 
     return ( 
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"inside"}>
             <form onSubmit={handleSubmit(onSubmit)}>
             <ModalOverlay />
             <ModalContent>
+                <ModalHeader>Edit Cluster</ModalHeader>
                 <ModalCloseButton _focus={{boxShadow: "none"}} />
                 <ModalBody>
-                <Box flex='1' bg='white' marginTop={5}>   
+                <Box flex='1' bg='white'>   
                     
-                        <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
+                        <Stack spacing={4} backgroundColor="whiteAlpha.900">
 
                         <FormControl>
                             <InputGroup>
-                            <Input type="text" { ...register("name", { required: false } )} name="name" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.name || ''} readOnly />
+                            <Input type="text" { ...register("name", { required: false } )} name="name" autoComplete="off" placeholder="Cluster Name" defaultValue={cluster?.name || ''} readOnly isDisabled color={'#000'} bg={'#eee'} />
                             </InputGroup>
                         </FormControl>
                         
