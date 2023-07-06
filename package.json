@@ -65,5 +65,8 @@
     "@types/react-router": "^5.1.18",
     "@types/react-router-dom": "^5.3.3",
     "dotenv-cli": "^7.1.0"
+  },
+  "volta": {
+    "node": "16.20.1"
   }
 }
