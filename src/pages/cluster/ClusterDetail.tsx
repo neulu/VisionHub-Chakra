@@ -24,6 +24,7 @@ import EditClusterPop from "components/cluster/EditClusterPop"
 
 import { fetchCluster, ClusterType, CatalogType, ChartData, ChartType } from 'clients/cluster/FetchClusterClient'
 import _ from "lodash"
+import moment from "moment";
 
 const ClusterDetail = () : JSX.Element => {
 
@@ -41,8 +42,6 @@ const ClusterDetail = () : JSX.Element => {
     const [ cluster, setCluster] = useState<ClusterType>()
 
     const [ catalogs, setCatalogs ] = useState<CatalogType[]>([])
-    
-    const [ selectedOptions, setSelectedOptions ] = useState<string[]>([]);
 
     const [ charts, setCharts ] = useState<ChartType[]>([])
 
@@ -84,6 +83,12 @@ const ClusterDetail = () : JSX.Element => {
             })
         }
     }
+
+    /** catalog 명 필터 ( ID-> Name 전환 ) */
+    const arr_catalogs : string[] = []
+    catalogs.map((catalog : CatalogType) =>  
+        cluster?.catalog_list.includes(catalog.id) && arr_catalogs.push(catalog.name)
+    )
 
     useEffect(() => {
         detailCluster(params.cluster_name)
@@ -129,7 +134,13 @@ const ClusterDetail = () : JSX.Element => {
                             </Td>
                             <Td>
                                 <Flex align="center">
-                                    <Icon mr="2" fontSize="16" as={MdCircle} color={'green.500'}/>{ cluster?.cluster_status || ''}
+                                    { cluster?.cluster_status ?
+                                        {
+                                            ON: <><Icon mr="2" fontSize="16" as={MdCircle} color={'green.500'}/>{ cluster?.cluster_status || ''}</>,
+                                            OFF: <><Icon mr="2" fontSize="16" as={MdCircle} color={'red.500'}/>{ cluster?.cluster_status || ''}</>,
+                                            PROCESS: <><Icon mr="2" fontSize="16" as={MdCircle} color={'yellow.500'}/>{ cluster?.cluster_status || ''}</>,
+                                        }[cluster?.cluster_status] : '-'
+                                    }
                                 </Flex>
                             </Td>
                         </Tr>
@@ -138,7 +149,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Created
                             </Td>
                             <Td>
-                            { cluster?.created_at || '-'}
+                            { moment.utc(cluster?.created_at).local().format('YYYY-MM-DD HH:mm:ss') || '' }
                             </Td>
                         </Tr>
                         <Tr>
@@ -146,7 +157,7 @@ const ClusterDetail = () : JSX.Element => {
                                 Catalog
                             </Td>
                             <Td>
-                                <Text marginBottom={0}>{ _.toString(cluster?.catalog_list)  || '-'}</Text>
+                                <Text marginBottom={0}>{ _.toString(arr_catalogs)  || '-'}</Text>
                             </Td>
                         </Tr>
                         <Tr>

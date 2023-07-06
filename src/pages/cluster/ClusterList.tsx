@@ -69,9 +69,7 @@ const ClusterList = () : JSX.Element => {
             } else { 
                 console.error(res.data.message)
             }
-            
             fetchCluster.findCatalogs().then((res) => { 
-                console.log(JSON.stringify(res.data))
                 if(res.data.message === "OK") { 
                     const refineCatalogs : CatalogType[] = res.data.data
                     setCatalogs(_.sortBy(refineCatalogs, ['id']))
@@ -95,33 +93,44 @@ const ClusterList = () : JSX.Element => {
     }, [currentPage]);
 
 
-
     /** 클러스터 삭제 이벤트  */
     const deleteCluster = (e: React.MouseEvent, cluster_name: string) => {
         e.preventDefault()
         if(window.confirm("클러스터를 삭제 하시겠습니까?")) { 
 
-            fetchCluster.delCluster(cluster_name).then((res : any) => { 
-                if(res && res.status === 200) {
-                    toast({
-                        title: "Cluster deleted.",
-                        description: "클러스터가 정상 삭제 되었습니다.",
-                        status: "success",
-                        duration: 5000,
-                        isClosable: true,
-                    })
-
-                    loadClusters()
-                } else { 
-                    toast({
-                        title: "Error Occurred",
-                        description: "클러스터 삭제 중 에러가 발생 했습니다.",
-                        status: "error",
-                        duration: 5000,
-                        isClosable: true,
-                    })
-                }
+            // ##################### 임시 코딩 (API 정합 보류) #####################
+            console.log(`### 삭제 클러스터 명: ${cluster_name}`)
+            toast({
+                title: "Cluster deleted.",
+                description: "클러스터가 정상 삭제 되었습니다.",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
             })
+
+            loadClusters()
+            // ##################### 임시 코딩 (API 정합 보류) #####################
+            // fetchCluster.delCluster(cluster_name).then((res : any) => { 
+            //     if(res && res.status === 200) {
+            //         toast({
+            //             title: "Cluster deleted.",
+            //             description: "클러스터가 정상 삭제 되었습니다.",
+            //             status: "success",
+            //             duration: 5000,
+            //             isClosable: true,
+            //         })
+
+            //         loadClusters()
+            //     } else { 
+            //         toast({
+            //             title: "Error Occurred",
+            //             description: "클러스터 삭제 중 에러가 발생 했습니다.",
+            //             status: "error",
+            //             duration: 5000,
+            //             isClosable: true,
+            //         })
+            //     }
+            // })
         }
     }
 
@@ -166,17 +175,7 @@ const ClusterList = () : JSX.Element => {
     }
 
     const [ clusters, setClusters] = useState<ClusterType[]>([])
-    const [ catalogs, setCatalogs ] = useState<CatalogType[]>([])
-
-    
-
-    const ClsuterStatus = (status : string) : JSX.Element => { 
-
-        return (
-            <></>
-        )
-
-    }
+    const [ catalogs, setCatalogs ] = useState<CatalogType[]>([])    
 
     return ( 
         <>
@@ -226,7 +225,7 @@ const ClusterList = () : JSX.Element => {
                         {
                             clusters && clusters.map(cluster => {
                                 return ( 
-                                    <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.id}>
+                                    <Tr _hover={{  bg: '#f2f2f2',  }} key={cluster.name}>
                                         <Td borderBottom="2px" borderBottomColor={'#f2f2f2'}>
                                             <Text marginBottom={0} cursor="pointer" onClick={(e)=>editCluster(e, cluster.name)}>{cluster.name || ''}</Text>
                                         </Td>

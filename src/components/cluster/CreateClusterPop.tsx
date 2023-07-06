@@ -56,15 +56,14 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
         // catalog id 로 변환해서 등록
         const arr_catalogs : number[] = []
 
-        catalogs.map((catalog : CatalogType) =>  
-            selectedOptions.includes(catalog.name) && arr_catalogs.push(catalog.id)
-        )
+        // catalog 목록에 포함 이름 필터 (이름 -> ID)
+        catalogs.map((catalog : CatalogType) =>  selectedOptions.includes(catalog.name) && arr_catalogs.push(catalog.id))
 
         // catalog id 로 변환해서 등록
         selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
         _.set(data, "status", 'Running')
         _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
-
+        
         const formData : ClusterType = { 
             name: data.name,
             chart_id: data.chart_id,
@@ -82,32 +81,48 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
             return
         }
 
+        // ##################### 임시 코딩 (API 정합 보류) #####################
+
         console.log(JSON.stringify(formData))
+        toast({
+            title: "Cluster created.",
+            description: "클러스터가 정상 등록 되었습니다.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+        })
 
-        fetchCluster.postCluster(formData).then((res:any) => { 
-            if(res.message === "OK") {
-                toast({
-                    title: "Cluster created.",
-                    description: "클러스터가 정상 등록 되었습니다.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                })
+        loadClusters()
+        setSelectedOptions([])
+        reset()
+        onClose()
 
-                loadClusters()
-                setSelectedOptions([])
-                reset()
-                onClose()
-            } else { 
-                toast({
-                    title: "Error Occurred with Creating",
-                    description: `클러스터 등록 중 에러가 발생 했습니다. [ ${res.message} ]`,
-                    status: "error",
-                    duration: 5000,
-                    isClosable: true,
-                })
-            }
-        }) 
+        // fetchCluster.postCluster(formData).then((res:any) => { 
+        //     if(res.message === "OK") {
+        //         toast({
+        //             title: "Cluster created.",
+        //             description: "클러스터가 정상 등록 되었습니다.",
+        //             status: "success",
+        //             duration: 5000,
+        //             isClosable: true,
+        //         })
+
+        //         loadClusters()
+        //         setSelectedOptions([])
+        //         reset()
+        //         onClose()
+        //     } else { 
+        //         toast({
+        //             title: "Error Occurred with Creating",
+        //             description: `클러스터 등록 중 에러가 발생 했습니다. [ ${res.message} ]`,
+        //             status: "error",
+        //             duration: 5000,
+        //             isClosable: true,
+        //         })
+        //     }
+        // }) 
+
+        // ##################### 임시 코딩 (API 정합 보류) #####################
     }
 
     const modelClose = () => { 
@@ -136,7 +151,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
     },500)
 
     const chgClusterSize = (e : React.ChangeEvent<HTMLSelectElement>) => {
-        if(e.target.value === "S") { 
+        if(e.target.value === "Small") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.small.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.small.coordinator_heap_size)
@@ -147,7 +162,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.small.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.small.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.small.cpu_utilization_threshold)
-        } else if(e.target.value === "M") { 
+        } else if(e.target.value === "Medium") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.medium.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.medium.coordinator_heap_size)
@@ -158,7 +173,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.medium.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.medium.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.medium.cpu_utilization_threshold)
-        } else if(e.target.value === "L") { 
+        } else if(e.target.value === "Large") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.large.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.large.coordinator_heap_size)
@@ -169,7 +184,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.large.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.large.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.large.cpu_utilization_threshold)
-        } else if(e.target.value === "X") { 
+        } else if(e.target.value === "X-Large") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.xlarge.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.xlarge.coordinator_heap_size)
@@ -180,7 +195,7 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.xlarge.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.xlarge.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.xlarge.cpu_utilization_threshold)
-        } else if(e.target.value === "C") { 
+        } else if(e.target.value === "Custom") { 
             setClusterSize(false)
             setValue("initial_workers", CLUSTER_SIZE.medium.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.medium.coordinator_heap_size)
@@ -248,7 +263,9 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
                             {
                                 charts && charts.map(chart => {
                                     return ( 
+                                        <React.Fragment key={chart.id}>
                                         <option value={chart.id}>{chart.name}</option>
+                                        </React.Fragment>
                                     )
                                 })
                             }
@@ -257,11 +274,11 @@ const CreateClusterPop = ({ isOpen, onClose, catalogs, charts, loadClusters } : 
 
                         <FormControl>
                             <Select { ...register("cluster_size", { required: true } )} name="cluster_size" width={'auto'} placeholder={'Cluster Size'} onChange={(e)=>chgClusterSize(e)}> 
-                                <option value='C'>Custom</option>
-                                <option value='S'>Small</option>
-                                <option value='M'>Medium</option>
-                                <option value='L'>Large</option>
-                                <option value='X'>X-Large</option>
+                                <option value='Custom'>Custom</option>
+                                <option value='Small'>Small</option>
+                                <option value='Medium'>Medium</option>
+                                <option value='Large'>Large</option>
+                                <option value='X-Large'>X-Large</option>
                             </Select>
                         </FormControl>
                         

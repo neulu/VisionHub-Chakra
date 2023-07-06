@@ -66,7 +66,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
 
 
     const chgClusterSize = (e : React.ChangeEvent<HTMLSelectElement>) => {
-        if(e.target.value === "S") { 
+        if(e.target.value === "Small") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.small.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.small.coordinator_heap_size)
@@ -77,7 +77,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.small.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.small.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.small.cpu_utilization_threshold)
-        } else if(e.target.value === "M") { 
+        } else if(e.target.value === "Medium") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.medium.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.medium.coordinator_heap_size)
@@ -88,7 +88,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.medium.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.medium.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.medium.cpu_utilization_threshold)
-        } else if(e.target.value === "L") { 
+        } else if(e.target.value === "Large") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.large.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.large.coordinator_heap_size)
@@ -99,7 +99,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.large.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.large.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.large.cpu_utilization_threshold)
-        } else if(e.target.value === "X") { 
+        } else if(e.target.value === "X-Large") { 
             setClusterSize(true)
             setValue("initial_workers", CLUSTER_SIZE.xlarge.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.xlarge.coordinator_heap_size)
@@ -110,7 +110,7 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
             setValue("cpu_allocation_for_each_coordinator", CLUSTER_SIZE.xlarge.cpu_allocation_for_each_coordinator)
             setValue("max_workers", CLUSTER_SIZE.xlarge.max_workers)
             setValue("cpu_utilization_threshold", CLUSTER_SIZE.xlarge.cpu_utilization_threshold)
-        } else if(e.target.value === "C") { 
+        } else if(e.target.value === "Custom") { 
             setClusterSize(false)
             setValue("initial_workers", CLUSTER_SIZE.medium.initial_workers)
             setValue("coordinator_heap_size", CLUSTER_SIZE.medium.coordinator_heap_size)
@@ -139,16 +139,18 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
     const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
 
         // catalog id 로 변환해서 등록
-        const catalogs : number[] = []
+        const arr_catalogs : number[] = []
 
-        selectedOptions.length > 0 && _.set(data, "catalogs", selectedOptions)
+        // selectedOptions.length > 0 && _.set(data, "catalog_list", selectedOptions)
+        catalogs.map((catalog : CatalogType) =>  selectedOptions.includes(catalog.name) && arr_catalogs.push(catalog.id))
+    
         _.set(data, "status", 'Running')
         _.set(data, "created", moment().format('YYYY-MM-DD HH:mm:ss'))
 
         const formData : ClusterType = { 
             name: data.name,
             chart_id: 1,
-            catalog_list: catalogs,
+            catalog_list: arr_catalogs,
             cluster_view_data: { 
                 description: data.description,
                 cluster_size: data.cluster_size
@@ -157,23 +159,39 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
         }
 
 
-        fetchCluster.postCluster(formData).then((res:any) => { 
-            if(res.status === 200) {
+        // ##################### 임시 코딩 (API 정합 보류) #####################
+        console.log(JSON.stringify(formData))
+        toast({
+            title: "Cluster modified.",
+            description: "클러스터가 정상 수정 되었습니다.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+        })
 
-                toast({
-                    title: "Cluster modified.",
-                    description: "클러스터가 정상 수정 되었습니다.",
-                    status: "success",
-                    duration: 5000,
-                    isClosable: true,
-                })
+        detailCluster(cluster?.name)
+        onClose()
 
-                detailCluster(cluster?.name)
-                onClose()
-            } else { 
-                console.error(res.message)
-            }
-        }) 
+        // fetchCluster.postCluster(formData).then((res:any) => { 
+        //     if(res.status === 200) {
+
+        //         toast({
+        //             title: "Cluster modified.",
+        //             description: "클러스터가 정상 수정 되었습니다.",
+        //             status: "success",
+        //             duration: 5000,
+        //             isClosable: true,
+        //         })
+
+        //         detailCluster(cluster?.name)
+        //         onClose()
+        //     } else { 
+        //         console.error(res.message)
+        //     }
+        // }) 
+
+        // ##################### 임시 코딩 (API 정합 보류) #####################
+
     }
 
     return ( 
@@ -210,7 +228,9 @@ const EditClusterPop = ({ isOpen, onClose, catalogs, cluster, charts, detailClus
                             {
                                 charts && charts.map(chart => {
                                     return ( 
+                                        <React.Fragment key={chart.id}>
                                         <option value={chart.id}>{chart.name}</option>
+                                        </React.Fragment>
                                     )
                                 })
                             }
