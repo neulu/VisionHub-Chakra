@@ -1,12 +1,14 @@
 import React, { ReactNode, useState } from 'react';
 import {
   IconButton,
+  Button,
   Box,
   CloseButton,
   Flex,
   Icon,
   useColorModeValue,
   // Link,
+  Slide,
   Drawer,
   DrawerContent,
   Text,
@@ -27,8 +29,20 @@ import {
   FiLogOut,
 } from 'react-icons/fi';
 import {
+  RiBearSmileLine,
+  RiNotification2Line,
+  RiMenuLine,
+  RiMore2Fill,
   RiBarChartBoxLine,
   RiCloseFill,
+  RiFileListLine,
+  RiLineChartLine,
+  RiFlowChart,
+  RiDatabase2Line,
+  RiSaveLine,
+  RiNodeTree,
+  RiPlayCircleLine,
+  RiUser6Line,
 } from 'react-icons/ri';
 import {
   LuNetwork,
@@ -46,8 +60,17 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Clusters', icon: LuNetwork, linkUrl: "/clusters"},
-  { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
+  { name: '프로젝트', icon: RiFileListLine, linkUrl: "/project"},
+  { name: '모델', icon: RiFlowChart, linkUrl: "/models"},
+  { name: '데이터', icon: RiFileListLine, linkUrl: "/"},
+  { name: '레이블링', icon: RiDatabase2Line, linkUrl: "/"},
+  { name: '실행', icon: RiPlayCircleLine, linkUrl: "/execution"},
+  { name: '테스트', icon: LuNetwork, linkUrl: "/test"},
+  { name: '모니터링', icon: RiLineChartLine, linkUrl: "/"},
+  { name: '사용자', icon: RiUser6Line, linkUrl: "/user"},
+  { name: '클러스터', icon: RiNodeTree, linkUrl: "/cluster"},
+  { name: '저장소', icon: RiSaveLine, linkUrl: "/storage"},
+  // { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
   // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
   // { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
@@ -69,25 +92,28 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
   }
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('white', 'gray.900')}>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} onLogout={onLogout} />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full">
-        <DrawerContent>
-          <SidebarContent onClose={onClose} onLogout={onLogout}/>
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
-      <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {children}
-      </Box>
+    // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
+    <Box w={{ base: 'full', sm: 'full', md: 1600, lg: 1600 }}  minH="100vh" > 
+      <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row' }}>
+        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} display={{ base: 'none', md: 'block' }} onLogout={onLogout} />
+        <Drawer
+          autoFocus={false}
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          returnFocusOnClose={false}
+          onOverlayClick={onClose}
+          size="full">
+          <DrawerContent>
+              <SidebarContent onClose={onClose} onLogout={onLogout}/>
+          </DrawerContent>
+        </Drawer>
+        {/* mobilenav */}
+        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
+        <Box w={{ base: 'full', sm: 'full', md: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ base: '10px', sm: '10px', md: '30px 0px 30px 30px' }} >
+          {children}
+        </Box>
+      </Flex>
     </Box>
   );
 }
@@ -100,21 +126,23 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
   return (
     <Box
-      // bg={useColorModeValue('white', 'gray.900')}
-      backgroundImage="url('/assets/images/bg-lnb.png')"
-      backgroundPosition="right 0"
-      backgroundRepeat="repeat-y"
-      // boxShadow='xl' 
-      // borderRight="1px"
-      // borderRightColor={useColorModeValue('gray.100', 'gray.100')}
-      // w='255px'
-      w={{ base: 'full', md: 60 }}
-      pos="fixed"
+      // w={{ base: 0, md: 80 }}
+      // pos="fixed"
       h="full"
       {...rest}>
-      <Flex h="20" alignItems="center" mx="10" justifyContent={'space-between'}>
-        <Image src="https://demo.datahubproject.io/assets/platforms/datahublogo.png" width={25} />
-        <Text fontSize="lg" fontWeight="bold" marginTop={3}>IDP-Datamesh</Text>
+      <Flex h="85" p={'0 30px'} justifyContent="space-between" alignItems="center">
+        <Flex alignItems="center">
+          <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'8px'} />
+          <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'500'} letterSpacing={'0'} m={'0'}>Vision Hub</Text>
+        </Flex>
+
+        <Button p={'0'} variant='none'>
+          <Icon as={RiNotification2Line} fontSize={'24px'} />
+        </Button>
+        <Button p={'0'} variant='none'>
+          <Icon as={RiMenuLine} fontSize={'24px'} />
+        </Button>
+       
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -124,7 +152,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       ))}
 
       {/* Logout Button */}
-      <Box position="absolute" textAlign="center" w={"240px"} bottom={10} backgroundColor="cyon">
+      {/* <Box position="absolute" textAlign="center" w={"240px"} bottom={10} backgroundColor="cyon">
         <Text>administrator</Text>
         <Center>
           <Box w={"50%"} h={"30px"} bgColor={"teal"} borderRadius="md" style={{cursor:'pointer'}} onClick={()=>onLogout()}>
@@ -134,7 +162,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
             </Flex>
           </Box>
         </Center>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
@@ -149,31 +177,30 @@ const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
   const pathname = window.location.pathname.split("/")[1];
 
   return (
-    <Link to={linkUrl}  style={{ textDecoration: 'none'}}>
+    <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
       {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
         {children.toString().toLowerCase().indexOf(pathname) > -1 ? (
-          <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
+          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}}
           _hover={{
-            bg: '#efefef',
+            bg: '#f5f8fd',
             color: 'black',
           }}
-          fontWeight='bold'
-          bg='#efefef'
+          bg='#f5f8fd'
           {...rest}>
             {icon && (
-              <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
+              <Icon mr="3" fontSize="24px" as={icon} />
             )}
             {children}
           </Flex>
         ) : (
-          <Flex align="center" w={233} p={4} pl={6} role="group" cursor="pointer" color={'gray.900'}
-        _hover={{
-          bg: '#efefef',
-          color: 'black',
-        }}
-        {...rest}>
+          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#333'} fontSize={{base: '0px', lg: '18px'}}
+          _hover={{
+            bg: '#f5f8fd',
+            color: 'black',
+          }}
+          {...rest}>
             {icon && (
-              <Icon mr="3" pl={0} fontSize="22" _groupHover={{ color: 'black',}} as={icon} />
+              <Icon mr="3" fontSize="24px" as={icon} />
             )}
             {children}
           </Flex>
@@ -204,8 +231,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-      <Image src="https://demo.datahubproject.io/assets/platforms/datahublogo.png" marginLeft={5} width={25} />
-      <Text fontSize="lg" fontFamily="monospace" fontWeight="bold" marginTop={3}>IDP-Datamesh</Text>
+      <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'10px'} />
+      <Text fontSize="lg" fontWeight={'500'}>Vision Hub</Text>
     </Flex>
   );
 };

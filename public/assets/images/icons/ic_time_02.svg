@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <g data-name="Icon feather-clock">
+        <path data-name="패스 7431" d="M12 22A10 10 0 0 1 4.929 4.929a10 10 0 0 1 14.142 14.142A9.935 9.935 0 0 1 12 22zm0-18.462A8.462 8.462 0 1 0 20.462 12 8.471 8.471 0 0 0 12 3.538z" style="fill:#aab5c7" transform="translate(-2 -2)"/>
+        <path data-name="패스 7432" d="M21.461 16.923a.766.766 0 0 1-.343-.081L17.425 15a.769.769 0 0 1-.425-.692V8.769a.769.769 0 1 1 1.538 0v5.063l3.267 1.634a.769.769 0 0 1-.345 1.457z" transform="translate(-7.769 -4.308)" style="fill:#aab5c7"/>
+    </g>
+</svg>
