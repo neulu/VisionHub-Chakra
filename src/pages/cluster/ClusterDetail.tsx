@@ -35,7 +35,7 @@ const ClusterDetail = () : JSX.Element => {
 
     const goClusters = (e: React.MouseEvent<HTMLButtonElement>) => { 
         e.preventDefault()
-        navigate("/clusters")
+        navigate("/cluster")
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure()

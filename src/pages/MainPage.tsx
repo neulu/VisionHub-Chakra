@@ -35,6 +35,7 @@ import {
   RiMore2Fill,
   RiBarChartBoxLine,
   RiCloseFill,
+  RiFileEditLine,
   RiFileListLine,
   RiLineChartLine,
   RiFlowChart,
@@ -55,21 +56,22 @@ import { Link } from "react-router-dom";
 
 interface LinkItemProps {
   name: string;
+  cate: string;
   icon: IconType;
   linkUrl: string;
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: '프로젝트', icon: RiFileListLine, linkUrl: "/project"},
-  { name: '모델', icon: RiFlowChart, linkUrl: "/models"},
-  { name: '데이터', icon: RiFileListLine, linkUrl: "/"},
-  { name: '레이블링', icon: RiDatabase2Line, linkUrl: "/"},
-  { name: '실행', icon: RiPlayCircleLine, linkUrl: "/execution"},
-  { name: '테스트', icon: LuNetwork, linkUrl: "/test"},
-  { name: '모니터링', icon: RiLineChartLine, linkUrl: "/"},
-  { name: '사용자', icon: RiUser6Line, linkUrl: "/user"},
-  { name: '클러스터', icon: RiNodeTree, linkUrl: "/cluster"},
-  { name: '저장소', icon: RiSaveLine, linkUrl: "/storage"},
+  { name: '프로젝트', cate: 'project', icon: RiFileListLine, linkUrl: "/project"},
+  { name: '모델', cate: 'models', icon: RiFlowChart, linkUrl: "/models"},
+  { name: '데이터', cate: '/', icon: RiFileListLine, linkUrl: "/"},
+  { name: '레이블링', cate: '/', icon: RiDatabase2Line, linkUrl: "/"},
+  { name: '실행', cate: 'execution', icon: RiPlayCircleLine, linkUrl: "/execution"},
+  { name: '테스트', cate: 'test', icon: RiFileEditLine, linkUrl: "/test"},
+  { name: '모니터링', cate: '/', icon: RiLineChartLine, linkUrl: "/"},
+  { name: '사용자', cate: 'user', icon: RiUser6Line, linkUrl: "/user"},
+  { name: '클러스터', cate: 'cluster', icon: RiNodeTree, linkUrl: "/cluster"},
+  { name: '저장소', cate: 'storage', icon: RiSaveLine, linkUrl: "/storage"},
   // { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
   // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
@@ -146,7 +148,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} linkUrl={link.linkUrl}>
+        <NavItem key={link.name} cate={link.cate} icon={link.icon} linkUrl={link.linkUrl}>
           {link.name}
         </NavItem>
       ))}
@@ -169,18 +171,22 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
+  cate: string;
   linkUrl: string;
   children: ReactText;
 }
 
-const NavItem = ({ icon, children, linkUrl, ...rest }: NavItemProps) => {
+const NavItem = ({cate, icon, children, linkUrl, ...rest }: NavItemProps) => {
   const pathname = window.location.pathname.split("/")[1];
-
+  // console.log(children.toString().toLocaleLowerCase())
+  // console.log('** menu 영문 cate >> ' + cate)
+  // console.log('** url 경로임=>> ' + pathname)
+  // console.log('** 폴더 경로임=>> ' + linkUrl)
   return (
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
       {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
-        {children.toString().toLowerCase().indexOf(pathname) > -1 ? (
-          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}}
+        {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
+          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}} fontWeight={'normal'}
           _hover={{
             bg: '#f5f8fd',
             color: 'black',

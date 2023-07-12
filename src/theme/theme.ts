@@ -57,9 +57,26 @@ const theme = extendTheme(
           fontSize: '16px', 
           lineHeight: '1',
           letterSpacing: '-1px',
-          // transition: all 0.5s ease,
+          transition: 'all 0.5s ease',
           'h2': {
             m : '0',
+          },
+          '&::-webkit-scrollbar': {
+            width: '12px',
+            height: '12px',
+            backgroundColor: '#fff',
+          },
+          
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#ddd',
+            borderRadius: '10px',
+            backgroundClip: 'padding-box',
+            border: '2px solid transparent',
+          },
+          
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#fff',
+            borderRadius: '10px',
           },
         },
       },
@@ -124,6 +141,30 @@ const theme = extendTheme(
             bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.750',
             color: props.colorMode === 'dark' ? '#000' : '#fff',
           }),
+          typeSelectBtn: {
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px 0 15px',
+            background: '#fff',
+            // transition: 'transform 0.2s ease-out',
+            svg: {
+              // color: '#f55',
+              // transition: 'transform 0.2s ease-out',
+            },
+            '&[data-active]': {
+              // background: '#f55',
+              // transform: 'rotate(-180deg)',
+              svg: {
+                // color: '#f00',
+                // transition: 'rotate(-180deg)',
+              },
+            },
+          },
+          typeSelectBtnLineNone: {
+            fontSize: '18px',
+            fontWeight: 'bold',
+            padding: '0 10px 0 0',
+            background: '#fff',
+          }
         },
         defaultProps: {
           size: 'md', // default is md
@@ -160,13 +201,18 @@ const theme = extendTheme(
                 wordBreak: 'break-all',
                 whiteSpace: 'normal',
                 letterSpacing: '0',
+                _last: {
+                  bgImage: "url('/assets/images/icons/ico-arrow-01.svg')",
+                  bgPosition: 'calc(100% - 5px) center',
+                  bgRepeat: 'no-repeat',
+                }
               }
             }
         }
       },
       Badge: {
         variants: {
-          simple: {
+          state: {
             w: '90px',
             fontSize: '16px',
             lineHeight: '1.3',
@@ -179,20 +225,161 @@ const theme = extendTheme(
         }
       },
       Switch: {
-        w: '90px',
         variants: {
-          simple: {
-            w: '90px',
-            fontSize: '16px',
+          default: {
+            track: {
+              width: '36px',
+              height: '16px',
+              p: '0',
+              border: 'solid 1px #888',
+              background: '#fff',
+              '&[data-checked]' : {
+                borderColor: '#005FB8',
+                background: '#005FB8',
+              },
+            },
+            thumb: {
+              width: '12px',
+              height: '12px',
+              m: '2px',
+              background: '#888',
+              '&[data-checked]' : {
+                background: '#fff',
+                transform: 'translateX(20px)',
+              },
+            },
+          },
+        },
+        
+      },
+      Popover: {
+        baseStyle: {
+          content: {
+            maxWidth: '400px',
+            width: 'auto',
             lineHeight: '1.3',
-            color: '#888',
-            fontWeight: 'normal',
-            textAlign: 'center',
-            p: '2px 0',
-            bg: '#e5e5e5',
+            p: '20px 20px 15px',
+            letterSpacing: '0',
+          },
+          body: {
+            p: '0',
+          }
+        },
+      },
+      Select: {
+        variants: {
+          outline: {
+            field: {
+              height: '39px',
+              borderRadius: '3px',
+              // p: '20px',
+              // m: '10px',
+              // fontSize: 'lg',
+              px: '4',
+              h: '12',
+            },
+            icon: {
+              // pr: '0',
+              '&[data-focus]' : {
+                background: '#000',
+                transform: 'translateY(0%)',
+              },
+            }
+          },
+          unstyled: {
+            field: {
+              fontSize: '18px',
+              fontWeight: 'bold',
+            },
+            icon: {
+              // pr: '0',
+            }
           }
         }
       },
+      Input: {
+        variants: {
+          outline: {
+            field: {
+              height: '39px',
+              borderRadius: '3px',
+            },
+            icon: {
+              // pr: '0',
+            }
+          }
+        }
+      },
+      Menu: {
+        variants: {
+          typeSelect: {
+            button: {
+            },
+            list: {
+              minWidth: 'auto',
+              p: '0',
+              marginTop:'-5px',
+              borderRadius: '3px',
+              bg: '#fff',
+              maxHeight: '300px',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+                height: '10px',
+                backgroundColor: '#fff',
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ddd',
+                borderRadius: '8px',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+              },
+              
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+              },
+            },
+            item: {
+              padding: '10px 25px 10px 15px',
+              color: '#1a1a1a',
+              _hover: {
+                bg: '#efefef',
+              },
+              _focus: {
+                bg: '#efefef',
+              },
+            },
+            // groupTitle: {
+            //   textTransform: 'uppercase',
+            //   color: 'white',
+            //   textAlign: 'center',
+            //   letterSpacing: 'wider',
+            //   opacity: '0.7',
+            // },
+            // command: {
+            //   opacity: '0.8',
+            //   fontFamily: 'mono',
+            //   fontSize: 'sm',
+            //   letterSpacing: 'tighter',
+            //   pl: '4',
+            // },
+            // divider: {
+            //   my: '4',
+            //   borderColor: 'white',
+            //   borderBottom: '2px dotted',
+            // },
+          },
+        }
+      },
+      // Icon: {
+      //   variants: {
+      //     typeSelectArrow: {
+      //       color: '#f55',
+      //     }
+      //   }
+      // },
     }
   }
 )

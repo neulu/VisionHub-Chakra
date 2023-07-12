@@ -41,7 +41,7 @@ export default function LoginForm() {
 
   const onSubmit : SubmitHandler<FormData> = (data : FormData) => {
     sessionStorage.setItem('isAuthenticated', 'true');
-    navigate("/clusters")
+    navigate("/project")
   }
 
   return (
@@ -55,7 +55,7 @@ export default function LoginForm() {
     >
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
         <Avatar bg="blue.700" />
-        <Heading color="blue.600">DataMesh</Heading>
+        <Heading color="blue.600">VisionHub Renewal</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" >
