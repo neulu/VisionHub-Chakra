@@ -44,6 +44,7 @@ import {
   RiNodeTree,
   RiPlayCircleLine,
   RiUser6Line,
+  RiDraftLine,
 } from 'react-icons/ri';
 import {
   LuNetwork,
@@ -67,7 +68,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: '데이터', cate: '/', icon: RiFileListLine, linkUrl: "/"},
   { name: '레이블링', cate: '/', icon: RiDatabase2Line, linkUrl: "/"},
   { name: '실행', cate: 'execution', icon: RiPlayCircleLine, linkUrl: "/execution"},
-  { name: '테스트', cate: 'test', icon: RiFileEditLine, linkUrl: "/test"},
+  { name: '테스트', cate: 'test', icon: RiDraftLine, linkUrl: "/test"},
   { name: '모니터링', cate: '/', icon: RiLineChartLine, linkUrl: "/"},
   { name: '사용자', cate: 'user', icon: RiUser6Line, linkUrl: "/user"},
   { name: '클러스터', cate: 'cluster', icon: RiNodeTree, linkUrl: "/cluster"},
@@ -95,17 +96,17 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
 
   return (
     // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
-    <Box w={{ base: 'full', sm: 'full', md: 1600, lg: 1600 }}  minH="100vh" > 
+    <Box w={{ base: 'full', sm: 'full', md: 1600, lg: 1600 }}  minH={"100vh"} > 
       <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row' }}>
-        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} display={{ base: 'none', md: 'block' }} onLogout={onLogout} />
+        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'100vh'} display={{ base: 'none', md: 'block' }} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
-          placement="left"
+          placement={"left"}
           onClose={onClose}
           returnFocusOnClose={false}
           onOverlayClick={onClose}
-          size="full">
+          size={"full"}>
           <DrawerContent>
               <SidebarContent onClose={onClose} onLogout={onLogout}/>
           </DrawerContent>
@@ -129,19 +130,18 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
   return (
     <Box
       // w={{ base: 0, md: 80 }}
-      // pos="fixed"
-      h="full"
+      pos={"relative"} h={"full"}
       {...rest}>
-      <Flex h="85" p={'0 30px'} justifyContent="space-between" alignItems="center">
-        <Flex alignItems="center">
+      <Flex h={"85"} p={'0 30px'} justifyContent={"space-between"} alignItems={"center"}>
+        <Flex alignItems={"center"}>
           <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'8px'} />
           <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'500'} letterSpacing={'0'} m={'0'}>Vision Hub</Text>
         </Flex>
 
-        <Button p={'0'} variant='none'>
+        <Button p={'0'} variant={'none'}>
           <Icon as={RiNotification2Line} fontSize={'24px'} />
         </Button>
-        <Button p={'0'} variant='none'>
+        <Button p={'0'} variant={'none'}>
           <Icon as={RiMenuLine} fontSize={'24px'} />
         </Button>
        
@@ -153,18 +153,18 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         </NavItem>
       ))}
 
-      {/* Logout Button */}
-      {/* <Box position="absolute" textAlign="center" w={"240px"} bottom={10} backgroundColor="cyon">
+      {/* account Area */}
+      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'30px'} w={'100%'} p={'0 30px'}>
         <Text>administrator</Text>
         <Center>
-          <Box w={"50%"} h={"30px"} bgColor={"teal"} borderRadius="md" style={{cursor:'pointer'}} onClick={()=>onLogout()}>
+          <Box w={"50%"} h={"30px"} bgColor={"teal"} borderRadius={"md"} style={{cursor:'pointer'}} onClick={()=>onLogout()}>
             <Flex>
-              <IconButton variant="unstyle" color="white" marginTop={-1} aria-label="open menu" icon={<FiLogOut />} />
-              <Text fontSize="md" color="white" marginTop={1} >Log out</Text>
+              <IconButton variant={"unstyle"} color={"white"} marginTop={-1} aria-label={"open menu"} icon={<FiLogOut />} />
+              <Text fontSize={"md"} color={"white"} marginTop={1} >Log out</Text>
             </Flex>
           </Box>
         </Center>
-      </Box> */}
+      </Flex>
     </Box>
   );
 };
@@ -186,27 +186,18 @@ const NavItem = ({cate, icon, children, linkUrl, ...rest }: NavItemProps) => {
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
       {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
         {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
-          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}} fontWeight={'normal'}
-          _hover={{
-            bg: '#f5f8fd',
-            color: 'black',
-          }}
-          bg='#f5f8fd'
+          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}} fontWeight={'normal'} bg={'#f5f8fd'}  _hover={{ bg: '#f5f8fd', color: 'black', }}
           {...rest}>
             {icon && (
-              <Icon mr="3" fontSize="24px" as={icon} />
+              <Icon mr={"3"} fontSize={"24px"} as={icon} />
             )}
             {children}
           </Flex>
         ) : (
-          <Flex align="center" role="group" cursor="pointer" h={'60px'} p={'0 30px'} color={'#333'} fontSize={{base: '0px', lg: '18px'}}
-          _hover={{
-            bg: '#f5f8fd',
-            color: 'black',
-          }}
+          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'60px'} p={'0 30px'} color={'#333'} fontSize={{base: '0px', lg: '18px'}}  _hover={{ bg: '#f5f8fd', color: 'black', }}
           {...rest}>
             {icon && (
-              <Icon mr="3" fontSize="24px" as={icon} />
+              <Icon mr={"3"} fontSize={"24px"} as={icon} />
             )}
             {children}
           </Flex>
@@ -224,21 +215,21 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 24 }}
-      height="20"
-      alignItems="center"
+      height={"20"}
+      alignItems={"center"}
       bg={useColorModeValue('white', 'gray.900')}
-      borderBottomWidth="1px"
+      borderBottomWidth={"1px"}
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent="flex-start"
+      justifyContent={"flex-start"}
       {...rest}>
       <IconButton
-        variant="outline"
+        variant={"outline"}
         onClick={onOpen}
-        aria-label="open menu"
+        aria-label={"open menu"}
         icon={<FiMenu />}
       />
       <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'10px'} />
-      <Text fontSize="lg" fontWeight={'500'}>Vision Hub</Text>
+      <Text fontSize={"lg"} fontWeight={'500'}>Vision Hub</Text>
     </Flex>
   );
 };

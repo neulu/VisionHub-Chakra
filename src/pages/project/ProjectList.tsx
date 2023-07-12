@@ -47,7 +47,12 @@ import {
     InputLeftElement, 
     InputRightElement,  
     useToast,
-    Tooltip
+    Tooltip,
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionPanel,
+    AccordionIcon,
   } from '@chakra-ui/react';
 
   import {
@@ -132,7 +137,7 @@ const ProjectList = () : JSX.Element => {
                                 <InputGroup>
                                     <Input variant='outline' w={'230px'} placeholder='검색어를 입력해 주세요.' _placeholder={{ color: '#bbb', letterSpacing: '-1px' }} />
                                     <InputRightElement>
-                                        <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.200'} cursor="pointer" />
+                                        <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.200'} cursor={'pointer'} />
                                     </InputRightElement>
                                 </InputGroup>
                                 <Button ml={'10px'}>
@@ -144,7 +149,6 @@ const ProjectList = () : JSX.Element => {
                                 <Menu variant='typeSelect'>
                                     <MenuButton as={Button} variant='typeSelectBtn' rightIcon={<RiArrowDownSLine />}>
                                         20줄 보기
-                                        {/* <Icon as={RiArrowDownSLine} color={'blackAlpha.300'} fontSize={'24px'} /> */}
                                     </MenuButton>
                                     <MenuList>
                                         <MenuItem>20줄 보기</MenuItem>
@@ -157,29 +161,6 @@ const ProjectList = () : JSX.Element => {
                                         <MenuItem>30줄 보기</MenuItem>
                                         <MenuItem>50줄 보기</MenuItem>
                                         <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
-                                        <MenuItem>20줄 보기</MenuItem>
-                                        <MenuItem>30줄 보기</MenuItem>
-                                        <MenuItem>50줄 보기</MenuItem>
                                         <MenuItem>20줄 보기</MenuItem>
                                         <MenuItem>30줄 보기</MenuItem>
                                         <MenuItem>50줄 보기</MenuItem>
@@ -217,8 +198,8 @@ const ProjectList = () : JSX.Element => {
                                         vh-model/starbucks/classification
                                         <Popover placement="right" >
                                             <PopoverTrigger>
-                                                <Button p={'0'} ml={'4px'} variant='none'>
-                                                    <Icon as={RiAddCircleLine} color={'blackAlpha.300'} fontSize={'24px'}  _hover={{ color:'blackAlpha.700'}}  _active={{ color:'blackAlpha.700'}} />
+                                                <Button variant='typePopoverBtn'>
+                                                    <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
                                             <Portal>
@@ -278,8 +259,8 @@ const ProjectList = () : JSX.Element => {
                                         vh-model/starbuckn
                                         <Popover placement="right" >
                                             <PopoverTrigger>
-                                                <Button p={'0'} ml={'4px'} variant='none'>
-                                                    <Icon as={RiAddCircleLine} color={'blackAlpha.300'} fontSize={'24px'}  _hover={{ color:'blackAlpha.700'}}  _active={{ color:'blackAlpha.700'}} />
+                                                <Button variant='typePopoverBtn'>
+                                                    <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
                                             <Portal>
@@ -339,8 +320,8 @@ const ProjectList = () : JSX.Element => {
                                         vh-model/starbucks/classification
                                         <Popover placement="right" >
                                             <PopoverTrigger>
-                                                <Button p={'0'} ml={'4px'} variant='none'>
-                                                    <Icon as={RiAddCircleLine} color={'blackAlpha.300'} fontSize={'24px'}  _hover={{ color:'blackAlpha.700'}}  _active={{ color:'blackAlpha.700'}} />
+                                                <Button variant='typePopoverBtn'>
+                                                    <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
                                             <Portal>

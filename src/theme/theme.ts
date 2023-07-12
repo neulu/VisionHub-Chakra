@@ -141,21 +141,29 @@ const theme = extendTheme(
             bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.750',
             color: props.colorMode === 'dark' ? '#000' : '#fff',
           }),
+          typePopoverBtn: {
+            fontSize: '24px',
+            color: 'blackAlpha.300',
+            padding: '0',
+            marginLeft: '4px',
+            '&:hover': {
+              color: 'blackAlpha.700',
+            },
+            '&[aria-expanded=true]': {
+              color: 'blackAlpha.700',
+            },
+          },
           typeSelectBtn: {
             border: 'solid 1px #e5e5e5',
             padding: '0 10px 0 15px',
             background: '#fff',
-            // transition: 'transform 0.2s ease-out',
             svg: {
-              // color: '#f55',
-              // transition: 'transform 0.2s ease-out',
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
             },
-            '&[data-active]': {
-              // background: '#f55',
-              // transform: 'rotate(-180deg)',
+            '&[aria-expanded=true]': {
               svg: {
-                // color: '#f00',
-                // transition: 'rotate(-180deg)',
+                transform: 'rotate(-180deg)',
               },
             },
           },
@@ -163,7 +171,16 @@ const theme = extendTheme(
             fontSize: '18px',
             fontWeight: 'bold',
             padding: '0 10px 0 0',
-            background: '#fff',
+            background: 'transparent',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
           }
         },
         defaultProps: {
@@ -373,13 +390,6 @@ const theme = extendTheme(
           },
         }
       },
-      // Icon: {
-      //   variants: {
-      //     typeSelectArrow: {
-      //       color: '#f55',
-      //     }
-      //   }
-      // },
     }
   }
 )
