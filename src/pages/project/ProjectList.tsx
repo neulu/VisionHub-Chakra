@@ -70,11 +70,22 @@ import {
     RiCloseCircleFill,
     RiFilterFill,
     RiAddCircleLine,
+    RiArrowDropLeftLine,
+    RiArrowDropRightLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
-
+  import { useNavigate } from 'react-router-dom';
 
 const ProjectList = () : JSX.Element => { 
+
+    const navigate = useNavigate();
+
+    /** 프로젝트 상세 페이지 */
+    const editCluster = (e: React.MouseEvent, projectId: string) => {
+        e.preventDefault()
+        console.log(`>> project page: ${projectId}`)
+        navigate({pathname  : `/project/${projectId}` })
+    }
 
 
     return (
@@ -170,6 +181,7 @@ const ProjectList = () : JSX.Element => {
                         </Flex>
                     </Box>
                     <Box>
+                        {/* table */}
                         <TableContainer>
                             <Table variant='simple'>
                                 <TableCaption>프로젝트 목록</TableCaption>
@@ -373,6 +385,21 @@ const ProjectList = () : JSX.Element => {
                                 </Tbody>
                             </Table>
                         </TableContainer>
+
+                        {/* pagination */}
+                        <Flex alignItems={"center"} justifyContent={"center"} w={"full"} m={'20px auto'}>
+                            <Flex alignItems={"center"} justifyContent={"center"} border={'1px solid #e5e5e5'} borderRadius={'3px'} >
+                                <Button variant={'paginationIconBtn'}>
+                                  <Icon as={RiArrowDropLeftLine} />
+                                </Button>
+                                <Button variant={'paginationBtn'}>1</Button>
+                                <Button variant={'paginationBtn'}>2</Button>
+                                <Button variant={'paginationBtn'}>3</Button>
+                                <Button variant={'paginationIconBtn'}>
+                                  <Icon as={RiArrowDropRightLine} />
+                                </Button>
+                            </Flex>
+                        </Flex>
                     </Box>
                 </Container>
             </>} />

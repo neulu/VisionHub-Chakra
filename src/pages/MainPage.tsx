@@ -15,9 +15,25 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
+  Stack,
   Image, 
   useColorMode,
-  Center
+  Avatar,
+  Center,
+  Popover,
+  Portal,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  // MenuArrow,
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -45,6 +61,7 @@ import {
   RiPlayCircleLine,
   RiUser6Line,
   RiDraftLine,
+  RiSettings3Line,
 } from 'react-icons/ri';
 import {
   LuNetwork,
@@ -96,9 +113,9 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
 
   return (
     // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
-    <Box w={{ base: 'full', sm: 'full', md: 1600, lg: 1600 }}  minH={"100vh"} > 
-      <Flex flexDirection={{ base: 'column', sm: 'column', md: 'row' }}>
-        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'100vh'} display={{ base: 'none', md: 'block' }} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
+    <Box w={{ sm: 'full', md: 1600}}  minH={"100vh"} > 
+      <Flex flexDirection={{ sm: 'column', md: 'row' }}>
+        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'none', md: 'block' }} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
@@ -113,7 +130,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
         </Drawer>
         {/* mobilenav */}
         <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-        <Box w={{ base: 'full', sm: 'full', md: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ base: '10px', sm: '10px', md: '30px 0px 30px 30px' }} >
+        <Box w={{ sm: 'full', md: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ sm: '10px', md: '30px 0px 30px 30px' }} >
           {children}
         </Box>
       </Flex>
@@ -138,12 +155,13 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
           <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'500'} letterSpacing={'0'} m={'0'}>Vision Hub</Text>
         </Flex>
 
-        <Button p={'0'} variant={'none'}>
+        <Button pos={{ md: 'absolute', lg: 'relative' }} bottom={{ md: '90px', lg: 'auto' }} p={'0'} variant={'none'} >
           <Icon as={RiNotification2Line} fontSize={'24px'} />
         </Button>
-        <Button p={'0'} variant={'none'}>
+        
+        {/* <Button p={'0'} variant={'none'}>
           <Icon as={RiMenuLine} fontSize={'24px'} />
-        </Button>
+        </Button> */}
        
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -154,16 +172,35 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       ))}
 
       {/* account Area */}
-      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'30px'} w={'100%'} p={'0 30px'}>
-        <Text>administrator</Text>
-        <Center>
-          <Box w={"50%"} h={"30px"} bgColor={"teal"} borderRadius={"md"} style={{cursor:'pointer'}} onClick={()=>onLogout()}>
-            <Flex>
-              <IconButton variant={"unstyle"} color={"white"} marginTop={-1} aria-label={"open menu"} icon={<FiLogOut />} />
-              <Text fontSize={"md"} color={"white"} marginTop={1} >Log out</Text>
-            </Flex>
-          </Box>
-        </Center>
+      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'40px'} w={'100%'} p={{ md: '0 25px', lg: '0 30px' }}>
+        <Flex alignItems={"center"}>
+          <Stack direction={"row"} alignItems={"center"}  mr={'4px'} gap={'0'}>
+            <Menu placement="right">
+              <MenuButton>
+                <Avatar
+                  boxSize={"33px"}
+                  maxW={'33px'}
+                  borderRadius={'full'}
+                  src={"https://bit.ly/sage-adebayo"}
+                  name={'홍길동'}
+                />
+              </MenuButton>
+              <MenuList display={{ md: 'block', lg: 'none' }} >
+                {/* <MenuArrow /> */}
+                <MenuItem>내 정보 관리</MenuItem>
+                <MenuItem onClick={()=>onLogout()}>로그아웃</MenuItem>
+              </MenuList>
+            </Menu>
+            <Text display={{ md: 'none', lg: 'block' }} fontSize={'lg'} m={'0 0 0 8px'}>홍길동</Text>
+          </Stack>
+          
+          <Button display={{ md: 'none', lg: 'block' }} h={'auto'} p={'0'} variant={'none'}>
+            <Icon as={RiSettings3Line} fontSize={'24px'} />
+          </Button>
+        </Flex>
+        <Button variant={'grayRoundBtn'} display={{ md: 'none', lg: 'block' }} onClick={()=>onLogout()}>
+            로그아웃
+        </Button>
       </Flex>
     </Box>
   );
@@ -184,7 +221,6 @@ const NavItem = ({cate, icon, children, linkUrl, ...rest }: NavItemProps) => {
   // console.log('** 폴더 경로임=>> ' + linkUrl)
   return (
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
-      {/* <Link to={linkUrl}  style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}  _activeLink={{fontWeight:'bold'}} > */}
         {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
           <Flex align={"center"} role={"group"} cursor={"pointer"} h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}} fontWeight={'normal'} bg={'#f5f8fd'}  _hover={{ bg: '#f5f8fd', color: 'black', }}
           {...rest}>

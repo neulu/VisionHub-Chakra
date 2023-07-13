@@ -141,6 +141,39 @@ const theme = extendTheme(
             bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.750',
             color: props.colorMode === 'dark' ? '#000' : '#fff',
           }),
+          grayRoundBtn: {
+            h: '28px',
+            // fontSize: '24px',
+            color: '#000',
+            borderRadius: 'full',
+            padding: '0 10px',
+            bg: '#999',
+            '&:hover': {
+              color: '#fff',
+              bg: '#000',
+            },
+          },
+          paginationBtn: {
+            // fontSize: '24px',
+            color: '#000',
+            padding: '0 7px',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+            '&:active': {
+              fontWeight: 'bold',
+              color: '#005FB8',
+              textDecoration: 'underline',
+            },
+          },
+          paginationIconBtn: {
+            fontSize: '24px',
+            color: 'blackAlpha.300',
+            padding: '0',
+            '&:hover': {
+              color: 'blackAlpha.700',
+            },
+          },
           typePopoverBtn: {
             fontSize: '24px',
             color: 'blackAlpha.300',
@@ -390,6 +423,16 @@ const theme = extendTheme(
           },
         }
       },
+      // FormControl: {
+      //   variants: {
+      //     typeLogin: {
+      //       display: 'flex',
+      //       Label: {
+      //         fontSize: '30px',
+      //       }
+      //     }
+      //   }
+      // },
     }
   }
 )

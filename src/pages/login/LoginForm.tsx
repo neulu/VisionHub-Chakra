@@ -13,11 +13,14 @@ import {
   Link,
   Avatar,
   FormControl,
+  FormLabel,
   FormHelperText,
-  InputRightElement
+  InputRightElement,
+  IconButton
 } from "@chakra-ui/react";
 import { useNavigate } from 'react-router';
 import { FaUserAlt, FaLock } from "react-icons/fa";
+import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 export default function LoginForm() {
@@ -45,55 +48,37 @@ export default function LoginForm() {
   }
 
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.100"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
-        <Avatar bg="blue.700" />
-        <Heading color="blue.600">VisionHub Renewal</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />
-                  <Input {...register("username", { required: true, minLength : 6 } )} type="text" name="username" autoComplete="off" placeholder="Username" onBlur={()=>clearErrors('username')} />
-                </InputGroup>     
-                {errors.username && errors.username.type === "required" && (<Text fontSize='xs'>Please enter a username</Text>) }
-                {errors.username && errors.username.type === "minLength" && (<Text fontSize='xs'>Please enter a username of at least 6 characters</Text>) }  
-              </FormControl>            
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement pointerEvents="none" color="gray.300" children={<CFaLock color="gray.300" />} />
-                  <Input { ...register("password", { required: true, minLength : 6 } )} type={showPassword ? "text" : "password"} name="password" autoComplete="off" placeholder="Password" onBlur={()=>clearErrors('password')} />
-                  <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}> {showPassword ? "Hide" : "Show"}</Button>
-                  </InputRightElement>              
-                </InputGroup>
-                {errors.password && errors.password.type === "required" && (<Text fontSize='xs'>Please enter a password</Text>) }
-                {errors.password && errors.password.type === "minLength" && (<Text fontSize='xs'>Please enter a password of at least 6 characters</Text>) }
-                <FormHelperText textAlign="right">
-                  <Link>forgot password?</Link>
-                </FormHelperText>
-              </FormControl>
-              <Button type="submit" borderRadius={5} variant="solid" colorScheme="blue" width="full">
-                Login
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Stack>
-      <Box>
-        Create new account?{" "}
-        <Link color="blue.600" href="#">
-          Sign Up
-        </Link>
+    <Flex flexDirection={"column"} w={"100wh"} h={"100vh"} justifyContent={"center"} alignItems={"center"}>
+
+      <Heading mb={'30px'}>Vision Hub</Heading>
+      <Box w={{ base: "90%", md: "700px" }} border={'solid 1px #000'} p={{ base: "20px 30px", md: "35px 100px 50px" }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+
+          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-end'} p={'10px 0'}>
+            <FormLabel w={'180px'} fontSize={'24px'} fontWeight={'500'} m={'0'}>아이디</FormLabel>
+            <Input {...register("username", { required: true, minLength : 6 } )} type={"text"} name={"username"} autoComplete={"off"} onBlur={()=>clearErrors('username')} w={'calc(100% - 180px)'} placeholder={"아이디를 입력해주세요."} />
+            {errors.username && errors.username.type === "required" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a username</Text>) }
+            {errors.username && errors.username.type === "minLength" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a username of at least 6 characters</Text>) }
+          </FormControl>
+          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-end'} p={'10px 0'}>
+            <FormLabel w={'180px'} fontSize={'24px'} fontWeight={'500'} m={'0'}>비밀번호</FormLabel>
+            <InputGroup w={'calc(100% - 180px)'}>
+              <Input { ...register("password", { required: true, minLength : 6 } )} type={showPassword ? "text" : "password"} name={"password"} autoComplete={"off"} placeholder={"비밀번호를 입력해주세요."} />
+              <InputRightElement mr={'3px'}>
+                {/* 비밀번호 hidden icon={<RiEyeOffFill />} / 비밀번호 view icon={<RiEyeFill />} */}
+                <IconButton aria-label='password-hidden' icon={<RiEyeOffFill />} variant={'none'} color={'blackAlpha.400'} fontSize={'24px'} onClick={handleShowClick} />
+              </InputRightElement>
+            </InputGroup>
+            {errors.password && errors.password.type === "required" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a password</Text>) }
+            {errors.password && errors.password.type === "minLength" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a password of at least 6 characters</Text>) }
+          </FormControl>
+
+            <Button type={"submit"} w={"full"} mt={'30px'}>
+              로그인
+            </Button>
+        </form>
       </Box>
+
     </Flex>
   );
 };
