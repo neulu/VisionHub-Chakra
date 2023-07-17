@@ -49,17 +49,11 @@ import {
   } from '@chakra-ui/react';
   import {
     RiUserSettingsLine,
-    RiArrowDownSLine,
-    RiFilterFill,
-    RiCloseCircleFill,
-    RiAddCircleLine,
-    RiArrowDropLeftLine,
-    RiArrowDropRightLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
 
-const ExecutionList = () : JSX.Element => { 
+const ExecutionWrite = () : JSX.Element => { 
 
     const navigate = useNavigate();
 
@@ -87,7 +81,7 @@ const ExecutionList = () : JSX.Element => {
                     </Box>
 
                     <Box mb={5}>
-                        실행 ExecutionList  ... 
+                        실행 ExecutionWrite  ... 
                     </Box>
                 </Container>
             </>} />
@@ -97,4 +91,4 @@ const ExecutionList = () : JSX.Element => {
 
 
 
-export default ExecutionList;
+export default ExecutionWrite;

@@ -54,19 +54,19 @@ export default function LoginForm() {
       <Box w={{ base: "90%", md: "700px" }} border={'solid 1px #000'} p={{ base: "20px 30px", md: "35px 100px 50px" }}>
         <form onSubmit={handleSubmit(onSubmit)}>
 
-          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-end'} p={'10px 0'}>
+          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-start'} p={'10px 0'}>
             <FormLabel w={'180px'} fontSize={'24px'} fontWeight={'500'} m={'0'}>아이디</FormLabel>
-            <Input {...register("username", { required: true, minLength : 6 } )} type={"text"} name={"username"} autoComplete={"off"} onBlur={()=>clearErrors('username')} w={'calc(100% - 180px)'} placeholder={"아이디를 입력해주세요."} />
+            <Input {...register("username", { required: true, minLength : 6 } )} type={"text"} name={"username"} autoComplete={"off"} onBlur={()=>clearErrors('username')} variant={'typeLogin'} w={'calc(100% - 180px)'} placeholder={"아이디를 입력해주세요."} />
             {errors.username && errors.username.type === "required" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a username</Text>) }
             {errors.username && errors.username.type === "minLength" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a username of at least 6 characters</Text>) }
           </FormControl>
-          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-end'} p={'10px 0'}>
+          <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-start'} p={'10px 0'}>
             <FormLabel w={'180px'} fontSize={'24px'} fontWeight={'500'} m={'0'}>비밀번호</FormLabel>
             <InputGroup w={'calc(100% - 180px)'}>
-              <Input { ...register("password", { required: true, minLength : 6 } )} type={showPassword ? "text" : "password"} name={"password"} autoComplete={"off"} placeholder={"비밀번호를 입력해주세요."} />
+              <Input { ...register("password", { required: true, minLength : 6 } )} type={showPassword ? "text" : "password"} name={"password"} autoComplete={"off"} variant={'typeLogin'} placeholder={"비밀번호를 입력해주세요."} />
               <InputRightElement mr={'3px'}>
                 {/* 비밀번호 hidden icon={<RiEyeOffFill />} / 비밀번호 view icon={<RiEyeFill />} */}
-                <IconButton aria-label='password-hidden' icon={<RiEyeOffFill />} variant={'none'} color={'blackAlpha.400'} fontSize={'24px'} onClick={handleShowClick} />
+                <IconButton aria-label={'password-hidden'} icon={<RiEyeOffFill />} variant={'none'} color={'blackAlpha.400'} fontSize={'24px'} onClick={handleShowClick} />
               </InputRightElement>
             </InputGroup>
             {errors.password && errors.password.type === "required" && (<Text pos={'absolute'} bottom={'-15px'} left={'180px'} fontSize={'sm'} color={'red.500'} >* Please enter a password</Text>) }

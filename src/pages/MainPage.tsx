@@ -69,8 +69,8 @@ import {
 
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
-import { useNavigate } from 'react-router';
-import { Link } from "react-router-dom";
+// import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LinkItemProps {
   name: string;
@@ -111,6 +111,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
     navigate("/login");
   }
 
+
   return (
     // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
     <Box w={{ sm: 'full', md: 1600}}  minH={"100vh"} > 
@@ -144,6 +145,17 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
+
+  const navigate = useNavigate();
+  // 알람 list page
+  const alarmList = () => {
+    navigate({pathname  : '/common/alarmList' })
+  }
+  // 내 정보 관리 list page
+  const accountMng = () => {
+    navigate({pathname  : '/common/accountMng' })
+  }
+
   return (
     <Box
       // w={{ base: 0, md: 80 }}
@@ -155,11 +167,11 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
           <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'500'} letterSpacing={'0'} m={'0'}>Vision Hub</Text>
         </Flex>
 
-        <Button pos={{ md: 'absolute', lg: 'relative' }} bottom={{ md: '90px', lg: 'auto' }} p={'0'} variant={'none'} >
+        <Button onClick={alarmList}  pos={{ md: 'absolute', lg: 'relative' }} bottom={{ md: '90px', lg: 'auto' }} p={'0'} variant={'none'} >
           <Icon as={RiNotification2Line} fontSize={'24px'} />
         </Button>
         
-        {/* <Button p={'0'} variant={'none'}>
+        {/* <Button p={'0'} variant={'none'}> 
           <Icon as={RiMenuLine} fontSize={'24px'} />
         </Button> */}
        
@@ -187,14 +199,14 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
               </MenuButton>
               <MenuList display={{ md: 'block', lg: 'none' }} >
                 {/* <MenuArrow /> */}
-                <MenuItem>내 정보 관리</MenuItem>
+                <MenuItem onClick={accountMng}>내 정보 관리</MenuItem>
                 <MenuItem onClick={()=>onLogout()}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
             <Text display={{ md: 'none', lg: 'block' }} fontSize={'lg'} m={'0 0 0 8px'}>홍길동</Text>
           </Stack>
           
-          <Button display={{ md: 'none', lg: 'block' }} h={'auto'} p={'0'} variant={'none'}>
+          <Button onClick={accountMng} display={{ md: 'none', lg: 'block' }} h={'auto'} p={'0'} variant={'none'}>
             <Icon as={RiSettings3Line} fontSize={'24px'} />
           </Button>
         </Flex>

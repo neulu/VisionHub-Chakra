@@ -36,11 +36,9 @@ const theme = extendTheme(
     breakpoints,
     config,
     spacing ,
-
     // fonts: {
-    //     heading: 'NanumSquareAc',
-    //     body: 'NanumSquareAc',
-    //   },
+    //   heading: 'NanumSquareAc',
+    //   body: 'NanumSquareAc',
     // },
     colors: {
       blackAlpha: {
@@ -53,7 +51,7 @@ const theme = extendTheme(
       global: {
         'html, body': {
           // 1rem 기준 =>> 16px
-          fontFamily:'NanumSquare',
+          // fontFamily:'NanumSquareAc',
           fontSize: '16px', 
           lineHeight: '1',
           letterSpacing: '-1px',
@@ -121,7 +119,7 @@ const theme = extendTheme(
       },
       Button: {
         baseStyle: {
-          fontFamily:'NanumSquare',
+          // fontFamily:'NanumSquare',
           lineHeight: '1',
           letterSpacing: '-1px',
           borderRadius: '3px',
@@ -141,6 +139,17 @@ const theme = extendTheme(
             bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.750',
             color: props.colorMode === 'dark' ? '#000' : '#fff',
           }),
+          typeGrayBtn: {
+            // h: '28px',
+            // fontSize: '24px',
+            color: '#000',
+            // padding: '0 10px',
+            bg: '#999',
+            '&:hover': {
+              color: '#fff',
+              bg: '#000',
+            },
+          },
           grayRoundBtn: {
             h: '28px',
             // fontSize: '24px',
@@ -214,7 +223,24 @@ const theme = extendTheme(
                 transform: 'rotate(-180deg)',
               },
             },
-          }
+          },
+          typeSelectWriteBtn: {
+            w: 'calc(100% - 200px)',
+            h: '32px',
+            textAlign: 'left',
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px 0 15px',
+            background: '#fff',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          },
         },
         defaultProps: {
           size: 'md', // default is md
@@ -229,7 +255,7 @@ const theme = extendTheme(
                 display: 'none',
               },
               th: {
-                fontFamily:'NanumSquare',
+                // fontFamily:'NanumSquare',
                 textTransform: "none",
                 fontSize: '16px',
                 fontWeight: '500',
@@ -241,7 +267,7 @@ const theme = extendTheme(
                 letterSpacing: '-1px',
               },
               td: {
-                fontFamily:'NanumSquare',
+                // fontFamily:'NanumSquare',
                 fontSize: '16px',
                 lineHeight: '1.3',
                 color: '#888',
@@ -256,6 +282,13 @@ const theme = extendTheme(
                   bgPosition: 'calc(100% - 5px) center',
                   bgRepeat: 'no-repeat',
                 }
+              },
+              tr: {
+                '&:hover': {
+                  td: {
+                    backgroundColor: '#f9f9f9',
+                  }
+                },
               }
             }
         }
@@ -271,6 +304,24 @@ const theme = extendTheme(
             textAlign: 'center',
             p: '2px 0',
             bg: '#e5e5e5',
+          },
+          category: {
+            h: '28px',
+            fontSize: '16px',
+            lineHeight: '1.6',
+            color: '#000',
+            fontWeight: 'normal',
+            borderRadius: 'full',
+            p: '0px 15px',
+            mr: '30px',
+            bg: '#999',
+          },
+          point: {
+            fontSize: '16px',
+            color: '#e79494',
+            fontWeight: 'normal',
+            p: '0px',
+            textTransform: 'none',
           }
         }
       },
@@ -349,15 +400,52 @@ const theme = extendTheme(
       },
       Input: {
         variants: {
-          outline: {
+          // outline: { #3725FF
+          //   field: {
+          //     height: '39px',
+          //     borderRadius: '3px',
+          //   },
+          // },
+          typeLogin: {
             field: {
               height: '39px',
+              border: 'solid 1px #dedede',
               borderRadius: '3px',
+              // '&:focus': {
+              //   borderColor: '#3725FF',
+              // },
             },
-            icon: {
-              // pr: '0',
-            }
-          }
+          },
+          typeWrite: {
+            field: {
+              height: '32px',
+              border: 'solid 1px #dedede',
+              borderRadius: '3px',
+              '&::placeholder': {
+                color: '#ccc',
+              },
+              '&:focus': {
+                borderColor: '#3725FF',
+              },
+            },
+          },
+        }
+      },
+      Textarea: {
+        variants: {
+          typeWrite: {
+            
+            height: '150px',
+            border: 'solid 1px #dedede',
+            borderRadius: '3px',
+            '&::placeholder': {
+              color: '#ccc',
+            },
+            '&:focus': {
+              borderColor: '#3725FF',
+            },
+           
+          },
         }
       },
       Menu: {
@@ -421,18 +509,101 @@ const theme = extendTheme(
             //   borderBottom: '2px dotted',
             // },
           },
+          typeWrite: {
+            button: {
+            },
+            list: {
+              w: '1070px', //calc(100% - 200px)',
+              p: '0',
+              marginTop:'-5px',
+              borderRadius: '3px',
+              border: 'solid 1px #dedede',
+              bg: '#fff',
+              maxHeight: '300px',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+                height: '10px',
+                backgroundColor: '#fff',
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ddd',
+                borderRadius: '8px',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+              },
+              
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+              },
+            },
+            item: {
+              padding: '10px 25px 10px 15px',
+              color: '#1a1a1a',
+              _hover: {
+                bg: '#efefef',
+              },
+              _focus: {
+                bg: '#efefef',
+              },
+            },
+          },
         }
       },
-      // FormControl: {
-      //   variants: {
-      //     typeLogin: {
-      //       display: 'flex',
-      //       Label: {
-      //         fontSize: '30px',
-      //       }
-      //     }
-      //   }
-      // },
+      Text: {
+        variants: {
+          typeDltSm: {
+            w: '85px',
+            // fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#666',
+          },
+          typeDldSm: {
+            w: 'calc(100% - 85px)',
+            // fontSize: '16px',
+            color: '#666',
+          },
+          typeDltLg: {
+            w: '200px',
+            // fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#000',
+          },
+          typeDldLg: {
+            w: 'calc(100% - 200px)',
+            // fontSize: '16px',
+            color: '#666',
+            letterSpacing: '0',
+          },
+          typeDltXl: {
+            // w: '100px',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: '#000',
+            m: '0',
+          },
+          typeDldXl: {
+            // w: 'calc(100% - 100px)',
+            fontSize: '18px',
+            color: '#000',
+            letterSpacing: '0',
+            m: '0',
+          },
+          typeAlarm: {
+            color: '#000',
+            fontWeight: 'bold',
+            letterSpacing: '0',
+            m: '0',
+          },
+          typeDate: {
+            color: '#000',
+            letterSpacing: '0',
+            m: '0',
+          },
+        }
+      },
     }
   }
 )

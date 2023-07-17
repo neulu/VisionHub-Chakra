@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Global} from '@emotion/react'
 
-export const Fonts = () => (
+const Fonts = () => ( //export const Fonts = () => (
   <Global
     styles={`
       /* Copied from https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css */
@@ -51,7 +51,7 @@ export const Fonts = () => (
        @font-face {
         font-family: 'NanumSquareAc';
         font-weight: 400;
-        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcR.eot);
+        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcR.woff2);
         src: local('☺'),
              url(NanumSquareAcR.eot?#iefix) format('embedded-opentype'),
              url(NanumSquareAcR.woff2) format('woff2'),
@@ -61,7 +61,7 @@ export const Fonts = () => (
        @font-face {
         font-family: 'NanumSquareAc';
         font-weight: 700;
-        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcB.eot);
+        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcB.woff2);
         src: local('☺'),
              url(NanumSquareAcB.eot?#iefix) format('embedded-opentype'),
              url(NanumSquareAcB.woff2) format('woff2'),
@@ -71,7 +71,7 @@ export const Fonts = () => (
        @font-face {
         font-family: 'NanumSquareAc';
         font-weight: 800;
-        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcEB.eot);
+        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcEB.woff2);
         src: local('☺'),
              url(NanumSquareAcEB.eot?#iefix) format('embedded-opentype'),
              url(NanumSquareAcEB.woff2) format('woff2'),
@@ -81,7 +81,7 @@ export const Fonts = () => (
        @font-face {
         font-family: 'NanumSquareAc';
         font-weight: 300;
-        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcL.eot);
+        src: url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/NanumSquareAcL.woff2);
         src: local('☺'),
              url(NanumSquareAcL.eot?#iefix) format('embedded-opentype'),
              url(NanumSquareAcL.woff2) format('woff2'),
@@ -91,3 +91,5 @@ export const Fonts = () => (
       `}
   />
 )
+
+export default Fonts

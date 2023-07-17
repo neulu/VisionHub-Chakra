@@ -46,25 +46,9 @@ import {
     InputGroup,
     InputLeftElement, 
     InputRightElement,  
-    useToast,
-    Tooltip,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
   } from '@chakra-ui/react';
 
   import {
-    RiNotification2Line,
-    RiMenuLine,
-    RiMore2Fill,
-    RiBarChartBoxLine,
-    RiCloseFill,
-    RiFileListLine,
-    RiLineChartLine,
-    RiFlowChart,
-    RiDatabase2Line,
     RiUserSettingsLine,
     RiArrowDownSLine,
     RiCloseCircleFill,
@@ -74,47 +58,44 @@ import {
     RiArrowDropRightLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
-  import { useNavigate } from 'react-router-dom';
+  import { Link, useNavigate } from 'react-router-dom';
 
 const ProjectList = () : JSX.Element => { 
 
     const navigate = useNavigate();
 
-    /** 프로젝트 상세 페이지 */
-    const editCluster = (e: React.MouseEvent, projectId: string) => {
-        e.preventDefault()
-        console.log(`>> project page: ${projectId}`)
-        navigate({pathname  : `/project/${projectId}` })
+    // 프로젝트 추가 page
+    const writeProject = () => {
+        navigate({pathname  : '/project/ProjectWrite' })
     }
-
 
     return (
         <>
             <MainPage children={<>
                 <Container>
                     <Box mb={5}>
-                        <Flex align="center" justifyContent={'space-between'}>
+                        <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
                                 <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>프로젝트</Heading>
-                                <Button variant='outline' color={'blackAlpha.200'} w={'34px'} h={'34px'} p={'0'} ml={'20px'}>
+                                <Button variant={'outline'} color={'blackAlpha.200'} w={'34px'} h={'34px'} p={'0'} ml={'20px'}>
                                     <Icon as={RiUserSettingsLine}  color={'blackAlpha.300'} fontSize={'24px'} />
                                 </Button>
                             </Flex>
-                            <Button>
-                                프로젝트 추가
-                            </Button>
+                            <HStack spacing={"10px"}>
+                                <Button onClick={writeProject}>프로젝트 추가</Button>
+                            </HStack>
                         </Flex>
                     </Box>
 
                     <Box mb={5}>
                         <Flex justifyContent={'space-between'}>
                             <Flex whiteSpace={'normal'} alignItems={'center'}>
-                                <Text fontSize='lg' whiteSpace={'nowrap'} m={'0'}>프로젝트 (총3개)</Text>
+                                <Text fontSize={'lg'} whiteSpace={'nowrap'} m={'0'}>프로젝트 (총3개)</Text>
                                 <Center h={'38px'} p={'0 10px'}>
-                                    <Divider orientation='vertical' w={'2px'} h={'10px'} bg={'black'} />
+                                    <Divider orientation={'vertical'} w={'2px'} h={'10px'} bg={'black'} />
                                 </Center>
-                                <Menu variant='typeSelect'>
-                                    <MenuButton as={Button} variant='typeSelectBtnLineNone' rightIcon={<RiArrowDownSLine />}>
+                                <Menu variant={'typeSelect'}>
+                                    <MenuButton as={Button} variant={'typeSelectBtnLineNone'} rightIcon={<RiArrowDownSLine />}>
                                         전체 저장소
                                     </MenuButton>
                                     <MenuList>
@@ -123,19 +104,19 @@ const ProjectList = () : JSX.Element => {
                                         <MenuItem>명화(신성) 6th 프로젝트</MenuItem>
                                     </MenuList>
                                 </Menu>
-                                <Button variant='solid' color={'blackAlpha.900'} w={'38px'} h={'38px'} p={'0 7px'}>
+                                <Button variant={'solid'} color={'blackAlpha.900'} w={'38px'} h={'38px'} p={'0 7px'}>
                                     <Icon as={RiFilterFill}  color={'white'} fontSize={'24px'} />
                                 </Button>
                                 <Flex alignItems={'center'}>
                                     <Box display={'flex'} alignItems={'center'} h={'38px'} color={'blackAlpha.800'} borderRadius={' full'} bg={'blackAlpha.200'} ml={'10px'} p={'0 15px'} whiteSpace={'nowrap'} >
                                        생성중
-                                        <Button p={'0'} ml={'5px'} variant='none'>
+                                        <Button p={'0'} ml={'5px'} variant={'none'}>
                                             <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.500'} />
                                         </Button>
                                     </Box>
                                     <Box display={'flex'} alignItems={'center'} h={'38px'} color={'blackAlpha.800'} borderRadius={' full'} bg={'blackAlpha.200'} ml={'10px'} p={'0 15px'} whiteSpace={'nowrap'} >
                                        종료
-                                        <Button p={'0'} ml={'5px'} variant='none'>
+                                        <Button p={'0'} ml={'5px'} variant={'none'}>
                                             <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.500'} />
                                         </Button>
                                     </Box>
@@ -143,10 +124,10 @@ const ProjectList = () : JSX.Element => {
                             </Flex>
                             <Flex whiteSpace={'normal'} alignItems={'center'}>
                                 <Center h={'38px'} p={'0 10px'}>
-                                    <Divider orientation='vertical' h={'38px'} bg={'#efefef'} />
+                                    <Divider orientation={'vertical'} h={'38px'} bg={'#efefef'} />
                                 </Center>
                                 <InputGroup>
-                                    <Input variant='outline' w={'230px'} placeholder='검색어를 입력해 주세요.' _placeholder={{ color: '#bbb', letterSpacing: '-1px' }} />
+                                    <Input variant={'outline'} w={'230px'} placeholder={'검색어를 입력해 주세요.'} _placeholder={{ color: '#bbb', letterSpacing: '-1px' }} />
                                     <InputRightElement>
                                         <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.200'} cursor={'pointer'} />
                                     </InputRightElement>
@@ -155,10 +136,10 @@ const ProjectList = () : JSX.Element => {
                                     검색
                                 </Button>
                                 <Center h={'38px'} p={'0 10px'}>
-                                    <Divider orientation='vertical' h={'38px'} bg={'#efefef'} />
+                                    <Divider orientation={'vertical'} h={'38px'} bg={'#efefef'} />
                                 </Center>
-                                <Menu variant='typeSelect'>
-                                    <MenuButton as={Button} variant='typeSelectBtn' rightIcon={<RiArrowDownSLine />}>
+                                <Menu variant={'typeSelect'}>
+                                    <MenuButton as={Button} variant={'typeSelectBtn'} rightIcon={<RiArrowDownSLine />}>
                                         20줄 보기
                                     </MenuButton>
                                     <MenuList>
@@ -183,7 +164,7 @@ const ProjectList = () : JSX.Element => {
                     <Box>
                         {/* table */}
                         <TableContainer>
-                            <Table variant='simple'>
+                            <Table variant={'simple'}>
                                 <TableCaption>프로젝트 목록</TableCaption>
                                 <Thead>
                                 <Tr>
@@ -200,17 +181,26 @@ const ProjectList = () : JSX.Element => {
                                 </Thead>
                                 <Tbody>
                                 <Tr>
+                                    <Td colSpan={9} p={'100px 0'} bg={'none !important'}>
+                                        내용이 없습니다.
+                                    </Td>
+                                </Tr>
+                                <Tr>
                                     <Td>15</Td>
-                                    <Td>명화(신성) 4th 프로젝트</Td>
                                     <Td>
-                                        <Badge variant='state'>생성중</Badge>
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
+                                        </Link>
+                                    </Td>
+                                    <Td>
+                                        <Badge variant={'state'}>생성중</Badge>
                                     </Td>
                                     <Td>eum-starbucks</Td>
                                     <Td>
                                         vh-model/starbucks/classification
-                                        <Popover placement="right" >
+                                        <Popover placement={"right"} >
                                             <PopoverTrigger>
-                                                <Button variant='typePopoverBtn'>
+                                                <Button variant={'typePopoverBtn'}>
                                                     <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
@@ -222,16 +212,16 @@ const ProjectList = () : JSX.Element => {
                                                     <SimpleGrid spacing={30}>
                                                         <VStack align={'top'} gap={'0'}>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>생성일자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>2023-06-30 15:09:41</Text>
+                                                                <Text variant={'typeDltSm'}>생성일자</Text>
+                                                                <Text variant={'typeDldSm'}>2023-06-30 15:09:41</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>작성자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>vh-admin</Text>
+                                                                <Text variant={'typeDltSm'}>작성자</Text>
+                                                                <Text variant={'typeDldSm'}>vh-admin</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>설명</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라</Text>
+                                                                <Text variant={'typeDltSm'}>설명</Text>
+                                                                <Text variant={'typeDldSm'}>td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라td 15번15번15번 이렇게 블라 블라</Text>
                                                             </HStack>
                                                         </VStack>
                                                     </SimpleGrid>
@@ -262,16 +252,20 @@ const ProjectList = () : JSX.Element => {
                                 </Tr>
                                 <Tr>
                                     <Td>14</Td>
-                                    <Td>명화(신성) 4th 프로젝트</Td>
                                     <Td>
-                                        <Badge variant='state'>생성중</Badge>
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
+                                        </Link>
+                                    </Td>
+                                    <Td>
+                                        <Badge variant={'state'}>생성중</Badge>
                                     </Td>
                                     <Td>eum-starbucks</Td>
                                     <Td>
                                         vh-model/starbuckn
-                                        <Popover placement="right" >
+                                        <Popover placement={"right"} >
                                             <PopoverTrigger>
-                                                <Button variant='typePopoverBtn'>
+                                                <Button variant={'typePopoverBtn'}>
                                                     <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
@@ -283,16 +277,16 @@ const ProjectList = () : JSX.Element => {
                                                     <SimpleGrid spacing={30}>
                                                         <VStack align={'top'} gap={'0'}>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>생성일자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>2023-06-30 15:09:41</Text>
+                                                                <Text variant={'typeDltSm'}>생성일자</Text>
+                                                                <Text variant={'typeDldSm'}>2023-06-30 15:09:41</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>작성자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>vh-admin</Text>
+                                                                <Text variant={'typeDltSm'}>작성자</Text>
+                                                                <Text variant={'typeDldSm'}>vh-admin</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>설명</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>td 14번14번14번 이렇게 블라 블라td 14번 블라 블라</Text>
+                                                                <Text variant={'typeDltSm'}>설명</Text>
+                                                                <Text variant={'typeDldSm'}>td 14번14번14번 이렇게 블라 블라td 14번 블라 블라</Text>
                                                             </HStack>
                                                         </VStack>
                                                     </SimpleGrid>
@@ -323,16 +317,20 @@ const ProjectList = () : JSX.Element => {
                                 </Tr>
                                 <Tr>
                                     <Td>13</Td>
-                                    <Td>명화(신성) 4th 프로젝트</Td>
                                     <Td>
-                                        <Badge variant='state'>생성중</Badge>
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
+                                        </Link>
+                                    </Td>
+                                    <Td>
+                                        <Badge variant={'state'}>생성중</Badge>
                                     </Td>
                                     <Td>eum-starbucks</Td>
                                     <Td>
                                         vh-model/starbucks/classification
-                                        <Popover placement="right" >
+                                        <Popover placement={"right"} >
                                             <PopoverTrigger>
-                                                <Button variant='typePopoverBtn'>
+                                                <Button variant={'typePopoverBtn'}>
                                                     <Icon as={RiAddCircleLine} />
                                                 </Button>
                                             </PopoverTrigger>
@@ -344,16 +342,16 @@ const ProjectList = () : JSX.Element => {
                                                     <SimpleGrid spacing={30}>
                                                         <VStack align={'top'} gap={'0'}>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>생성일자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>2023-06-30 15:09:41</Text>
+                                                                <Text variant={'typeDltSm'}>생성일자</Text>
+                                                                <Text variant={'typeDldSm'}>2023-06-30 15:09:41</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>작성자</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>vh-admin</Text>
+                                                                <Text variant={'typeDltSm'}>작성자</Text>
+                                                                <Text variant={'typeDldSm'}>vh-admin</Text>
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'}>
-                                                                <Text w={'85px'} fontSize={'16px'} color={'#666'} fontWeight={'bold'}>설명</Text>
-                                                                <Text w={'calc(100% - 85px)'} fontSize={'16px'} color={'#666'}>td 13 이렇게 블라 블라td  블라</Text>
+                                                                <Text variant={'typeDltSm'}>설명</Text>
+                                                                <Text variant={'typeDldSm'}>td 13 이렇게 블라 블라td  블라</Text>
                                                             </HStack>
                                                         </VStack>
                                                     </SimpleGrid>

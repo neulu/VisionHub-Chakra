@@ -30,7 +30,23 @@ import {
 
 import BoardPaging from 'components/common/BoardPaging'
 import { FiMoreHorizontal , FiMoreVertical} from 'react-icons/fi';
-import { RiCheckDoubleLine, RiStopCircleLine, RiPlayCircleLine, RiPauseMiniLine, RiEdit2Line, RiUserSettingsLine, RiLoginCircleLine, RiDeleteBin6Line, RiCloseFill } from 'react-icons/ri';
+import { 
+    RiCheckDoubleLine, 
+    RiStopCircleLine, 
+    RiPlayCircleLine, 
+    RiPauseMiniLine, 
+    RiEdit2Line, 
+    RiUserSettingsLine, 
+    RiLoginCircleLine, 
+    RiDeleteBin6Line, 
+    RiCloseFill,
+    RiArrowDownSLine,
+    RiFilterFill,
+    RiCloseCircleFill,
+    RiAddCircleLine,
+    RiArrowDropLeftLine,
+    RiArrowDropRightLine,
+} from 'react-icons/ri';
 import { LuLoader2 } from 'react-icons/lu';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons'
 

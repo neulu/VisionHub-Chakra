@@ -49,17 +49,11 @@ import {
   } from '@chakra-ui/react';
   import {
     RiUserSettingsLine,
-    RiArrowDownSLine,
-    RiFilterFill,
-    RiCloseCircleFill,
-    RiAddCircleLine,
-    RiArrowDropLeftLine,
-    RiArrowDropRightLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
 
-const ExecutionList = () : JSX.Element => { 
+const TestView = () : JSX.Element => { 
 
     const navigate = useNavigate();
 
@@ -75,7 +69,7 @@ const ExecutionList = () : JSX.Element => {
                     <Box mb={5}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>실행</Heading>
+                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>테스트</Heading>
                                 <Button variant={'outline'} color={'blackAlpha.200'} w={'34px'} h={'34px'} p={'0'} ml={'20px'}>
                                     <Icon as={RiUserSettingsLine}  color={'blackAlpha.300'} fontSize={'24px'} />
                                 </Button>
@@ -87,7 +81,7 @@ const ExecutionList = () : JSX.Element => {
                     </Box>
 
                     <Box mb={5}>
-                        실행 ExecutionList  ... 
+                        테스트 TestView  ... 
                     </Box>
                 </Container>
             </>} />
@@ -97,4 +91,4 @@ const ExecutionList = () : JSX.Element => {
 
 
 
-export default ExecutionList;
+export default TestView;
