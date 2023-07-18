@@ -45,7 +45,7 @@ const AccountMng = () : JSX.Element => {
                     <Box mb={5}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>
+                                <Heading>
                                   내 정보 관리
                                 </Heading>
                             </Flex>

@@ -36,28 +36,25 @@ const theme = extendTheme(
     breakpoints,
     config,
     spacing ,
-    // fonts: {
-    //   heading: 'NanumSquareAc',
-    //   body: 'NanumSquareAc',
+    // colors: {
+    //   blackAlpha: {
+    //     750: "RGBA(0, 0, 0, 0.70)",
+    //   },
     // },
-    colors: {
-      blackAlpha: {
-        750: "RGBA(0, 0, 0, 0.70)",
-      },
-    },
   },
   {
     styles: {
       global: {
         'html, body': {
           // 1rem 기준 =>> 16px
-          // fontFamily:'NanumSquareAc',
+          fontFamily: 'Inter',
           fontSize: '16px', 
           lineHeight: '1',
-          letterSpacing: '-1px',
+          // letterSpacing: '-1px',
           transition: 'all 0.5s ease',
-          'h2': {
-            m : '0',
+          '.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6': {
+            fontSize: '30px !important',
+            lineHeight: '1.8 !important',
           },
           '&::-webkit-scrollbar': {
             width: '12px',
@@ -87,6 +84,13 @@ const theme = extendTheme(
           w: '100%',
           maxW: '100%',
           p: '0',
+        },
+      },
+      Heading: {
+        baseStyle: {
+          fontWeight: '500',
+          fontFamily: 'Inter',
+          m : '0',
         },
       },
       Form: {
@@ -121,7 +125,7 @@ const theme = extendTheme(
         baseStyle: {
           // fontFamily:'NanumSquare',
           lineHeight: '1',
-          letterSpacing: '-1px',
+          // letterSpacing: '-1px',
           borderRadius: '3px',
         },
         sizes: {
@@ -131,12 +135,11 @@ const theme = extendTheme(
             fontSize: '16px',
             fontWeight: 'normal',
             padding: '0 10px',
-            // bg: 'blackAlpha.800',
           },
         },
         variants: {
           solid: (props: StyleFunctionProps) => ({
-            bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.750',
+            bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.700',
             color: props.colorMode === 'dark' ? '#000' : '#fff',
           }),
           typeGrayBtn: {
@@ -255,16 +258,16 @@ const theme = extendTheme(
                 display: 'none',
               },
               th: {
-                // fontFamily:'NanumSquare',
                 textTransform: "none",
                 fontSize: '16px',
-                fontWeight: '500',
+                fontWeight: 'normal',
+                fontFamily: 'Inter',
                 lineHeight: '1.3',
                 color: '#000',
                 textAlign: 'center',
                 p: '7px 5px',
                 bg: '#ccc',
-                letterSpacing: '-1px',
+                // letterSpacing: '-1px',
               },
               td: {
                 // fontFamily:'NanumSquare',
@@ -276,7 +279,7 @@ const theme = extendTheme(
                 p: '15px 5px',
                 wordBreak: 'break-all',
                 whiteSpace: 'normal',
-                letterSpacing: '0',
+                // letterSpacing: '0',
                 _last: {
                   bgImage: "url('/assets/images/icons/ico-arrow-01.svg')",
                   bgPosition: 'calc(100% - 5px) center',
@@ -295,6 +298,18 @@ const theme = extendTheme(
       },
       Badge: {
         variants: {
+	alarm: {
+            pos: 'absolute',
+            right: '0',
+            top: '0',
+            display: 'inline-block',
+            width: '4px',
+            height: '4px',
+            borderRadius: '10px',
+            fontSize: '0',
+            p: '0px',
+            bg: '#ff0000',
+          },
           state: {
             w: '90px',
             fontSize: '16px',
@@ -360,7 +375,7 @@ const theme = extendTheme(
             width: 'auto',
             lineHeight: '1.3',
             p: '20px 20px 15px',
-            letterSpacing: '0',
+            // letterSpacing: '0',
           },
           body: {
             p: '0',
@@ -575,7 +590,7 @@ const theme = extendTheme(
             w: 'calc(100% - 200px)',
             // fontSize: '16px',
             color: '#666',
-            letterSpacing: '0',
+            // letterSpacing: '0',
           },
           typeDltXl: {
             // w: '100px',
@@ -588,18 +603,18 @@ const theme = extendTheme(
             // w: 'calc(100% - 100px)',
             fontSize: '18px',
             color: '#000',
-            letterSpacing: '0',
+            // letterSpacing: '0',
             m: '0',
           },
           typeAlarm: {
             color: '#000',
             fontWeight: 'bold',
-            letterSpacing: '0',
+            // letterSpacing: '0',
             m: '0',
           },
           typeDate: {
             color: '#000',
-            letterSpacing: '0',
+            // letterSpacing: '0',
             m: '0',
           },
         }

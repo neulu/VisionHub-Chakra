@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import {
   IconButton,
+  Badge,
   Button,
   Box,
   CloseButton,
@@ -116,7 +117,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
     // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
     <Box w={{ sm: 'full', md: 1600}}  minH={"100vh"} > 
       <Flex flexDirection={{ sm: 'column', md: 'row' }}>
-        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'none', md: 'block' }} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
+        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'none', md: 'block' }} fontFamily={'NanumSquare'} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
@@ -164,13 +165,15 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       <Flex h={"85"} p={'0 30px'} justifyContent={"space-between"} alignItems={"center"}>
         <Flex alignItems={"center"}>
           <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'8px'} />
-          <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'500'} letterSpacing={'0'} m={'0'}>Vision Hub</Text>
+          <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'700'} m={'0'}>Vision Hub</Text>
         </Flex>
 
-        <Button onClick={alarmList}  pos={{ md: 'absolute', lg: 'relative' }} bottom={{ md: '90px', lg: 'auto' }} p={'0'} variant={'none'} >
+        <Button variant={'none'} pos={'relative'} w={'24px'} minW={'auto'} h={'24px'} p={'0'} >
           <Icon as={RiNotification2Line} fontSize={'24px'} />
+          {/* 알림 new 일때 Badge Show */}
+          <Badge variant={'alarm'}>New</Badge>
         </Button>
-        
+
         {/* <Button p={'0'} variant={'none'}> 
           <Icon as={RiMenuLine} fontSize={'24px'} />
         </Button> */}

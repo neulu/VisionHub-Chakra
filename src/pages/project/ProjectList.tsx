@@ -76,7 +76,7 @@ const ProjectList = () : JSX.Element => {
                     <Box mb={5}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>프로젝트</Heading>
+                                <Heading>프로젝트</Heading>
                                 <Button variant={'outline'} color={'blackAlpha.200'} w={'34px'} h={'34px'} p={'0'} ml={'20px'}>
                                     <Icon as={RiUserSettingsLine}  color={'blackAlpha.300'} fontSize={'24px'} />
                                 </Button>
@@ -127,7 +127,7 @@ const ProjectList = () : JSX.Element => {
                                     <Divider orientation={'vertical'} h={'38px'} bg={'#efefef'} />
                                 </Center>
                                 <InputGroup>
-                                    <Input variant={'outline'} w={'230px'} placeholder={'검색어를 입력해 주세요.'} _placeholder={{ color: '#bbb', letterSpacing: '-1px' }} />
+                                    <Input variant={'outline'} w={'230px'} placeholder={'검색어를 입력해 주세요.'} _placeholder={{ color: '#bbb' }} />
                                     <InputRightElement>
                                         <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.200'} cursor={'pointer'} />
                                     </InputRightElement>
