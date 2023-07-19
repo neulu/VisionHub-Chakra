@@ -151,7 +151,7 @@ const ModelView = () : JSX.Element => {
                                 <Divider variant={'dashed'} borderColor={'#ddd'} />
                                 <Flex flexDirection={'column'}>
                                     <Text variant={'typeDltSm'}>Config Data</Text>
-                                    <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'} letterSpacing={'0'} overflowY={"auto"}
+                                    <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'} overflowY={"auto"}
                                         css={{
                                             '&::-webkit-scrollbar': {
                                                 width: '6px',
@@ -253,7 +253,7 @@ const ModelView = () : JSX.Element => {
                                 <Divider variant={'dashed'} borderColor={'#ddd'} />
                                 <Flex flexDirection={'column'}>
                                     <Text variant={'typeDltSm'}>Config Data</Text>
-                                    <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'} letterSpacing={'0'} overflowY={"auto"}
+                                    <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'}  overflowY={"auto"}
                                         css={{
                                             '&::-webkit-scrollbar': {
                                                 width: '6px',
