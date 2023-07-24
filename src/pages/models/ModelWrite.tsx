@@ -53,6 +53,8 @@ import {
   import {
     RiUserSettingsLine,
     RiArrowDownSLine,
+    RiAddCircleLine,
+    RiDownloadLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
@@ -60,6 +62,7 @@ import {
 const ModelWrite = () : JSX.Element => { 
 
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     // 추가 page
     const writeModel = () => {
@@ -70,69 +73,130 @@ const ModelWrite = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}>
+                    <Box mb={'40px'}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>모델 추가</Heading>
+                                <Heading>
+                                  모델 추가
+                                </Heading>
                             </Flex>
                             <HStack spacing={"10px"}>
-                                <Button>저장</Button>
+                              <Button>저장</Button>
                               <Button variant={'typeGrayBtn'}>취소</Button>
                             </HStack>
                         </Flex>
                     </Box>
-
+                    
                     <Box>
                       {/* cont list */}
                       <SimpleGrid spacing={30}>
                           <VStack align={'top'} gap={'0'}>
-
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>모델명</FormLabel>
-                              <Input type={'text'} variant={'typeWrite'}  w={'calc(100% - 200px)'} placeholder={'모델명을 입력해주세요.'} />
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>모델명</FormLabel>
+                              <Input type={'text'} variant={'typeWrite'} placeholder={'모델명을 입력해주세요.'} />
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>클러스터</FormLabel>
-                              <Menu variant={'typeWrite'}>
-                                  <MenuButton as={Button} variant={'typeSelectWriteBtn'} rightIcon={<RiArrowDownSLine />}>
-                                    클러스터 선택
-                                  </MenuButton>
-                                  <MenuList>
-                                      <MenuItem>클러스터 11111111111111111 보기</MenuItem>
-                                      <MenuItem>클러스터 2222 보기</MenuItem>
-                                      <MenuItem>클러스터 3333333333333333 보기</MenuItem>
-                                  </MenuList>
-                              </Menu>
-                            </FormControl>
+                            <SimpleGrid templateColumns='repeat(3, 1fr)' gap={'100px'}>
+                                <FormControl variant={'typeWrite'} isRequired>
+                                  <FormLabel>버전</FormLabel>
+                                  <Menu variant={'typeFlexible'}>
+                                      <MenuButton as={Button} variant={'typeSelectWriteBtn'} rightIcon={<RiArrowDownSLine />}>
+                                        v1.1
+                                      </MenuButton>
+                                      <MenuList w={'180px'}>
+                                          <MenuItem>v1.1</MenuItem>
+                                          <MenuItem>v1.2</MenuItem>
+                                          <MenuItem>v1.3</MenuItem>
+                                      </MenuList>
+                                  </Menu>
+                                </FormControl>
+                                <FormControl variant={'typeWriteSm'} isRequired>
+                                  <FormLabel>모델학습</FormLabel>
+                                  <Menu variant={'typeFlexible'}>
+                                      <MenuButton as={Button} variant={'typeSelectBtnSm'} rightIcon={<RiArrowDownSLine />}>
+                                        학습형태 선택
+                                      </MenuButton>
+                                      <MenuList w={'180px'}>
+                                          <MenuItem>학습형태 111111</MenuItem>
+                                          <MenuItem>학습형태 2222</MenuItem>
+                                          <MenuItem>학습형태 33</MenuItem>
+                                      </MenuList>
+                                  </Menu>
+                                </FormControl>
+                                <FormControl variant={'typeWriteSm'} isRequired>
+                                  <FormLabel>저장소</FormLabel>
+                                  <Menu variant={'typeFlexible'}>
+                                      <MenuButton as={Button} variant={'typeSelectBtnSm'} rightIcon={<RiArrowDownSLine />}>
+                                        저장소 선택
+                                      </MenuButton>
+                                      <MenuList w={'180px'}>
+                                          <MenuItem>저장소 111111</MenuItem>
+                                          <MenuItem>저장소 2222</MenuItem>
+                                          <MenuItem>저장소 33</MenuItem>
+                                      </MenuList>
+                                  </Menu>
+                                </FormControl>
+                            </SimpleGrid>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>네임 스페이스</FormLabel>
-                              <Input type={'text'} variant={'typeWrite'}  w={'calc(100% - 200px)'} placeholder={'네임 스페이스를 입력해주세요.'} />
-                            </FormControl>
-
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>라이선스 기간</FormLabel>
-                                <Flex alignItems={'center'}>
-                                  <InputGroup>
-                                    <Input type={'text'} variant={'typeWrite'} w={'100px'} />
-                                    <Input type={'text'} variant={'typeWrite'} w={'60px'} ml={'-1px'} />
-                                    <Input type={'text'} variant={'typeWrite'} w={'60px'} ml={'-1px'} />
-                                  </InputGroup>
-                                  <Text m={'8px'}>~</Text>
-                                  <InputGroup>
-                                    <Input type={'text'} variant={'typeWrite'} w={'100px'} />
-                                    <Input type={'text'} variant={'typeWrite'} w={'60px'} ml={'-1px'} />
-                                    <Input type={'text'} variant={'typeWrite'} w={'60px'} ml={'-1px'} />
-                                  </InputGroup>
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>Detection</FormLabel>
+                              <Button variant={'typeSimple'} pos={'absolute'} top={'35px'} >
+                                Template file
+                                <Icon as={RiDownloadLine} fontSize={'18px'} ml={'5px'} />
+                              </Button>
+                              {/* border, icon, text color => #3725FF */}
+                              <Flex flexDirection={'column'} alignItems={'flex-end'} w={'calc(100% - 200px)'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w={'100%'} h={'120px'} border={'dashed 1px #e5e5e5'} borderRadius={'4px'} borderColor={'#3725FF'}>
+                                  <Icon as={RiAddCircleLine} fontSize={'24px'} color={'#3725FF'} mr={'10px'} />
+                                  <Text color={'#3725FF'} m={0}>
+                                    파일을 마우스로 이곳에 끌어오세요.
+                                  </Text>
+                                  <Input type={'file'} accept={'.zip'} display={'none !important'} />
                                 </Flex>
+                                <Text variant={'typeDescMd'} mt={'10px'}>최대 100MB까지 업로드 가능합니다.</Text>
+                              </Flex>
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'flex-start'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'7px 0 0'}>Detection</FormLabel>
-                              <Textarea variant={'typeWrite'} w={'calc(100% - 200px)'} placeholder={'설명을 작성해 주세요.'} />
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>Config</FormLabel>
+                              <Button variant={'typeSimple'} pos={'absolute'} top={'35px'} >
+                                Template file
+                                <Icon as={RiDownloadLine} fontSize={'18px'} ml={'5px'} />
+                              </Button>
+                              <Flex flexDirection={'column'} alignItems={'flex-end'} w={'calc(100% - 200px)'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w={'100%'} h={'120px'} border={'dashed 1px #e5e5e5'} borderRadius={'4px'}>
+                                  <Icon as={RiAddCircleLine} fontSize={'24px'} color={'#e5e5e5'} mr={'10px'} />
+                                  <Text color={'#b3b3b3'} m={0}>
+                                    파일을 마우스로 이곳에 끌어오세요.
+                                  </Text>
+                                  <Input type={'file'} accept={'.zip'} display={'none !important'} />
+                                </Flex>
+                                <Text variant={'typeDescMd'} mt={'10px'}>최대 100MB까지 업로드 가능합니다.</Text>
+                              </Flex>
                             </FormControl>
 
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>Check Point(*.pt)</FormLabel>
+                              <Button variant={'typeSimple'} pos={'absolute'} top={'35px'} >
+                                Template file
+                                <Icon as={RiDownloadLine} fontSize={'18px'} ml={'5px'} />
+                              </Button>
+                              <Flex flexDirection={'column'} alignItems={'flex-end'} w={'calc(100% - 200px)'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w={'100%'} h={'120px'} border={'dashed 1px #e5e5e5'} borderRadius={'4px'}>
+                                  <Icon as={RiAddCircleLine} fontSize={'24px'} color={'#e5e5e5'} mr={'10px'} />
+                                  <Text color={'#b3b3b3'} m={0}>
+                                    파일을 마우스로 이곳에 끌어오세요.
+                                  </Text>
+                                  <Input type={'file'} accept={'.zip'} display={'none !important'} />
+                                </Flex>
+                                <Text variant={'typeDescMd'} mt={'10px'}>최대 100MB까지 업로드 가능합니다.</Text>
+                              </Flex>
+                            </FormControl>
+
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>설명</FormLabel>
+                              <Textarea variant={'typeWrite'} placeholder={'설명을 작성해 주세요.'} />
+                            </FormControl>
                           </VStack>
                       </SimpleGrid>
                       

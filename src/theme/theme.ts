@@ -47,14 +47,13 @@ const theme = extendTheme(
       global: {
         'html, body': {
           // 1rem 기준 =>> 16px
-          fontFamily: 'Inter',
+          fontFamily: 'NanumSquare',
           fontSize: '16px', 
           lineHeight: '1',
-          // letterSpacing: '-1px',
           transition: 'all 0.5s ease',
           '.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6': {
             fontSize: '30px !important',
-            lineHeight: '1.8 !important',
+            lineHeight: '1 !important',
           },
           '&::-webkit-scrollbar': {
             width: '12px',
@@ -88,9 +87,20 @@ const theme = extendTheme(
       },
       Heading: {
         baseStyle: {
-          fontWeight: '500',
-          fontFamily: 'Inter',
+          fontWeight: '600',
+          fontFamily: 'NanumSquare',
           m : '0',
+        },
+      },
+      Breadcrumb: {
+        baseStyle: {
+          list: {
+            // fontFamily: 'NanumSquare',
+            color: '#000',
+            fontWeight: '600',
+          },
+          // item: {
+          // },
         },
       },
       Form: {
@@ -118,44 +128,113 @@ const theme = extendTheme(
                 transformOrigin: "left top"
               }
             }
-          }
+          },
+          typeWrite: {
+            container: {
+              pos: 'relative',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              p: '10px 0',
+              label: {
+                display: 'flex',
+                w: '200px',
+                fontWeight: 'bold',
+                color: '#000',
+                m: '7px 0 0 0',
+              },
+            },
+          },
+          typeWriteSm: {
+            container: {
+              pos: 'relative',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              p: '10px 0',
+              label: {
+                display: 'flex',
+                w: '180px',
+                fontWeight: 'bold',
+                color: '#000',
+                m: '7px 0 0 0',
+              },
+            },
+          },
+          typeModal: {
+            container: {
+              pos: 'relative',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              p: '14px 0',
+              label: {
+                display: 'flex',
+                w: '180px',
+                fontSize: '18px',
+                color: '#000',
+                m: '7px 0 0 0',
+              },
+            },
+          },
         }
       },
       Button: {
-        baseStyle: {
-          // fontFamily:'NanumSquare',
+         baseStyle: {
+          minWidth: 'auto',
+          fontFamily: 'NanumSquare',
+          fontWeight: '400',
           lineHeight: '1',
-          // letterSpacing: '-1px',
           borderRadius: '3px',
         },
-        sizes: {
-          md: {
+        variants: {
+          solid: {
             minWidth: 'auto',
             h: '39px',
-            fontSize: '16px',
-            fontWeight: 'normal',
+            color: '#fff',
             padding: '0 10px',
-          },
-        },
-        variants: {
-          solid: (props: StyleFunctionProps) => ({
-            bg: props.colorMode === 'dark' ? 'blackAlpha.100' : 'blackAlpha.700',
-            color: props.colorMode === 'dark' ? '#000' : '#fff',
-          }),
-          typeGrayBtn: {
-            // h: '28px',
-            // fontSize: '24px',
-            color: '#000',
-            // padding: '0 10px',
-            bg: '#999',
+            bg: '#4d4d4d',
             '&:hover': {
-              color: '#fff',
-              bg: '#000',
+              bg: '#222',
+            },
+          },
+          typeIcon: {
+            pos: 'relative',
+            w: '24px',
+            minW: 'auto',
+            h: '24px',
+            fontSize: '24px',
+            border: 'none',
+            borderRadius: '0',
+            padding: '0',
+            m: '0',
+            bg: 'none',
+          },
+          typeIconSm: {
+            pos: 'relative',
+            w: '12px',
+            minW: 'auto',
+            h: '12px',
+            fontSize: '12px',
+            border: 'none',
+            borderRadius: '0',
+            padding: '0',
+            m: '0',
+            bg: 'none',
+          },
+          whiteRoundBtn: {
+            h: '26px',
+            fontSize: '14px',
+            color: '#000',
+            borderRadius: 'full',
+            padding: '0 15px',
+            border: 'solid 1px #e5e5e5',
+            '&:hover': {
+              bg: '#eee',
             },
           },
           grayRoundBtn: {
             h: '28px',
-            // fontSize: '24px',
             color: '#000',
             borderRadius: 'full',
             padding: '0 10px',
@@ -165,8 +244,77 @@ const theme = extendTheme(
               bg: '#000',
             },
           },
+          typeGrayBtn: {
+            color: '#000',
+            padding: '0 10px',
+            bg: '#999',
+            '&:hover': {
+              color: '#fff',
+              bg: '#000',
+            },
+          },
+          typeGrayBtnLg: {
+            h: '43px',
+            fontWeight: '400',
+            color: '#000',
+            padding: '0 35px',
+            m: '0 5px',
+            bg: '#b3b3b3',
+            '&:hover': {
+              bg: '#ccc',
+            },
+          },
+          typeWhiteBtnSm: {
+            h: '32px',
+            fontSize: '14px',
+            fontWeight: '400',
+            color: 'blackAlpha.800',
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px',
+            ml: '10px',
+            bg: '#fff',
+            '&:hover': {
+              bg: '#eee',
+            },
+          },
+          typeBlackBtnSm: {
+            h: '32px',
+            fontSize: '14px',
+            fontWeight: '400',
+            color: '#fff',
+            border: 'solid 1px #2D2D2D',
+            padding: '0 10px',
+            ml: '10px',
+            bg: '#2D2D2D',
+            '&:hover': {
+              bg: '#444',
+            },
+          },
+          typeBlackBtnLg: {
+            h: '43px',
+            fontWeight: '400',
+            color: '#fff',
+            padding: '0 35px',
+            m: '0 5px',
+            bg: '#4d4d4d',
+            '&:hover': {
+              bg: '#222',
+            },
+          },
+          typeSimple: {
+            h: '30px',
+            fontWeight: '600',
+            color: '#000',
+            borderRadius: '5px',
+            padding: '0 5px',
+            m: '5px 0',
+            bg: '#eee',
+            '&:hover': {
+              bg: '#ccc',
+            },
+          },
           paginationBtn: {
-            // fontSize: '24px',
+            minW: 'auto',
             color: '#000',
             padding: '0 7px',
             '&:hover': {
@@ -179,6 +327,7 @@ const theme = extendTheme(
             },
           },
           paginationIconBtn: {
+            minW: 'auto',
             fontSize: '24px',
             color: 'blackAlpha.300',
             padding: '0',
@@ -187,10 +336,17 @@ const theme = extendTheme(
             },
           },
           typePopoverBtn: {
+            pos: 'relative',
+            w: '20px',
+            minW: 'auto',
+            h: '20px',
             fontSize: '24px',
             color: 'blackAlpha.300',
+            border: 'none',
+            borderRadius: '0',
             padding: '0',
-            marginLeft: '4px',
+            m: '0 0 0 7px',
+            bg: 'none',
             '&:hover': {
               color: 'blackAlpha.700',
             },
@@ -244,12 +400,46 @@ const theme = extendTheme(
               },
             },
           },
+          typeSelectBtnSm: {
+            w: 'calc(100% - 180px)',
+            h: '32px',
+            textAlign: 'left',
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px 0 15px',
+            background: '#fff',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          },
+          typeSelectModalBtn: {
+            w: 'calc(100% - 180px)',
+            h: '32px',
+            textAlign: 'left',
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px 0 15px',
+            background: '#fff',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          },
         },
-        defaultProps: {
-          size: 'md', // default is md
-          variant: 'solid', // default is solid
-          colorScheme: 'blackAlpha', // default is gray
-        },
+        // defaultProps: {
+        //   size: 'md', // default is md
+        //   variant: 'solid', // default is solid
+        //   colorScheme: 'blackAlpha', // default is gray
+        // },
       },
       Table: {
         variants: {
@@ -258,47 +448,47 @@ const theme = extendTheme(
                 display: 'none',
               },
               th: {
+                h: '36px',
                 textTransform: "none",
                 fontSize: '16px',
-                fontWeight: 'normal',
-                fontFamily: 'Inter',
+                fontWeight: '600',
+                fontFamily: 'NanumSquare',
                 lineHeight: '1.3',
                 color: '#000',
                 textAlign: 'center',
                 p: '7px 5px',
                 bg: '#ccc',
-                // letterSpacing: '-1px',
               },
               td: {
-                // fontFamily:'NanumSquare',
+                fontFamily: 'NanumSquare',
                 fontSize: '16px',
                 lineHeight: '1.3',
                 color: '#888',
                 textAlign: 'center',
                 borderColor: '#ccc',
-                p: '15px 5px',
+                p: '21px 5px 17px',
                 wordBreak: 'break-all',
                 whiteSpace: 'normal',
-                // letterSpacing: '0',
+                fontVariantNumeric: 'normal',
                 _last: {
                   bgImage: "url('/assets/images/icons/ico-arrow-01.svg')",
                   bgPosition: 'calc(100% - 5px) center',
                   bgRepeat: 'no-repeat',
                 }
               },
-              tr: {
-                '&:hover': {
-                  td: {
-                    backgroundColor: '#f9f9f9',
-                  }
-                },
-              }
+              // tr: {
+              //   '&:hover': {
+              //     td: {
+              //       backgroundColor: '#f9f9f9',
+              //     }
+              //   },
+              // },
             }
         }
       },
       Badge: {
         variants: {
-	alarm: {
+          alarm: {
             pos: 'absolute',
             right: '0',
             top: '0',
@@ -312,12 +502,13 @@ const theme = extendTheme(
           },
           state: {
             w: '90px',
+            h: '21px',
             fontSize: '16px',
-            lineHeight: '1.3',
+            lineHeight: '21px',
             color: '#888',
             fontWeight: 'normal',
             textAlign: 'center',
-            p: '2px 0',
+            p: '0',
             bg: '#e5e5e5',
           },
           category: {
@@ -337,8 +528,32 @@ const theme = extendTheme(
             fontWeight: 'normal',
             p: '0px',
             textTransform: 'none',
-          }
+          },
+          filter: {
+            textTransform: "none",
+            display: 'flex',
+            alignItems: 'center',
+            h: '38px',
+            fontSize: '16px',
+            color: '#000',
+            fontWeight: '300',
+            borderRadius: 'full',
+            bg: '#e5e5e5',
+            p: '0 10px',
+            m: '0 0 0 10px',
+          },
         }
+      },
+      Tooltip: {
+        baseStyle: {
+          fontSize: '14px',
+          fontWeight: '200',
+          lineHeight: '1',
+          borderRadius: '4px',
+          color: '#fff',
+          p: '5px 10px',
+          bg: '#2d3748',
+        },
       },
       Switch: {
         variants: {
@@ -368,6 +583,50 @@ const theme = extendTheme(
         },
         
       },
+      Modal: {
+        baseStyle: {
+          dialog: {
+            w: '640px',
+            maxW: 'auto',
+          },
+          closeButton: {
+            // display: 'none',
+            top: '30px',
+            right: '30px',
+            fontSize: '20px',
+          },
+          header: {
+            fontSize: '26px',
+            fontWeight: '600',
+            color: '#000',
+            p: '35px 30px 20px',
+          },
+          body: {
+            p: '0px 40px 10px',
+            '&::-webkit-scrollbar': {
+              width: '10px',
+              height: '10px',
+              backgroundColor: '#fff',
+            },
+            
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#ddd',
+              borderRadius: '8px',
+              backgroundClip: 'padding-box',
+              border: '2px solid transparent',
+            },
+            
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: '#fff',
+              borderRadius: '8px',
+            },
+          },
+          footer: {
+            justifyContent: 'center',
+            p: '10px 0px 30px',
+          },
+        },
+      },
       Popover: {
         baseStyle: {
           content: {
@@ -375,52 +634,31 @@ const theme = extendTheme(
             width: 'auto',
             lineHeight: '1.3',
             p: '20px 20px 15px',
-            // letterSpacing: '0',
           },
           body: {
             p: '0',
+          },
+          footer: {
+            textAlign: 'right',
+            p: '10px 30px 35px',
+            border: 'none',
           }
         },
       },
-      Select: {
+      Input: {
         variants: {
           outline: {
             field: {
               height: '39px',
+              border: 'solid 1px #e5e5e5',
               borderRadius: '3px',
-              // p: '20px',
-              // m: '10px',
-              // fontSize: 'lg',
-              px: '4',
-              h: '12',
-            },
-            icon: {
-              // pr: '0',
-              '&[data-focus]' : {
-                background: '#000',
-                transform: 'translateY(0%)',
+              '&::placeholder': {
+                // fontSize: '16px',
+                color: 'blackAlpha.600',
+                fontWeight: '200',
               },
-            }
-          },
-          unstyled: {
-            field: {
-              fontSize: '18px',
-              fontWeight: 'bold',
             },
-            icon: {
-              // pr: '0',
-            }
-          }
-        }
-      },
-      Input: {
-        variants: {
-          // outline: { #3725FF
-          //   field: {
-          //     height: '39px',
-          //     borderRadius: '3px',
-          //   },
-          // },
+          },
           typeLogin: {
             field: {
               height: '39px',
@@ -433,11 +671,26 @@ const theme = extendTheme(
           },
           typeWrite: {
             field: {
+              w: 'calc(100% - 200px)',
               height: '32px',
               border: 'solid 1px #dedede',
               borderRadius: '3px',
               '&::placeholder': {
-                color: '#ccc',
+                color: 'blackAlpha.600',
+              },
+              '&:focus': {
+                borderColor: '#3725FF',
+              },
+            },
+          },
+          typeWriteSm: {
+            field: {
+              w: 'calc(100% - 180px)',
+              height: '32px',
+              border: 'solid 1px #dedede',
+              borderRadius: '3px',
+              '&::placeholder': {
+                color: 'blackAlpha.600',
               },
               '&:focus': {
                 borderColor: '#3725FF',
@@ -449,17 +702,27 @@ const theme = extendTheme(
       Textarea: {
         variants: {
           typeWrite: {
-            
+            resize: 'none',
+            w: 'calc(100% - 200px)',
             height: '150px',
             border: 'solid 1px #dedede',
             borderRadius: '3px',
             '&::placeholder': {
-              color: '#ccc',
+              color: 'blackAlpha.600',
             },
             '&:focus': {
               borderColor: '#3725FF',
             },
-           
+          },
+          typeModal: {
+            resize: 'none',
+            w: 'calc(100% - 180px)',
+            height: '70px',
+            border: 'solid 1px #dedede',
+            borderRadius: '3px',
+            '&::placeholder': {
+              color: 'blackAlpha.600',
+            },
           },
         }
       },
@@ -469,6 +732,7 @@ const theme = extendTheme(
             button: {
             },
             list: {
+              // w: '120px',
               minWidth: 'auto',
               p: '0',
               marginTop:'-5px',
@@ -505,23 +769,10 @@ const theme = extendTheme(
               },
             },
             // groupTitle: {
-            //   textTransform: 'uppercase',
-            //   color: 'white',
-            //   textAlign: 'center',
-            //   letterSpacing: 'wider',
-            //   opacity: '0.7',
             // },
             // command: {
-            //   opacity: '0.8',
-            //   fontFamily: 'mono',
-            //   fontSize: 'sm',
-            //   letterSpacing: 'tighter',
-            //   pl: '4',
             // },
             // divider: {
-            //   my: '4',
-            //   borderColor: 'white',
-            //   borderBottom: '2px dotted',
             // },
           },
           typeWrite: {
@@ -565,57 +816,166 @@ const theme = extendTheme(
               },
             },
           },
+          typeFlexible: {
+            button: {
+            },
+            list: {
+              // w: '1070px',
+              p: '0',
+              marginTop:'-5px',
+              borderRadius: '3px',
+              border: 'solid 1px #dedede',
+              bg: '#fff',
+              maxHeight: '300px',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+                height: '10px',
+                backgroundColor: '#fff',
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ddd',
+                borderRadius: '8px',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+              },
+              
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+              },
+            },
+            item: {
+              padding: '10px 25px 10px 15px',
+              color: '#1a1a1a',
+              _hover: {
+                bg: '#efefef',
+              },
+              _focus: {
+                bg: '#efefef',
+              },
+            },
+          },
+          typeModal: {
+            button: {
+            },
+            list: {
+              w: '380px', //calc(100% - 200px)',
+              p: '0',
+              marginTop:'-5px',
+              borderRadius: '3px',
+              border: 'solid 1px #dedede',
+              bg: '#fff',
+              maxHeight: '200px',
+              overflow: 'auto',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+                height: '10px',
+                backgroundColor: '#fff',
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ddd',
+                borderRadius: '8px',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+              },
+              
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+              },
+            },
+            item: {
+              padding: '10px 25px 10px 15px',
+              color: '#1a1a1a',
+              _hover: {
+                bg: '#efefef',
+              },
+              _focus: {
+                bg: '#efefef',
+              },
+            },
+          },
         }
       },
       Text: {
+        baseStyle: {
+          m: '0',
+        },
         variants: {
+          typeTitleSm: {
+            fontSize: '14px',
+            fontWeight: '700',
+            color: '#000',
+            p: '0',
+            m: '0 0 20px',
+          },
+          typeTitleMd: {
+            fontWeight: '700',
+            color: '#666',
+            p: '0',
+            m: '0 0 20px',
+          },
+          typeTitleLg: {
+            fontSize: '18px',
+            fontWeight: '400',
+            color: '#000',
+            p: '0',
+            m: '0',
+          },
+          typeTitleXl: {
+            fontSize: '30px',
+            fontWeight: '400',
+            color: '#000',
+            p: '0',
+            m: '0 0 25px',
+          },
           typeDltSm: {
             w: '85px',
-            // fontSize: '16px',
             fontWeight: 'bold',
             color: '#666',
           },
           typeDldSm: {
             w: 'calc(100% - 85px)',
-            // fontSize: '16px',
             color: '#666',
           },
           typeDltLg: {
             w: '200px',
-            // fontSize: '16px',
             fontWeight: 'bold',
             color: '#000',
           },
           typeDldLg: {
             w: 'calc(100% - 200px)',
-            // fontSize: '16px',
             color: '#666',
-            // letterSpacing: '0',
           },
           typeDltXl: {
-            // w: '100px',
             fontSize: '18px',
-            fontWeight: 'bold',
+            fontWeight: '900',
             color: '#000',
-            m: '0',
           },
           typeDldXl: {
-            // w: 'calc(100% - 100px)',
             fontSize: '18px',
+            fontWeight: '600',
             color: '#000',
-            // letterSpacing: '0',
-            m: '0',
           },
           typeAlarm: {
             color: '#000',
             fontWeight: 'bold',
-            // letterSpacing: '0',
-            m: '0',
           },
           typeDate: {
             color: '#000',
-            // letterSpacing: '0',
-            m: '0',
+          },
+          typeDesc: {
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: '#000',
+          },
+          typeDescMd: {
+            fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#000',
           },
         }
       },
@@ -624,6 +984,41 @@ const theme = extendTheme(
 )
 
 export default theme
+
+
+/*
+Select: {
+        variants: {
+          outline: {
+            field: {
+              height: '39px',
+              borderRadius: '3px',
+              // p: '20px',
+              // m: '10px',
+              // fontSize: 'lg',
+              px: '4',
+              h: '12',
+            },
+            icon: {
+              // pr: '0',
+              '&[data-focus]' : {
+                background: '#000',
+                transform: 'translateY(0%)',
+              },
+            }
+          },
+          unstyled: {
+            field: {
+              fontSize: '18px',
+              fontWeight: 'bold',
+            },
+            icon: {
+              // pr: '0',
+            }
+          }
+        }
+      },
+*/
 
 
 /* spacing 기준 [16px]

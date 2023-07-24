@@ -42,20 +42,31 @@ import {
     MenuButton,
     MenuList,
     MenuItem, 
+    FormControl,
+    FormLabel,
     Input ,
     InputGroup,
     InputLeftElement, 
     InputRightElement, 
+    Textarea,
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
     Grid, 
     GridItem,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
   } from '@chakra-ui/react';
   import {
     RiUserSettingsLine,
     RiArrowRightSLine,
     RiAddCircleLine,
+    RiArrowDownSLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
@@ -63,6 +74,7 @@ import {
 const ModelView = () : JSX.Element => { 
 
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     // 추가 page
     const writeModelLearning = () => {
@@ -73,7 +85,7 @@ const ModelView = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}>
+                    <Box mb={'35px'}>
                         {/* location */}
                         <Breadcrumb spacing={"3px"} separator={<RiArrowRightSLine color={"gray"} />}>
                           <BreadcrumbItem>
@@ -86,11 +98,11 @@ const ModelView = () : JSX.Element => {
 
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>vh-model/t2k/detection</Heading>
+                                <Heading>vh-model/t2k/detection</Heading>
                             </Flex>
                             <HStack spacing={"10px"}>
                                 <Button onClick={writeModelLearning}>
-                                    <Icon as={RiAddCircleLine} color={'white'} fontSize={'24px'} mr={'5px'} />
+                                    <Icon as={RiAddCircleLine} fontSize={'24px'} mr={'5px'} />
                                     모델학습
                                 </Button>
                                 <Button variant={'typeGrayBtn'}>삭제</Button>
@@ -100,28 +112,28 @@ const ModelView = () : JSX.Element => {
                     </Box>
 
                     <Box mb={5}>
-                        <SimpleGrid templateColumns='repeat(5, 1fr)' gap={3} pos={'relative'} p={'30px 90px 30px 20px'} mb={'10px'} bg={'#ddd'}>
+                        <SimpleGrid templateColumns='repeat(5, 1fr)' gap={3} pos={'relative'} p={'40px 90px 40px 20px'} mb={'10px'} bg={'#ddd'}>
                             <Flex alignItems={'center'}>
-                                <Text variant={'typeDltXl'} w={'100px'}>버전</Text>
+                                <Text variant={'typeDltXl'} w={'120px'}>버전</Text>
                                 <Text variant={'typeDldXl'}>v1.2.1</Text>
                             </Flex>
                             <Flex alignItems={'center'}>
-                                <Text variant={'typeDltXl'} w={'100px'}>모델 빌드 수</Text>
+                                <Text variant={'typeDltXl'} w={'120px'}>모델 빌드 수</Text>
                                 <Text variant={'typeDldXl'}>1</Text>
                             </Flex>
                             <Flex alignItems={'center'}>
-                                <Text variant={'typeDltXl'} w={'100px'}>모델 상태</Text>
+                                <Text variant={'typeDltXl'} w={'120px'}>모델 상태</Text>
                                 <Text variant={'typeDldXl'}>빌드 완료</Text>
                             </Flex>
                             <Flex alignItems={'center'}>
-                                <Text variant={'typeDltXl'} w={'100px'}>저장소</Text>
+                                <Text variant={'typeDltXl'} w={'120px'}>저장소</Text>
                                 <Text variant={'typeDldXl'}>vp-eks</Text>
                             </Flex>
                             <Flex alignItems={'center'}>
-                                <Text variant={'typeDltXl'} w={'100px'}>Threshold</Text>
+                                <Text variant={'typeDltXl'} w={'120px'}>Threshold</Text>
                                 <Text variant={'typeDldXl'}>v1.2</Text>
                             </Flex>
-                            <Button pos={'absolute'} right={'20px'} top={'20px'}>
+                            <Button pos={'absolute'} right={'20px'} top={'30px'}  onClick={onOpen}>
                                 변경
                             </Button>
                         </SimpleGrid>
@@ -134,23 +146,23 @@ const ModelView = () : JSX.Element => {
                                     <Text variant={'typeDldXl'} fontWeight={'bold'}>v.1.0.1</Text>
                                 </Flex>
                                 <Divider borderColor={'#ddd'} />
-                                <VStack align={'top'} gap={'2'}>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
+                                <VStack align={'top'} gap={'4'}>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
                                         <Text variant={'typeDltSm'}>생성일자</Text>
                                         <Text variant={'typeDldSm'}>2023-06-30 15:09:41</Text>
                                     </HStack>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
                                         <Text variant={'typeDltSm'}>작성자</Text>
                                         <Text variant={'typeDldSm'}>vh-admin</Text>
                                     </HStack>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
-                                        <Text variant={'typeDltSm'} m={'0'}>설명</Text>
-                                        <Text variant={'typeDldSm'} m={'0'}>설명 설명 블라명이렇게 블라 블라</Text>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
+                                        <Text variant={'typeDltSm'}>설명</Text>
+                                        <Text variant={'typeDldSm'}>설명 설명 블라명이렇게 블라 블라</Text>
                                     </HStack>
                                 </VStack>
                                 <Divider variant={'dashed'} borderColor={'#ddd'} />
                                 <Flex flexDirection={'column'}>
-                                    <Text variant={'typeDltSm'}>Config Data</Text>
+                                    <Text variant={'typeTitleMd'}>Config Data</Text>
                                     <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'} overflowY={"auto"}
                                         css={{
                                             '&::-webkit-scrollbar': {
@@ -236,23 +248,23 @@ const ModelView = () : JSX.Element => {
                                     <Text variant={'typeDldXl'} fontWeight={'bold'}>v2.1.1</Text>
                                 </Flex>
                                 <Divider borderColor={'#ddd'} />
-                                <VStack align={'top'} gap={'2'}>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
+                                <VStack align={'top'} gap={'4'}>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
                                         <Text variant={'typeDltSm'}>생성일자</Text>
                                         <Text variant={'typeDldSm'}>2023-06-30 15:09:41</Text>
                                     </HStack>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
                                         <Text variant={'typeDltSm'}>작성자</Text>
                                         <Text variant={'typeDldSm'}>vh-admin</Text>
                                     </HStack>
-                                    <HStack alignItems={'flex-start'} gap={'5'}>
-                                        <Text variant={'typeDltSm'} m={'0'}>설명</Text>
-                                        <Text variant={'typeDldSm'} m={'0'}>설명 설명 블라명이렇게 블라 블라</Text>
+                                    <HStack alignItems={'flex-start'} gap={'0'}>
+                                        <Text variant={'typeDltSm'}>설명</Text>
+                                        <Text variant={'typeDldSm'}>설명 설명 블라명이렇게 블라 블라</Text>
                                     </HStack>
                                 </VStack>
                                 <Divider variant={'dashed'} borderColor={'#ddd'} />
                                 <Flex flexDirection={'column'}>
-                                    <Text variant={'typeDltSm'}>Config Data</Text>
+                                    <Text variant={'typeTitleMd'}>Config Data</Text>
                                     <Box  maxH={'calc(100vh - 510px)'} color={'#bababa'} lineHeight={'1.4'} mr={'-10px'}  overflowY={"auto"}
                                         css={{
                                             '&::-webkit-scrollbar': {
@@ -332,6 +344,63 @@ const ModelView = () : JSX.Element => {
                             </Flex>
                         </SimpleGrid>
                     </Box>
+
+
+                    {/* modal */}
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent maxW={'640px'}>
+                        <ModalHeader>Threshold 업데이트</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <SimpleGrid spacing={30}>
+                            <VStack align={'top'} gap={'0'}>
+
+                                <FormControl variant={"typeModal"} isRequired>
+                                    <FormLabel>Threshold 선택</FormLabel>
+                                    <Menu variant={'typeModal'}>
+                                        <MenuButton as={Button} variant={'typeSelectModalBtn'} rightIcon={<RiArrowDownSLine />}>
+                                        threshold 선택
+                                        </MenuButton>
+                                        <MenuList>
+                                            <MenuItem>threshold 11111111111111111 </MenuItem>
+                                            <MenuItem>threshold 2222 </MenuItem>
+                                            <MenuItem>threshold 3333333333333333</MenuItem>
+                                            <MenuItem>threshold 4 </MenuItem>
+                                            <MenuItem>threshold 5555</MenuItem>
+                                            <MenuItem>threshold 6 </MenuItem>
+                                            <MenuItem>threshold 77</MenuItem>
+                                            <MenuItem>threshold 3333333333333333</MenuItem>
+                                            <MenuItem>threshold 4 </MenuItem>
+                                            <MenuItem>threshold 5555</MenuItem>
+                                            <MenuItem>threshold 6 </MenuItem>
+                                            <MenuItem>threshold 77</MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                </FormControl>
+
+                                <FormControl variant={'typeModal'}>
+                                    <FormLabel>설명</FormLabel>
+                                    <Textarea variant={'typeModal'} placeholder={'설명을 작성해 주세요.'} />
+                                </FormControl>
+
+                                <Flex alignItems={"center"} justifyContent={"center"} mt={'15px'}>
+                                    <Text variant={'typeDesc'}>버전이 v1.0.1로 업데이트됩니다.</Text>
+                                </Flex>
+
+                            </VStack>
+                          </SimpleGrid>
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button variant={'typeGrayBtnLg'} onClick={onClose}>
+                            취소
+                          </Button>
+                          <Button variant={'typeBlackBtnLg'}>
+                            저장
+                          </Button>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
                    
                 </Container>
             </>} />

@@ -38,11 +38,6 @@ import {
     VStack,
     Select,
     Divider,
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Textarea,
     Menu,
     MenuButton,
     MenuList,
@@ -50,20 +45,14 @@ import {
     Input ,
     InputGroup,
     InputLeftElement, 
-    InputRightElement,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton, 
+    InputRightElement,  
   } from '@chakra-ui/react';
+
   import {
     RiUserSettingsLine,
     RiArrowDownSLine,
-    RiFilterFill,
     RiCloseCircleFill,
+    RiFilterFill,
     RiAddCircleLine,
     RiArrowDropLeftLine,
     RiArrowDropRightLine,
@@ -71,30 +60,29 @@ import {
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
 
-const ModelList = () : JSX.Element => { 
+const ProjectList = () : JSX.Element => { 
 
     const navigate = useNavigate();
-    const { isOpen, onOpen, onClose } = useDisclosure();
 
-    // 추가 page
-    const writeModel = () => {
-        navigate({pathname  : '/models/ModelWrite' })
+    // 프로젝트 추가 page
+    const writeProject = () => {
+        navigate({pathname  : '/project/ProjectWrite' })
     }
 
     return (
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}> 
+                    <Box mb={5}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading>모델</Heading>
+                                <Heading>프로젝트</Heading>
                                 <Button variant={'outline'} color={'blackAlpha.200'} w={'34px'} minW={'auto'} h={'34px'} p={'0'} ml={'20px'}>
                                     <Icon as={RiUserSettingsLine}  color={'blackAlpha.300'} fontSize={'24px'} />
                                 </Button>
                             </Flex>
                             <HStack spacing={"10px"}>
-                                <Button onClick={writeModel}>모델 추가</Button>
+                                <Button onClick={writeProject}>프로젝트 추가</Button>
                             </HStack>
                         </Flex>
                     </Box>
@@ -116,6 +104,23 @@ const ModelList = () : JSX.Element => {
                                         <MenuItem>명화(신성) 6th 프로젝트</MenuItem>
                                     </MenuList>
                                 </Menu>
+                                <Button w={'38px'} h={'38px'} color={'blackAlpha.900'} p={'0 7px'} >
+                                    <Icon as={RiFilterFill}  color={'white'} fontSize={'24px'} />
+                                </Button>
+                                <Flex alignItems={'center'}>
+                                    <Badge variant={'filter'}>
+                                       생성중
+                                        <Button variant={'typeIcon'}>
+                                            <Icon as={RiCloseCircleFill} color={'blackAlpha.500'} />
+                                        </Button>
+                                    </Badge>
+                                    <Badge variant={'filter'}>
+                                        종료
+                                        <Button variant={'typeIcon'}>
+                                            <Icon as={RiCloseCircleFill} color={'blackAlpha.500'} />
+                                        </Button>
+                                    </Badge>
+                                </Flex>
                             </Flex>
                             <Flex whiteSpace={'normal'} alignItems={'center'}>
                                 <Center h={'38px'} p={'0 10px'}>
@@ -140,12 +145,20 @@ const ModelList = () : JSX.Element => {
                                     <MenuButton as={Button} variant={'typeSelectBtn'} rightIcon={<RiArrowDownSLine />}>
                                         20줄 보기
                                     </MenuButton>
-                                    <MenuList w={'120px'}>
+                                    <MenuList>
                                         <MenuItem>20줄 보기</MenuItem>
                                         <MenuItem>30줄 보기</MenuItem>
                                         <MenuItem>50줄 보기</MenuItem>
                                         <MenuItem>20줄 보기</MenuItem>
                                         <MenuItem>30줄 보기</MenuItem>
+                                        <MenuItem>50줄 보기</MenuItem>
+                                        <MenuItem>20줄 보기</MenuItem>
+                                        <MenuItem>30줄 보기</MenuItem>
+                                        <MenuItem>50줄 보기</MenuItem>
+                                        <MenuItem>20줄 보기</MenuItem>
+                                        <MenuItem>20줄 보기</MenuItem>
+                                        <MenuItem>30줄 보기</MenuItem>
+                                        <MenuItem>50줄 보기</MenuItem>
                                     </MenuList>
                                 </Menu>
                             </Flex>
@@ -155,33 +168,39 @@ const ModelList = () : JSX.Element => {
                         {/* table */}
                         <TableContainer>
                             <Table variant={'simple'}>
-                                <TableCaption>모델 목록</TableCaption>
+                                <TableCaption>프로젝트 목록</TableCaption>
                                 <Thead>
                                 <Tr>
                                     <Th w={'60px'}>No</Th>
-                                    <Th>저장소</Th>
+                                    <Th>프로젝트</Th>
+                                    <Th w={'100px'}>상태</Th>
+                                    <Th>실행 아이디</Th>
                                     <Th>모델명</Th>
-                                    <Th w={'120px'}>최신버전</Th>
-                                    <Th w={'120px'}>상태</Th>
-                                    <Th w={'120px'}>모델 빌드 수</Th>
-                                    <Th w={'250px'}>생성일시</Th>
+                                    <Th w={'100px'}>버전</Th>
+                                    <Th w={'100px'}>수명</Th>
+                                    <Th w={'200px'}>생성일시</Th>
+                                    <Th w={'80px'}>실행</Th>
                                 </Tr>
                                 </Thead>
                                 <Tbody>
                                 <Tr>
-                                    <Td colSpan={7} p={'100px 0'} bg={'none !important'}>
+                                    <Td colSpan={9} p={'100px 0'} bg={'none !important'}>
                                         내용이 없습니다.
                                     </Td>
                                 </Tr>
                                 <Tr>
                                     <Td>15</Td>
                                     <Td>
-                                        <Link to={'/models/modelView'}>
-                                            aws-ecr
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
                                         </Link>
                                     </Td>
                                     <Td>
-                                        vh-model/t2k/classification
+                                        <Badge variant={'state'}>생성중</Badge>
+                                    </Td>
+                                    <Td>eum-starbucks</Td>
+                                    <Td>
+                                        vh-model/starbucks/classification
                                         <Popover placement={"right"} >
                                             <PopoverTrigger>
                                                 <Button variant={'typePopoverBtn'}>
@@ -205,7 +224,7 @@ const ModelList = () : JSX.Element => {
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'} gap={'0'}>
                                                                 <Text variant={'typeDltSm'}>설명</Text>
-                                                                <Text variant={'typeDldSm'}>td 15번15번이렇게15번1515번15번이 렇게15 번1515번15번게15번1515 번15번이렇게 15번15   번이렇게15번15번이렇게15번15  번이렇게 블라 블라</Text>
+                                                                <Text variant={'typeDldSm'}>td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 td 15번렇게 블라 블라</Text>
                                                             </HStack>
                                                         </VStack>
                                                     </SimpleGrid>
@@ -214,7 +233,7 @@ const ModelList = () : JSX.Element => {
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             모델학습
                                                         </Button>
-                                                        <Button m={'0 5px'} onClick={onOpen}>
+                                                        <Button m={'0 5px'}>
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             Threshold
                                                         </Button>
@@ -228,21 +247,25 @@ const ModelList = () : JSX.Element => {
                                         </Popover>
                                     </Td>
                                     <Td>v.1.5.2</Td>
-                                    <Td>
-                                        <Badge variant={'state'}>빌드 완료</Badge>
-                                    </Td>
-                                    <Td>2</Td>
+                                    <Td>2021 시간</Td>
                                     <Td>2023-07-10 15:09:41</Td>
+                                    <Td>
+                                        <Switch variant={'default'} m={'1px'} isInvalid  />
+                                    </Td>
                                 </Tr>
                                 <Tr>
                                     <Td>14</Td>
                                     <Td>
-                                        <Link to={'/models/modelView'}>
-                                            aws-ecr
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
                                         </Link>
                                     </Td>
                                     <Td>
-                                        vh-model/t2k/classification
+                                        <Badge variant={'state'}>생성중</Badge>
+                                    </Td>
+                                    <Td>eum-starbucks</Td>
+                                    <Td>
+                                        vh-model/starbuckn
                                         <Popover placement={"right"} >
                                             <PopoverTrigger>
                                                 <Button variant={'typePopoverBtn'}>
@@ -266,7 +289,7 @@ const ModelList = () : JSX.Element => {
                                                             </HStack>
                                                             <HStack alignItems={'flex-start'} gap={'0'}>
                                                                 <Text variant={'typeDltSm'}>설명</Text>
-                                                                <Text variant={'typeDldSm'}>td 14번14번이렇게 블라 블라</Text>
+                                                                <Text variant={'typeDldSm'}>td 14 14 14 블라 블라</Text>
                                                             </HStack>
                                                         </VStack>
                                                     </SimpleGrid>
@@ -275,7 +298,7 @@ const ModelList = () : JSX.Element => {
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             모델학습
                                                         </Button>
-                                                        <Button m={'0 5px'} onClick={onOpen}>
+                                                        <Button m={'0 5px'}>
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             Threshold
                                                         </Button>
@@ -289,21 +312,25 @@ const ModelList = () : JSX.Element => {
                                         </Popover>
                                     </Td>
                                     <Td>v.1.5.2</Td>
-                                    <Td>
-                                        <Badge variant={'state'}>빌드 완료</Badge>
-                                    </Td>
-                                    <Td>2</Td>
+                                    <Td>2021 시간</Td>
                                     <Td>2023-07-10 15:09:41</Td>
+                                    <Td>
+                                        <Switch  variant={'default'} m={'1px'} isInvalid  />
+                                    </Td>
                                 </Tr>
                                 <Tr>
                                     <Td>13</Td>
                                     <Td>
-                                        <Link to={'/models/modelView'}>
-                                            aws-ecr
+                                        <Link to={'/project/projectView'}>
+                                            명화(신성) 4th 프로젝트
                                         </Link>
                                     </Td>
                                     <Td>
-                                        vh-model/t2k/classification
+                                        <Badge variant={'state'}>생성중</Badge>
+                                    </Td>
+                                    <Td>eum-starbucks</Td>
+                                    <Td>
+                                        vh-model/starbucks/classification
                                         <Popover placement={"right"} >
                                             <PopoverTrigger>
                                                 <Button variant={'typePopoverBtn'}>
@@ -336,7 +363,7 @@ const ModelList = () : JSX.Element => {
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             모델학습
                                                         </Button>
-                                                        <Button m={'0 5px'} onClick={onOpen}>
+                                                        <Button m={'0 5px'}>
                                                             <Icon as={RiAddCircleLine}  fontSize={'24px'} mr={'5px'} />
                                                             Threshold
                                                         </Button>
@@ -350,11 +377,11 @@ const ModelList = () : JSX.Element => {
                                         </Popover>
                                     </Td>
                                     <Td>v.1.5.2</Td>
-                                    <Td>
-                                        <Badge variant={'state'}>빌드 완료</Badge>
-                                    </Td>
-                                    <Td>2</Td>
+                                    <Td>2021 시간</Td>
                                     <Td>2023-07-10 15:09:41</Td>
+                                    <Td>
+                                        <Switch variant={'default'} m={'1px'} isInvalid defaultChecked />
+                                    </Td>
                                 </Tr>
                                 </Tbody>
                             </Table>
@@ -375,65 +402,6 @@ const ModelList = () : JSX.Element => {
                             </Flex>
                         </Flex>
                     </Box>
-
-
-                    {/* modal  */}
-                    <Modal isOpen={isOpen} onClose={onClose}>
-                      <ModalOverlay />
-                      <ModalContent maxW={'640px'}>
-                        <ModalHeader>Threshold 업데이트</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                          <SimpleGrid spacing={30}>
-                            <VStack align={'top'} gap={'0'}>
-
-                                <FormControl variant={"typeModal"} isRequired>
-                                    <FormLabel>Threshold 선택</FormLabel>
-                                    <Menu variant={'typeModal'}>
-                                        <MenuButton as={Button} variant={'typeSelectModalBtn'} rightIcon={<RiArrowDownSLine />}>
-                                        threshold 선택
-                                        </MenuButton>
-                                        <MenuList>
-                                            <MenuItem>threshold 11111111111111111 </MenuItem>
-                                            <MenuItem>threshold 2222 </MenuItem>
-                                            <MenuItem>threshold 3333333333333333</MenuItem>
-                                            <MenuItem>threshold 4 </MenuItem>
-                                            <MenuItem>threshold 5555</MenuItem>
-                                            <MenuItem>threshold 6 </MenuItem>
-                                            <MenuItem>threshold 77</MenuItem>
-                                            <MenuItem>threshold 3333333333333333</MenuItem>
-                                            <MenuItem>threshold 4 </MenuItem>
-                                            <MenuItem>threshold 5555</MenuItem>
-                                            <MenuItem>threshold 6 </MenuItem>
-                                            <MenuItem>threshold 77</MenuItem>
-                                        </MenuList>
-                                    </Menu>
-                                </FormControl>
-
-                                <FormControl variant={'typeModal'}>
-                                    <FormLabel>설명</FormLabel>
-                                    <Textarea variant={'typeModal'} placeholder={'설명을 작성해 주세요.'} />
-                                </FormControl>
-
-                                <Flex alignItems={"center"} justifyContent={"center"} mt={'15px'}>
-                                    <Text variant={'typeDesc'}>버전이 v1.0.1로 업데이트됩니다.</Text>
-                                </Flex>
-
-                            </VStack>
-                          </SimpleGrid>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button variant={'typeGrayBtnLg'} onClick={onClose}>
-                            취소
-                          </Button>
-                          <Button variant={'typeBlackBtnLg'}>
-                            저장
-                          </Button>
-                        </ModalFooter>
-                      </ModalContent>
-                    </Modal>
-
-
                 </Container>
             </>} />
         </>
@@ -441,5 +409,4 @@ const ModelList = () : JSX.Element => {
 }
 
 
-
-export default ModelList;
+export default ProjectList;

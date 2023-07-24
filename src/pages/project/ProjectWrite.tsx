@@ -70,10 +70,10 @@ const ProjectWrite = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}>
+                    <Box mb={'40px'}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>
+                                <Heading>
                                   프로젝트 추가
                                 </Heading>
                             </Flex>
@@ -88,13 +88,13 @@ const ProjectWrite = () : JSX.Element => {
                       {/* cont list */}
                       <SimpleGrid spacing={30}>
                           <VStack align={'top'} gap={'0'}>
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>프로젝트명</FormLabel>
-                              <Input type={'text'} variant={'typeWrite'}  w={'calc(100% - 200px)'} placeholder={'프로젝트명을 입력해주세요.'} />
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>프로젝트명</FormLabel>
+                              <Input type={'text'} variant={'typeWrite'} placeholder={'프로젝트명을 입력해주세요.'} />
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>클러스터</FormLabel>
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>클러스터</FormLabel>
                               <Menu variant={'typeWrite'}>
                                   <MenuButton as={Button} variant={'typeSelectWriteBtn'} rightIcon={<RiArrowDownSLine />}>
                                     클러스터 선택
@@ -107,13 +107,13 @@ const ProjectWrite = () : JSX.Element => {
                               </Menu>
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>네임 스페이스</FormLabel>
-                              <Input type={'text'} variant={'typeWrite'}  w={'calc(100% - 200px)'} placeholder={'네임 스페이스를 입력해주세요.'} />
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>네임 스페이스</FormLabel>
+                              <Input type={'text'} variant={'typeWrite'} placeholder={'네임 스페이스를 입력해주세요.'} />
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'} isRequired>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>라이선스 기간</FormLabel>
+                            <FormControl variant={'typeWrite'} isRequired>
+                              <FormLabel>라이선스 기간</FormLabel>
                                 <Flex alignItems={'center'}>
                                   <InputGroup>
                                     <Input type={'text'} variant={'typeWrite'} w={'100px'} />
@@ -129,9 +129,9 @@ const ProjectWrite = () : JSX.Element => {
                                 </Flex>
                             </FormControl>
 
-                            <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'15px 0'}>
-                              <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>설명</FormLabel>
-                              <Textarea variant={'typeWrite'} w={'calc(100% - 200px)'} placeholder={'설명을 작성해 주세요.'} />
+                            <FormControl variant={'typeWrite'}>
+                              <FormLabel>설명</FormLabel>
+                              <Textarea variant={'typeWrite'} placeholder={'설명을 작성해 주세요.'} />
                             </FormControl>
                           </VStack>
                       </SimpleGrid>

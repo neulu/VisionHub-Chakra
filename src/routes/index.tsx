@@ -12,11 +12,13 @@ import ErrorPage from "pages/common/ErrorPage";
 import CatalogList from "pages/catalogs/CatalogList";
 
 // vision hub GNB
-// login
-import LoginForm from "pages/login/LoginForm";
+// common
+import CommonList from "pages/common/CommonList";
 // 알람 / 내 정보관리
 import AlarmList from "pages/common/AlarmList";
 import AccountMng from "pages/common/AccountMng";
+// login
+import LoginForm from "pages/login/LoginForm";
 // 프로젝트
 import ProjectList from "pages/project/ProjectList";
 import ProjectView from "pages/project/ProjectView";
@@ -55,6 +57,8 @@ export default function Router() {
                         {/* <Route index element={ <DataBoard /> }/> */}
                         {/* ------------------ */}
                         <Route index element={ <ProjectList /> }/>
+                        {/* common */}
+                        <Route path="/common/commonList" element={ <CommonList /> } />
                         {/* 프로젝트 */}
                         <Route path="/project" element={ <ProjectList /> } />
                         <Route path="/project/projectView" element={ <ProjectView /> } />

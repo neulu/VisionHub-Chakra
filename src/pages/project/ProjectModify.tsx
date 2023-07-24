@@ -75,7 +75,7 @@ const ProjectModify = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}>
+                    <Box mb={'25px'}>
                         {/* location */}
                         <Breadcrumb spacing={"3px"} separator={<RiArrowRightSLine color={"gray"} />}>
                           <BreadcrumbItem>
@@ -88,7 +88,7 @@ const ProjectModify = () : JSX.Element => {
 
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading fontSize={'30px'} fontWeight={'500'} lineHeight={'1.8'}>
+                                <Heading>
                                   명화(신성)6th 프로젝트
                                 </Heading>
                             </Flex>
@@ -104,26 +104,26 @@ const ProjectModify = () : JSX.Element => {
                       {/* cont list */}
                       <SimpleGrid spacing={30}>
                           <VStack align={'top'} gap={'0'}>
-                              <HStack alignItems={'flex-start'} p={'15px 0'} gap={'0'}>
+                              <HStack alignItems={'flex-start'} p={'18px 0'} gap={'0'}>
                                   <Text variant={'typeDltLg'}>프로젝트명</Text>
                                   <Text variant={'typeDldLg'}>명화(신성) 6th 프로젝트</Text>
                               </HStack>
-                              <HStack alignItems={'flex-start'} p={'15px 0'} gap={'0'}>
+                              <HStack alignItems={'flex-start'} p={'18px 0'} gap={'0'}>
                                   <Text variant={'typeDltLg'}>클러스터</Text>
                                   <Text variant={'typeDldLg'}>VHUB-DEV-EKS00</Text>
                               </HStack>
-                              <HStack alignItems={'flex-start'} p={'15px 0'} gap={'0'}>
+                              <HStack alignItems={'flex-start'} p={'18px 0'} gap={'0'}>
                                   <Text variant={'typeDltLg'}>네임 스페이스</Text>
                                   <Text variant={'typeDldLg'}>myunghwa-6th</Text>
                               </HStack>
-                              <HStack alignItems={'flex-start'} p={'15px 0'} gap={'0'}>
+                              <HStack alignItems={'flex-start'} p={'18px 0'} gap={'0'}>
                                   <Text variant={'typeDltLg'}>라이선스 기간</Text>
                                   <Text variant={'typeDldLg'}>2023.06.02 ~ 2023.12.31</Text>
                               </HStack>
 
-                              <FormControl pos={'relative'} display={'flex'} alignItems={'center'} flexWrap={'wrap'} justifyContent={'flex-start'} p={'10px 0'}>
-                                <FormLabel w={'200px'} fontWeight={'bold'} m={'0'}>설명</FormLabel>
-                                <Textarea variant={'typeWrite'} w={'calc(100% - 200px)'} placeholder={'설명을 작성해 주세요.'} />
+                              <FormControl variant={'typeWrite'}>
+                                <FormLabel>설명</FormLabel>
+                                <Textarea variant={'typeWrite'} placeholder={'설명을 작성해 주세요.'} />
                               </FormControl>
                           </VStack>
                       </SimpleGrid>

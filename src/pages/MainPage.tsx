@@ -114,10 +114,9 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
 
 
   return (
-    // bg={{ base: '#eee', sm: '#aaa', md: '#888', lg: '#666', xl: '#222' }}ml={{ base: 0, sm: 0, md: '80px', lg: '300px' }}
-    <Box w={{ sm: 'full', md: 1600}}  minH={"100vh"} > 
-      <Flex flexDirection={{ sm: 'column', md: 'row' }}>
-        <SidebarContent  onClose={() => onClose} w={{ md: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'none', md: 'block' }} fontFamily={'NanumSquare'} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
+    <Box w={{ sm: 1600}}  minH={"100vh"} > 
+      <Flex flexDirection={{ sm: 'row' }}>
+        <SidebarContent  onClose={() => onClose} w={{ sm: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'block' }} fontFamily={'NanumSquare'} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
@@ -131,8 +130,8 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
           </DrawerContent>
         </Drawer>
         {/* mobilenav */}
-        <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
-        <Box w={{ sm: 'full', md: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ sm: '10px', md: '30px 0px 30px 30px' }} >
+        <MobileNav display={{ base: 'none' }} onOpen={onOpen} />
+        <Box w={{ sm: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ sm: '40px 0px 30px 30px' }} >
           {children}
         </Box>
       </Flex>
@@ -168,8 +167,8 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
           <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'700'} m={'0'}>Vision Hub</Text>
         </Flex>
 
-        <Button variant={'none'} pos={'relative'} w={'24px'} minW={'auto'} h={'24px'} p={'0'} >
-          <Icon as={RiNotification2Line} fontSize={'24px'} />
+        <Button variant={'typeIcon'} pos={{base: 'absolute', lg: 'relative'}} bottom={{base: '95px', lg: 'auto'}} >
+          <Icon as={RiNotification2Line} />
           {/* 알림 new 일때 Badge Show */}
           <Badge variant={'alarm'}>New</Badge>
         </Button>
@@ -178,7 +177,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
           <Icon as={RiMenuLine} fontSize={'24px'} />
         </Button> */}
        
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+        {/* <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} /> */}
       </Flex>
       {LinkItems.map((link) => (
         <NavItem key={link.name} cate={link.cate} icon={link.icon} linkUrl={link.linkUrl}>
@@ -187,7 +186,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       ))}
 
       {/* account Area */}
-      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'40px'} w={'100%'} p={{ md: '0 25px', lg: '0 30px' }}>
+      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'40px'} w={'100%'} p={{ sm: '0 25px', lg: '0 30px' }}>
         <Flex alignItems={"center"}>
           <Stack direction={"row"} alignItems={"center"}  mr={'4px'} gap={'0'}>
             <Menu placement="right">
@@ -200,20 +199,20 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
                   name={'홍길동'}
                 />
               </MenuButton>
-              <MenuList display={{ md: 'block', lg: 'none' }} >
+              <MenuList display={{ sm: 'block', lg: 'none' }} >
                 {/* <MenuArrow /> */}
                 <MenuItem onClick={accountMng}>내 정보 관리</MenuItem>
                 <MenuItem onClick={()=>onLogout()}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
-            <Text display={{ md: 'none', lg: 'block' }} fontSize={'lg'} m={'0 0 0 8px'}>홍길동</Text>
+            <Text display={{ sm: 'none', lg: 'block' }} fontSize={'lg'} m={'0 0 0 8px'}>홍길동</Text>
           </Stack>
           
-          <Button onClick={accountMng} display={{ md: 'none', lg: 'block' }} h={'auto'} p={'0'} variant={'none'}>
-            <Icon as={RiSettings3Line} fontSize={'24px'} />
+          <Button onClick={accountMng} display={{ sm: 'none', lg: 'block' }} variant={'typeIcon'}>
+            <Icon as={RiSettings3Line} />
           </Button>
         </Flex>
-        <Button variant={'grayRoundBtn'} display={{ md: 'none', lg: 'block' }} onClick={()=>onLogout()}>
+        <Button variant={'grayRoundBtn'} display={{ sm: 'none', lg: 'block' }} onClick={()=>onLogout()}>
             로그아웃
         </Button>
       </Flex>
