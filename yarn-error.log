@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Users\unida\AppData\Local\Volta\tools\image\node\16.20.1\node.exe C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\bin\yarn.js
+  C:\Users\unida\AppData\Local\Volta\tools\image\node\16.20.1\node.exe C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\bin\yarn.js add @hashtag-design-system/components
 
 PATH: 
   C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\bin;C:\Users\unida\AppData\Local\Volta\tools\image\node\16.20.1;C:\Python311\Scripts\;C:\Python311\;C:\Program Files\Volta\;C:\Program Files\Eclipse Adoptium\jdk-17.0.6.10-hotspot\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Bandizip\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\ProgramData\chocolatey\bin;C:\Users\unida\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs\;C:\Users\unida\AppData\Local\Volta\bin;C:\Users\unida\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\unida\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\unida\AppData\Roaming\npm
@@ -14,20 +14,21 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:141517:19)
-      at Object.onceWrapper (node:events:627:28)
-      at ClientRequest.emit (node:events:513:28)
-      at TLSSocket.emitRequestTimeout (node:_http_client:839:9)
-      at Object.onceWrapper (node:events:627:28)
-      at TLSSocket.emit (node:events:525:35)
-      at TLSSocket.Socket._onTimeout (node:net:550:8)
-      at listOnTimeout (node:internal/timers:559:17)
-      at processTimers (node:internal/timers:502:7)
+  Invariant Violation: expected hoisted manifest for "@hashtag-design-system/components#framer-motion#react-dom"
+      at invariant (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:2318:15)
+      at _loop2 (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:91029:9)
+      at PackageHoister.init (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:91099:19)
+      at PackageLinker.getFlatHoistedTree (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:48549:20)
+      at PackageLinker.<anonymous> (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:48560:27)
+      at Generator.next (<anonymous>)
+      at step (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:310:30)
+      at C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:328:14
+      at new Promise (<anonymous>)
+      at new F (C:\Users\unida\AppData\Local\Volta\tools\image\yarn\1.22.19\lib\cli.js:5305:28)
 
 npm manifest: 
   {
-    "name": "idp-data-mesh",
+    "name": "visionhub",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -53,6 +54,7 @@ npm manifest:
       "react-folder-tree": "^5.1.1",
       "react-force-graph-3d": "^1.23.0",
       "react-hook-form": "^7.43.9",
+      "react-icons": "^4.10.1",
       "react-player": "^2.12.0",
       "react-plotly.js": "^2.6.0",
       "react-redux": "^8.0.5",
@@ -9398,6 +9400,11 @@ Lockfile:
     version "4.9.0"
     resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.9.0.tgz#ba44f436a053393adb1bdcafbc5c158b7b70d2a3"
     integrity sha512-ijUnFr//ycebOqujtqtV9PFS7JjhWg0QU6ykURVHuL4cbofvRCf3f6GMn9+fBktEFQOIVZnuAYLZdiyadRQRFg==
+  
+  react-icons@^4.10.1:
+    version "4.10.1"
+    resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.10.1.tgz#3f3b5eec1f63c1796f6a26174a1091ca6437a500"
+    integrity sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==
   
   react-is@^16.13.1, react-is@^16.7.0:
     version "16.13.1"

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MainPage from 'pages/MainPage'
 import {
+    chakra,
     Container,
     Heading,
     IconButton,
@@ -49,13 +50,13 @@ import {
   } from '@chakra-ui/react';
 
   import {
-    RiUserSettingsLine,
-    RiArrowDownSLine,
-    RiCloseCircleFill,
-    RiFilterFill,
-    RiAddCircleLine,
-    RiArrowDropLeftLine,
-    RiArrowDropRightLine,
+    AiOutlineSearch,
+  } from 'react-icons/ai';
+  import {
+    HiOutlineChevronDown,
+  } from 'react-icons/hi';
+  import {
+    RiAddFill,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
@@ -73,49 +74,39 @@ const ProjectList = () : JSX.Element => {
         <>
             <MainPage children={<>
                 <Container>
-                    <Box mb={5}>
+                    <Box mb={'15px'} pb={'15px'} borderBottom={'solid 1px #E4E4E4'}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
                                 <Heading>프로젝트</Heading>
-                                <Button variant={'outline'} color={'blackAlpha.200'} w={'34px'} minW={'auto'} h={'34px'} p={'0'} ml={'20px'}>
-                                    <Icon as={RiUserSettingsLine}  color={'blackAlpha.300'} fontSize={'24px'} />
-                                </Button>
                             </Flex>
                             <HStack spacing={"10px"}>
-                                <Button onClick={writeProject}>프로젝트 추가</Button>
+                                <Button onClick={writeProject}>
+                                    <Icon as={RiAddFill}  fontSize={'18px'} mr={'5px'} />
+                                    프로젝트 추가
+                                </Button>
                             </HStack>
                         </Flex>
                     </Box>
 
-                    <Box mb={5}>
+                    <Box mb={'15px'}>
                         <Flex justifyContent={'space-between'}>
                             <Flex whiteSpace={'normal'} alignItems={'center'}>
-                                <Text variant={'typeTitleLg'}>프로젝트 (총3개)</Text>
+                                <Text variant={'typeMd'}>프로젝트 <chakra.span color={'#6155E9'}>3</chakra.span></Text>
                             </Flex>
                             <Flex whiteSpace={'normal'} alignItems={'center'}>
-                                <Center h={'38px'} p={'0 10px'}>
-                                    <Divider orientation={'vertical'} h={'38px'} bg={'#efefef'} />
-                                </Center>
-                                <Flex whiteSpace={'normal'} alignItems={'center'}>
+                                <Flex whiteSpace={'normal'} alignItems={'center'} mr={'10px'}>
                                     <InputGroup>
-                                        <Input variant={'outline'} w={'230px'} placeholder={'검색어를 입력해 주세요.'} />
+                                        <Input variant={'outline'} w={'250px'} placeholder={'검색어를 입력해 주세요.'} />
                                         <InputRightElement>
-                                            <Icon as={RiCloseCircleFill} fontSize={'22px'} color={'blackAlpha.200'} cursor={'pointer'} />
+                                            <Icon as={AiOutlineSearch} fontSize={'21px'} color={'#6D6D6D'} cursor={'pointer'} />
                                         </InputRightElement>
                                     </InputGroup>
-                                    <Button ml={'10px'}>
-                                        검색
-                                    </Button>
                                 </Flex>
-                                
-                                <Center h={'38px'} p={'0 10px'}>
-                                    <Divider orientation={'vertical'} h={'38px'} bg={'#efefef'} />
-                                </Center>
                                 <Menu variant={'typeSelect'}>
-                                    <MenuButton as={Button} variant={'typeSelectBtn'} rightIcon={<RiArrowDownSLine />}>
+                                    <MenuButton as={Button} variant={'typeSelect'} w={'130px'} textAlign={'left'} rightIcon={<HiOutlineChevronDown />}>
                                         20줄 보기
                                     </MenuButton>
-                                    <MenuList w={'120px'}>
+                                    <MenuList w={'130px'}>
                                         <MenuItem>20줄 보기</MenuItem>
                                         <MenuItem>30줄 보기</MenuItem>
                                         <MenuItem>50줄 보기</MenuItem>
@@ -128,27 +119,26 @@ const ProjectList = () : JSX.Element => {
                     </Box>
                     <Box>
                         {/* table */}
-                        <TableContainer>
+                        <TableContainer border={'solid 1px #dadada'} borderRadius={'4px'}>
                             <Table variant={'simple'}>
                                 <TableCaption>프로젝트 목록</TableCaption>
                                 <Thead>
                                 <Tr>
-                                    <Th w={'60px'}>No</Th>
+                                    <Th w={'80px'} textAlign={'center'}>No</Th>
                                     <Th>프로젝트명</Th>
                                     <Th>클러스터</Th>
                                     <Th>네임스페이스</Th>
-                                    <Th w={'280px'}>라이센스</Th>
+                                    <Th>라이센스</Th>
                                 </Tr>
                                 </Thead>
                                 <Tbody>
                                 <Tr>
-                                    <Td colSpan={5} p={'100px 0'} bg={'none !important'}>
+                                    <Td colSpan={5} textAlign={'center'} p={'100px 0'} bg={'none !important'}>
                                         내용이 없습니다.
                                     </Td>
                                 </Tr>
-                                {/* New */}
-                                <Tr bg={'#e5e5e5'}>
-                                    <Td>New</Td>
+                                <Tr>
+                                    <Td textAlign={'center'}>New</Td>
                                     <Td>
                                         <Link to={'/project/projectView'}>
                                             명화(신성) 4th 프로젝트
@@ -159,7 +149,7 @@ const ProjectList = () : JSX.Element => {
                                     <Td>2022-12-26 ~ 2022-12-26</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>15</Td>
+                                    <Td textAlign={'center'}>15</Td>
                                     <Td>
                                         <Link to={'/project/projectView'}>
                                             명화(신성) 4th 프로젝트
@@ -170,7 +160,7 @@ const ProjectList = () : JSX.Element => {
                                     <Td>2022-12-26 ~ 2022-12-26</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>14</Td>
+                                    <Td textAlign={'center'}>14</Td>
                                     <Td>
                                         <Link to={'/project/projectView'}>
                                             명화(신성) 4th 프로젝트
@@ -184,20 +174,6 @@ const ProjectList = () : JSX.Element => {
                             </Table>
                         </TableContainer>
 
-                        {/* pagination */}
-                        <Flex alignItems={"center"} justifyContent={"center"} w={"full"} m={'20px auto'}>
-                            <Flex alignItems={"center"} justifyContent={"center"} border={'1px solid #e5e5e5'} borderRadius={'3px'} >
-                                <Button variant={'paginationIconBtn'}>
-                                  <Icon as={RiArrowDropLeftLine} />
-                                </Button>
-                                <Button variant={'paginationBtn'}>1</Button>
-                                <Button variant={'paginationBtn'}>2</Button>
-                                <Button variant={'paginationBtn'}>3</Button>
-                                <Button variant={'paginationIconBtn'}>
-                                  <Icon as={RiArrowDropRightLine} />
-                                </Button>
-                            </Flex>
-                        </Flex>
                     </Box>
                 </Container>
             </>} />

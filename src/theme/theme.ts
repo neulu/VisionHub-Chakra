@@ -1,6 +1,9 @@
 import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
 import type { StyleFunctionProps } from '@chakra-ui/styled-system'
 
+// import {  icons10, icons12, icons16, iconsMisc } from 'theme/icons/iconMnModels'
+
+
 const config: ThemeConfig = {
   initialColorMode: 'light',
   useSystemColorMode: true,
@@ -41,18 +44,29 @@ const theme = extendTheme(
     //     750: "RGBA(0, 0, 0, 0.70)",
     //   },
     // },
+    // icons: {
+    //   // ...theme.icons,
+    // ...icons16,
+    // ...icons12,
+    // ...icons10,
+    // ...iconsMisc,
+    // },
   },
   {
     styles: {
       global: {
         'html, body': {
           // 1rem 기준 =>> 16px
-          fontFamily: 'NanumSquare',
-          fontSize: '16px', 
+          fontFamily: 'Pretendard',
+          fontSize: '15px', 
+          color: '#1B1B1B',
           lineHeight: '1',
           transition: 'all 0.5s ease',
+          '*': {
+            boxShadow: 'none !important',
+          },
           '.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6': {
-            fontSize: '30px !important',
+            fontSize: '24px !important',
             lineHeight: '1 !important',
           },
           '&::-webkit-scrollbar': {
@@ -87,15 +101,14 @@ const theme = extendTheme(
       },
       Heading: {
         baseStyle: {
-          fontWeight: '600',
-          fontFamily: 'NanumSquare',
+          fontWeight: '700',
+          fontFamily: 'Pretendard',
           m : '0',
         },
       },
       Breadcrumb: {
         baseStyle: {
           list: {
-            // fontFamily: 'NanumSquare',
             color: '#000',
             fontWeight: '600',
           },
@@ -161,6 +174,22 @@ const theme = extendTheme(
               },
             },
           },
+          typeWriteXs: {
+            container: {
+              pos: 'relative',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              p: '10px 0',
+              label: {
+                display: 'flex',
+                w: '120px',
+                fontWeight: 'bold',
+                color: '#000',
+                m: '7px 0 0 0',
+              },
+            },
+          },
           typeModal: {
             container: {
               pos: 'relative',
@@ -182,20 +211,22 @@ const theme = extendTheme(
       Button: {
          baseStyle: {
           minWidth: 'auto',
-          fontFamily: 'NanumSquare',
+          fontSize: '14px',
+          fontFamily: 'Pretendard',
           fontWeight: '400',
           lineHeight: '1',
-          borderRadius: '3px',
+          borderRadius: '4px',
         },
         variants: {
           solid: {
             minWidth: 'auto',
-            h: '39px',
+            h: '40px',
+            fontSize: '14px',
             color: '#fff',
             padding: '0 10px',
-            bg: '#4d4d4d',
+            bg: '#2b5df6',
             '&:hover': {
-              bg: '#222',
+              bg: '#2f53bf',
             },
           },
           typeIcon: {
@@ -210,6 +241,23 @@ const theme = extendTheme(
             m: '0',
             bg: 'none',
           },
+          typeSelect: {
+            h: '36px',
+            border: 'solid 1px #C6C6C6',
+            padding: '0 7px 0 10px',
+            background: 'transparent',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+              opacity: '.8',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          },
+
           typeIconSm: {
             pos: 'relative',
             w: '12px',
@@ -313,6 +361,33 @@ const theme = extendTheme(
               bg: '#ccc',
             },
           },
+          typeSimpleSm: {
+            h: '27px',
+            fontSize: '13px',
+            fontWeight: '400',
+            color: '#000',
+            borderRadius: '5px',
+            padding: '0 5px',
+            m: '5px 0',
+            bg: '#eee',
+            '&:hover': {
+              bg: '#ccc',
+            },
+          },
+          typeSimpleWhiteSm: {
+            h: '27px',
+            fontSize: '13px',
+            fontWeight: '400',
+            color: '#000',
+            border: 'solid 1px #e5e5e5',
+            borderRadius: '5px',
+            padding: '0 5px',
+            m: '5px 0',
+            bg: '#fff',
+            '&:hover': {
+              bg: '#eee',
+            },
+          },
           paginationBtn: {
             minW: 'auto',
             color: '#000',
@@ -354,20 +429,7 @@ const theme = extendTheme(
               color: 'blackAlpha.700',
             },
           },
-          typeSelectBtn: {
-            border: 'solid 1px #e5e5e5',
-            padding: '0 10px 0 15px',
-            background: '#fff',
-            svg: {
-              transition: 'transform 0.2s ease-out',
-              transformOrigin: 'center center',
-            },
-            '&[aria-expanded=true]': {
-              svg: {
-                transform: 'rotate(-180deg)',
-              },
-            },
-          },
+          
           typeSelectBtnLineNone: {
             fontSize: '18px',
             fontWeight: 'bold',
@@ -417,6 +479,23 @@ const theme = extendTheme(
               },
             },
           },
+          typeSelectBtnXs: {
+            w: 'calc(100% - 120px)',
+            h: '32px',
+            textAlign: 'left',
+            border: 'solid 1px #e5e5e5',
+            padding: '0 10px 0 15px',
+            background: '#fff',
+            svg: {
+              transition: 'transform 0.2s ease-out',
+              transformOrigin: 'center center',
+            },
+            '&[aria-expanded=true]': {
+              svg: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          },
           typeSelectModalBtn: {
             w: 'calc(100% - 180px)',
             h: '32px',
@@ -444,37 +523,50 @@ const theme = extendTheme(
       Table: {
         variants: {
             simple: {
+              table : {
+                bg: '#fff',
+              },
               caption : {
                 display: 'none',
               },
               th: {
-                h: '36px',
+                h: '40px',
                 textTransform: "none",
-                fontSize: '16px',
-                fontWeight: '600',
-                fontFamily: 'NanumSquare',
-                lineHeight: '1.3',
-                color: '#000',
-                textAlign: 'center',
-                p: '7px 5px',
-                bg: '#ccc',
+                fontSize: '13px',
+                // fontWeight: '600',
+                fontFamily: 'Pretendard',
+                lineHeight: '1',
+                color: '#636D7E',
+                textAlign: 'left',
+                p: '0 10px',
+                borderBottomColor: '#dadada',
+                bg: '#f6f6f6',
               },
               td: {
-                fontFamily: 'NanumSquare',
-                fontSize: '16px',
+                fontFamily: 'Pretendard',
+                fontSize: '15px',
                 lineHeight: '1.3',
-                color: '#888',
-                textAlign: 'center',
-                borderColor: '#ccc',
-                p: '21px 5px 17px',
+                color: '#1B1B1B',
+                textAlign: 'left',
+                borderColor: '#ececec',
+                p: '21px 10px 18px',
                 wordBreak: 'break-all',
                 whiteSpace: 'normal',
                 fontVariantNumeric: 'normal',
                 _last: {
-                  bgImage: "url('/assets/images/icons/ico-arrow-01.svg')",
-                  bgPosition: 'calc(100% - 5px) center',
+                  bgImage: "url('/assets/images/icons/ico-arrow-right.svg')",
+                  bgPosition: 'calc(100% - 25px) center',
                   bgRepeat: 'no-repeat',
                 }
+              },
+              tbody: {
+                tr: {
+                  _last: {
+                    td: {
+                      border: 'none',
+                    }
+                  }
+                },
               },
               // tr: {
               //   '&:hover': {
@@ -626,6 +718,53 @@ const theme = extendTheme(
             p: '10px 0px 30px',
           },
         },
+        variants: {
+          typePreview: {
+            dialog: {
+              w: '880px',
+              maxW: 'auto',
+            },
+            closeButton: {
+              // display: 'none',
+              top: '10px',
+              right: '10px',
+              fontSize: '15px',
+            },
+            header: {
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '16px',
+              fontWeight: '400',
+              color: '#3725FF',
+              p: '20px 30px 30px',
+            },
+            body: {
+              color: 'blackAlpha.900',
+              lineHeight: '1.4',
+              p: '0px 10px 10px 25px',
+              m: '10px',
+              '&::-webkit-scrollbar': {
+                width: '10px',
+                height: '10px',
+                borderRadius: '10px',
+                backgroundColor: '#f9f9f9',
+              },
+              
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#898989',
+                borderRadius: '8px',
+                backgroundClip: 'padding-box',
+                border: '2px solid transparent',
+              },
+              
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: '#f9f9f9',
+                width: '10px',
+                borderRadius: '10px',
+              },
+            },
+          },
+        },
       },
       Popover: {
         baseStyle: {
@@ -649,24 +788,31 @@ const theme = extendTheme(
         variants: {
           outline: {
             field: {
-              height: '39px',
-              border: 'solid 1px #e5e5e5',
-              borderRadius: '3px',
+              height: '36px',
+              padding: '0 10px',
+              borderColor: '#c6c6c6',
+              borderRadius: '4px',
+              background: 'transparent',
               '&::placeholder': {
-                // fontSize: '16px',
-                color: 'blackAlpha.600',
-                fontWeight: '200',
+                fontSize: '14px',
+                color: '#909090',
+                fontWeight: '500',
+                textIndent: '0',
               },
             },
           },
           typeLogin: {
             field: {
-              height: '39px',
-              border: 'solid 1px #dedede',
+              height: '44px',
+              padding: '0 10px',
+              border: 'solid 1px #DADADA',
               borderRadius: '3px',
-              // '&:focus': {
-              //   borderColor: '#3725FF',
-              // },
+              '&::placeholder': {
+                fontSize: '15px',
+                color: '#D5D5D5',
+                fontWeight: '500',
+                textIndent: '0',
+              },
             },
           },
           typeWrite: {
@@ -681,6 +827,18 @@ const theme = extendTheme(
               '&:focus': {
                 borderColor: '#3725FF',
               },
+              _disabled: {
+                // fontSize: '14px',
+                color: 'blackAlpha.500',
+                bg: '#DCDCDC',
+                opacity: '1',
+              },
+              _readOnly: {
+                // fontSize: '14px',
+                color: 'blackAlpha.500',
+                bg: '#DCDCDC',
+                opacity: '1',
+              },
             },
           },
           typeWriteSm: {
@@ -694,6 +852,44 @@ const theme = extendTheme(
               },
               '&:focus': {
                 borderColor: '#3725FF',
+              },
+              _disabled: {
+                fontSize: '14px',
+                color: 'blackAlpha.700',
+                bg: '#DCDCDC',
+                opacity: '1',
+              },
+              _readOnly: {
+                fontSize: '14px',
+                color: 'blackAlpha.700',
+                bg: '#DCDCDC',
+                opacity: '1',
+              },
+            },
+          },
+          typeWriteXs: {
+            field: {
+              w: 'calc(100% - 180px)',
+              height: '32px',
+              border: 'solid 1px #dedede',
+              borderRadius: '3px',
+              '&::placeholder': {
+                color: 'blackAlpha.600',
+              },
+              '&:focus': {
+                borderColor: '#3725FF',
+              },
+              _disabled: {
+                fontSize: '14px',
+                color: 'blackAlpha.700',
+                bg: '#DCDCDC',
+                opacity: '1',
+              },
+              _readOnly: {
+                fontSize: '14px',
+                color: 'blackAlpha.700',
+                bg: '#DCDCDC',
+                opacity: '1',
               },
             },
           },
@@ -737,6 +933,7 @@ const theme = extendTheme(
               p: '0',
               marginTop:'-5px',
               borderRadius: '3px',
+              borderColor: '#C6C6C6',
               bg: '#fff',
               maxHeight: '300px',
               overflow: 'auto',
@@ -745,21 +942,19 @@ const theme = extendTheme(
                 height: '10px',
                 backgroundColor: '#fff',
               },
-              
               '&::-webkit-scrollbar-thumb': {
                 backgroundColor: '#ddd',
                 borderRadius: '8px',
                 backgroundClip: 'padding-box',
                 border: '2px solid transparent',
               },
-              
               '&::-webkit-scrollbar-track': {
                 backgroundColor: '#fff',
                 borderRadius: '8px',
               },
             },
             item: {
-              padding: '10px 25px 10px 15px',
+              padding: '10px 25px 10px 10px',
               color: '#1a1a1a',
               _hover: {
                 bg: '#efefef',
@@ -903,8 +1098,13 @@ const theme = extendTheme(
       Text: {
         baseStyle: {
           m: '0',
+          p: '0',
         },
         variants: {
+          typeMd: {
+            fontWeight: '600',
+            color: '#323232',
+          },
           typeTitleSm: {
             fontSize: '14px',
             fontWeight: '700',
@@ -974,6 +1174,11 @@ const theme = extendTheme(
           },
           typeDescMd: {
             fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#000',
+          },
+          typeDescSm: {
+            fontSize: '14px',
             fontWeight: 'bold',
             color: '#000',
           },

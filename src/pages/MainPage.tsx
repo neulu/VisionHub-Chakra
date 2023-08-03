@@ -34,6 +34,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  VStack,
   // MenuArrow,
 } from '@chakra-ui/react';
 import {
@@ -49,7 +50,6 @@ import {
   RiBearSmileLine,
   RiNotification2Line,
   RiMenuLine,
-  RiMore2Fill,
   RiBarChartBoxLine,
   RiCloseFill,
   RiFileEditLine,
@@ -63,15 +63,23 @@ import {
   RiUser6Line,
   RiDraftLine,
   RiSettings3Line,
+  RiMore2Fill,
+  RiFileList2Line,
+  // RiShapesLine,
 } from 'react-icons/ri';
 import {
-  LuNetwork,
-} from 'react-icons/lu';
-
+  MdOutlineScreenSearchDesktop,
+} from 'react-icons/md';
+import { createIcon } from "@chakra-ui/react";
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
+import { render } from "react-dom";
 // import { useNavigate } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
+// import { MnModels } from 'theme/icons/iconMnModels'
+// import { UpDownIcon } from 'theme/icons/iconMnModels'
+
+
 
 interface LinkItemProps {
   name: string;
@@ -80,14 +88,20 @@ interface LinkItemProps {
   linkUrl: string;
 }
 
+
+
+
+
 const LinkItems: Array<LinkItemProps> = [
-  { name: '프로젝트', cate: 'project', icon: RiFileListLine, linkUrl: "/project"},
-  { name: '모델', cate: 'models', icon: RiFlowChart, linkUrl: "/models"},
+
+  
+  { name: '프로젝트', cate: 'project', icon: RiFileList2Line, linkUrl: "/project"},
+  { name: '모델', cate: 'models', icon: RiFileListLine, linkUrl: "/models"},
   { name: '데이터', cate: '/', icon: RiFileListLine, linkUrl: "/"},
   { name: '레이블링', cate: '/', icon: RiDatabase2Line, linkUrl: "/"},
   { name: '실행', cate: 'execution', icon: RiPlayCircleLine, linkUrl: "/execution"},
   { name: '테스트', cate: 'test', icon: RiDraftLine, linkUrl: "/test"},
-  { name: '모니터링', cate: '/', icon: RiLineChartLine, linkUrl: "/"},
+  { name: '모니터링', cate: '/', icon: MdOutlineScreenSearchDesktop, linkUrl: "/"},
   { name: '사용자', cate: 'user', icon: RiUser6Line, linkUrl: "/user"},
   { name: '클러스터', cate: 'cluster', icon: RiNodeTree, linkUrl: "/cluster"},
   { name: '저장소', cate: 'storage', icon: RiSaveLine, linkUrl: "/storage"},
@@ -112,11 +126,20 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
     navigate("/login");
   }
 
+  // const CircleIcon = (props) => (
+  //   <Icon viewBox='0 0 200 200' {...props}>
+  //     <path
+  //       fill='currentColor'
+  //       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+  //     />
+  //   </Icon>
+  // )
+
 
   return (
-    <Box w={{ sm: 1600}}  minH={"100vh"} > 
-      <Flex flexDirection={{ sm: 'row' }}>
-        <SidebarContent  onClose={() => onClose} w={{ sm: '80px', lg: '300px' }} h={'auto'} minH={'100vh'} display={{ base: 'block' }} fontFamily={'NanumSquare'} borderRight={'solid 1px #ddd'} onLogout={onLogout} />
+    <Box minW={"1600px"} minH={"100vh"} bg={'#f6f6f6'}> 
+      <Flex w={{ sm: 1600}}>
+        <SidebarContent  onClose={() => onClose} w={'270px'} h={'auto'} minH={'100vh'} display={{ base: 'block' }} fontFamily={'NanumSquare'} bg={'#22252b'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
@@ -131,7 +154,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
         </Drawer>
         {/* mobilenav */}
         <MobileNav display={{ base: 'none' }} onOpen={onOpen} />
-        <Box w={{ sm: 'calc(100% - 80px)', lg: 'calc(100% - 300px)' }} p={{ sm: '40px 0px 30px 30px' }} >
+        <Box w={'calc(100% - 270px)'} p={'35px 10px 50px 50px'} >
           {children}
         </Box>
       </Flex>
@@ -156,22 +179,46 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
     navigate({pathname  : '/common/accountMng' })
   }
 
+  // home icon
+  const HomeAppLogo = createIcon({
+    displayName: "HomeAppLogo",
+    viewBox: "0 0 19 19",
+    d: "M1.343 18.129c-.373 0-.69-.131-.951-.392A1.295 1.295 0 010 16.786v-2.07l4.029-3.47v6.883H1.343zm4.028 0V14.1h8.058v4.029H5.37zm9.4 0V9.484l-4.336-3.72 3.077-2.659 4.812 4.113c.15.13.266.285.35.464.084.179.126.369.126.571v8.533c0 .373-.13.69-.392.95a1.295 1.295 0 01-.95.393H14.77zM0 12.925V8.253a1.39 1.39 0 01.476-1.035L8.533.336c.13-.112.268-.196.414-.252a1.24 1.24 0 01.9 0c.15.056.29.13.42.224l2.21 1.902L0 12.925z",
+  });
+
+  // SNB icon
+// const MnModels = createIcon({
+//   displayName: "MnModels",
+//   viewBox: "0 0 19 20",
+//   d: "M4.192 8.615L9 .731l4.808 7.884H4.192zm10.308 11c-1.147 0-2.12-.399-2.918-1.197s-1.197-1.77-1.197-2.918c0-1.147.399-2.12 1.197-2.918s1.77-1.197 2.918-1.197c1.148 0 2.12.399 2.918 1.197s1.198 1.77 1.198 2.918c0 1.147-.4 2.12-1.198 2.918-.798.798-1.77 1.197-2.918 1.197zm-14.115-.5v-7.23h7.23v7.23H.385zm14.115-1c.732 0 1.351-.252 1.857-.758s.759-1.124.759-1.857c0-.732-.253-1.35-.759-1.857-.505-.506-1.124-.758-1.857-.758-.732 0-1.35.252-1.857.758-.505.506-.758 1.124-.758 1.857 0 .732.252 1.351.758 1.857s1.125.758 1.857.758zm-12.615-.5h4.23v-4.23h-4.23v4.23zm4.954-10.5h4.323L9 3.638 6.84 7.115z",
+// });
+
+// const CircleIcon = (props) => (
+//   <Icon viewBox='0 0 200 200' {...props}>
+//     <path
+//       fill='currentColor'
+//       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+//     />
+//   </Icon>
+// )
+
   return (
     <Box
-      // w={{ base: 0, md: 80 }}
       pos={"relative"} h={"full"}
       {...rest}>
-      <Flex h={"85"} p={'0 30px'} justifyContent={"space-between"} alignItems={"center"}>
+      <Flex h={"90"} p={'0 25px'} justifyContent={"flex-start"} alignItems={"center"}>
         <Flex alignItems={"center"}>
-          <Icon as={RiBearSmileLine} fontSize={'24px'} mr={'8px'} />
-          <Text fontSize={{base: '0px', lg: '22px'}} fontWeight={'700'} m={'0'}>Vision Hub</Text>
+          <Icon as={HomeAppLogo} fontSize={'19px'} color={'#fff'} mr={'15px'}  />
+          {/* <Icon as={MnModels} fontSize={'19px'} color={'#fff'} mr={'15px'}  /> */}
+          {/* <Icon name={MnModels} fontSize={'19px'} color={'#fff'} mr={'15px'}  /> */}
+          <Text fontSize={'20px'} fontWeight={'700'} fontFamily={'SUIT'} color={'#fff'}>VISION HUB</Text>
         </Flex>
 
-        <Button variant={'typeIcon'} pos={{base: 'absolute', lg: 'relative'}} bottom={{base: '95px', lg: 'auto'}} >
-          <Icon as={RiNotification2Line} />
+        {/* <Button variant={'typeIcon'} pos={{base: 'absolute', lg: 'relative'}} bottom={{base: '95px', lg: 'auto'}} >
+          <Icon as={RiNotification2Line} /> */}
           {/* 알림 new 일때 Badge Show */}
-          <Badge variant={'alarm'}>New</Badge>
-        </Button>
+          {/* <Badge variant={'alarm'}>New</Badge>
+        </Button> */}
 
         {/* <Button p={'0'} variant={'none'}> 
           <Icon as={RiMenuLine} fontSize={'24px'} />
@@ -180,41 +227,46 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         {/* <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} /> */}
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} cate={link.cate} icon={link.icon} linkUrl={link.linkUrl}>
+        <NavItem key={link.name} cate={link.cate} icon={link.icon} linkUrl={link.linkUrl} m={'0 12px 6px 12px'}>
           {link.name}
         </NavItem>
       ))}
 
       {/* account Area */}
-      <Flex justifyContent={"space-between"} alignItems={"center"} pos={'absolute'} bottom={'40px'} w={'100%'} p={{ sm: '0 25px', lg: '0 30px' }}>
-        <Flex alignItems={"center"}>
-          <Stack direction={"row"} alignItems={"center"}  mr={'4px'} gap={'0'}>
-            <Menu placement="right">
-              <MenuButton>
-                <Avatar
-                  boxSize={"33px"}
-                  maxW={'33px'}
-                  borderRadius={'full'}
-                  src={"https://bit.ly/sage-adebayo"}
-                  name={'홍길동'}
-                />
-              </MenuButton>
-              <MenuList display={{ sm: 'block', lg: 'none' }} >
-                {/* <MenuArrow /> */}
-                <MenuItem onClick={accountMng}>내 정보 관리</MenuItem>
-                <MenuItem onClick={()=>onLogout()}>로그아웃</MenuItem>
-              </MenuList>
-            </Menu>
-            <Text display={{ sm: 'none', lg: 'block' }} fontSize={'lg'} m={'0 0 0 8px'}>홍길동</Text>
+      <Flex alignItems={"center"} pos={'absolute'} bottom={'0px'} w={'100%'} h={'95px'} p={'0 10px 0 20px'} borderTop={'solid 1px #1d1f24'}>
+        <Flex alignItems={"flex-start"}  justifyContent={"space-between"} w={'100%'}>
+          <Stack direction={"row"} alignItems={"center"} gap={'0'}>
+            <Avatar
+              boxSize={"30px"}
+              maxW={'30px'}
+              borderRadius={'full'}
+              src={"https://bit.ly/sage-adebayo"}
+              name={'홍길동'}
+            />
+            <VStack alignItems={"flex-start"} gap={'0'} ml={'15px'}>
+              <Text fontSize={'15px'} color={'#A8B1C0'} mb={'7px'}>홍길동</Text>
+              <Text fontSize={'13px'} color={'#636D7E'}>honggildong@gmail.com</Text>
+            </VStack>
           </Stack>
+
+          <Menu placement="right">
+            <Button as={MenuButton} variant={'typeIcon'}>
+              <Icon as={RiMore2Fill}  fontSize={'18px'} color={'#fff'} />
+            </Button>
+            <MenuList>
+              {/* <MenuArrow /> */}
+              <MenuItem onClick={accountMng}>내 정보 관리</MenuItem>
+              <MenuItem onClick={()=>onLogout()}>로그아웃</MenuItem>
+            </MenuList>
+          </Menu>
           
-          <Button onClick={accountMng} display={{ sm: 'none', lg: 'block' }} variant={'typeIcon'}>
+          {/* <Button onClick={accountMng} display={{ sm: 'none', lg: 'block' }} variant={'typeIcon'}>
             <Icon as={RiSettings3Line} />
-          </Button>
+          </Button> */}
         </Flex>
-        <Button variant={'grayRoundBtn'} display={{ sm: 'none', lg: 'block' }} onClick={()=>onLogout()}>
-            로그아웃
-        </Button>
+        {/* <Button variant={'grayRoundBtn'} display={{ sm: 'none', lg: 'block' }} onClick={()=>onLogout()}>
+            로그아웃RiMore2Fill
+        </Button> */}
       </Flex>
     </Box>
   );
@@ -233,21 +285,41 @@ const NavItem = ({cate, icon, children, linkUrl, ...rest }: NavItemProps) => {
   // console.log('** menu 영문 cate >> ' + cate)
   // console.log('** url 경로임=>> ' + pathname)
   // console.log('** 폴더 경로임=>> ' + linkUrl)
+
+
+  // SNB icon
+// const MnModels = createIcon({
+//   displayName: "MnModels",
+//   viewBox: "0 0 19 20",
+//   d: "M4.192 8.615L9 .731l4.808 7.884H4.192zm10.308 11c-1.147 0-2.12-.399-2.918-1.197s-1.197-1.77-1.197-2.918c0-1.147.399-2.12 1.197-2.918s1.77-1.197 2.918-1.197c1.148 0 2.12.399 2.918 1.197s1.198 1.77 1.198 2.918c0 1.147-.4 2.12-1.198 2.918-.798.798-1.77 1.197-2.918 1.197zm-14.115-.5v-7.23h7.23v7.23H.385zm14.115-1c.732 0 1.351-.252 1.857-.758s.759-1.124.759-1.857c0-.732-.253-1.35-.759-1.857-.505-.506-1.124-.758-1.857-.758-.732 0-1.35.252-1.857.758-.505.506-.758 1.124-.758 1.857 0 .732.252 1.351.758 1.857s1.125.758 1.857.758zm-12.615-.5h4.23v-4.23h-4.23v4.23zm4.954-10.5h4.323L9 3.638 6.84 7.115z",
+// });
+
+// const CircleIcon = (props) => (
+//   <Icon viewBox='0 0 200 200' {...props}>
+//     <path
+//       fill='currentColor'
+//       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+//     />
+//   </Icon>
+// )
+
   return (
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
         {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
-          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'60px'} p={'0 30px'} color={'#000'}  fontSize={{base: '0px', lg: '18px'}} fontWeight={'normal'} bg={'#f5f8fd'}  _hover={{ bg: '#f5f8fd', color: 'black', }}
+          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'45px'}  color={'#fff'}  fontSize={'15px'} fontWeight={'500'} fontFamily={'Pretendard'} p={'0 12px'} borderRadius={'4px'} bg={'#3d6dfe'}  _hover={{ bg: '#3d6dfe', color: '#fff', }}
           {...rest}>
             {icon && (
-              <Icon mr={"3"} fontSize={"24px"} as={icon} />
+              <Icon mr={"3"} fontSize={"20px"} as={icon} color={'#fff'} />
             )}
             {children}
           </Flex>
         ) : (
-          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'60px'} p={'0 30px'} color={'#333'} fontSize={{base: '0px', lg: '18px'}}  _hover={{ bg: '#f5f8fd', color: 'black', }}
+          <Flex align={"center"} role={"group"} cursor={"pointer"} h={'45px'} color={'#A8B1C0'} fontSize={'15px'} fontWeight={'500'} fontFamily={'Pretendard'} p={'0 12px'}borderRadius={'4px'} _hover={{ bg: '#1a1c21' }}
           {...rest}>
             {icon && (
-              <Icon mr={"3"} fontSize={"24px"} as={icon} />
+               <Icon mr={"3"} fontSize={"20px"} as={icon} color={'#636D7E'} />
+              // <Icon />
+              // <Image as={icon} mr={"3"} fontSize={"20px"}  color={'#636D7E'}  src={'/assets/images/MnModels.svg'} />
             )}
             {children}
           </Flex>
