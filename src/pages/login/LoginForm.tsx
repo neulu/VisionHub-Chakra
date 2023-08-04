@@ -73,7 +73,7 @@ export default function LoginForm() {
             <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-start'} p={'6px 0'}>
               <Input {...register("username", { required: true, minLength : 6 } )} type={"text"} name={"username"} autoComplete={"off"} onBlur={()=>clearErrors('username')} variant={'typeLogin'} w={'full'} placeholder={"Username or email"} />
               {errors.username && errors.username.type === "required" && (<Text pos={'absolute'} bottom={'-7px'} left={'0'} fontSize={'11px'} color={'red.500'} >* Please enter a username</Text>) }
-              {errors.username && errors.username.type === "minLength" && (<Text pos={'absolute'} bottom={'-15px'} left={'0'} fontSize={'11px'} color={'red.500'} >* Please enter a username of at least 6 characters</Text>) }
+              {errors.username && errors.username.type === "minLength" && (<Text pos={'absolute'} bottom={'-7px'} left={'0'} fontSize={'11px'} color={'red.500'} >* Please enter a username of at least 6 characters</Text>) }
             </FormControl>
             <FormControl pos={'relative'} display={'flex'} alignItems={"center"} flexWrap={'wrap'} justifyContent={'flex-start'} p={'6px 0'}>
               <Input { ...register("password", { required: true, minLength : 6 } )} type={showPassword ? "text" : "password"} name={"password"} autoComplete={"off"}   w={'full'}variant={'typeLogin'} placeholder={"Password"} />

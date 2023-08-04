@@ -77,7 +77,7 @@ const ProjectList = () : JSX.Element => {
                     <Box mb={'15px'} pb={'15px'} borderBottom={'solid 1px #E4E4E4'}>
                         <Flex align={"center"} justifyContent={'space-between'}>
                             <Flex alignItems={'center'}>
-                                <Heading>프로젝트</Heading>
+                                <Heading variant={'typeLg'}>프로젝트</Heading>
                             </Flex>
                             <HStack spacing={"10px"}>
                                 <Button onClick={writeProject}>
@@ -120,7 +120,7 @@ const ProjectList = () : JSX.Element => {
                     <Box>
                         {/* table */}
                         <TableContainer border={'solid 1px #dadada'} borderRadius={'4px'}>
-                            <Table variant={'simple'}>
+                            <Table variant={'typeList'}>
                                 <TableCaption>프로젝트 목록</TableCaption>
                                 <Thead>
                                 <Tr>

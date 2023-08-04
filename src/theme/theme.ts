@@ -65,10 +65,6 @@ const theme = extendTheme(
           '*': {
             boxShadow: 'none !important',
           },
-          '.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6': {
-            fontSize: '24px !important',
-            lineHeight: '1 !important',
-          },
           '&::-webkit-scrollbar': {
             width: '12px',
             height: '12px',
@@ -101,19 +97,31 @@ const theme = extendTheme(
       },
       Heading: {
         baseStyle: {
-          fontWeight: '700',
           fontFamily: 'Pretendard',
+          // lineHeight: '1 !important',
           m : '0',
+        },
+        variants: {
+          typeMd: {
+            fontSize: '22px',
+            color: '#111',
+            fontWeight: '600',
+          },
+          typeLg: {
+            fontSize: '24px',
+            color: '#1B1B1B',
+            fontWeight: '700',
+          },
+          
         },
       },
       Breadcrumb: {
         baseStyle: {
           list: {
-            color: '#000',
-            fontWeight: '600',
+            color: '#909090',
+            fontSize: '14px',
+            fontWeight: '500',
           },
-          // item: {
-          // },
         },
       },
       Form: {
@@ -213,7 +221,7 @@ const theme = extendTheme(
           minWidth: 'auto',
           fontSize: '14px',
           fontFamily: 'Pretendard',
-          fontWeight: '400',
+          fontWeight: '500',
           lineHeight: '1',
           borderRadius: '4px',
         },
@@ -255,6 +263,17 @@ const theme = extendTheme(
               svg: {
                 transform: 'rotate(-180deg)',
               },
+            },
+          },
+          typeWhiteMd: {
+            h: '40px',
+            fontSize: '15px',
+            color: '#323232',
+            borderRadius: '4px',
+            padding: '0 25px',
+            border: 'solid 1px #c6c6c6',
+            '&:hover': {
+              bg: '#eee',
             },
           },
 
@@ -521,61 +540,137 @@ const theme = extendTheme(
         // },
       },
       Table: {
+        baseStyle: {
+           caption : {
+              display: 'none',
+            },
+            table : {
+              bg: '#fff',
+            },
+            th: {
+              h: '40px',
+              fontSize: '13px',
+              color: '#636D7E',
+              fontFamily: 'Pretendard',
+              lineHeight: '1',
+              textAlign: 'left',
+              borderBottom: 'solid 1px #dadada',
+              bg: '#f6f6f6',
+              textTransform: "none",
+              fontVariantNumeric: 'normal',
+            },
+            td: {
+              fontSize: '15px',
+              color: '#1B1B1B',
+              fontFamily: 'Pretendard',
+              lineHeight: '1.3',
+              textAlign: 'left',
+              borderBottom: 'solid 1px #ececec',
+              wordBreak: 'break-all',
+              whiteSpace: 'normal',
+              textTransform: "none",
+              fontVariantNumeric: 'normal',
+            },
+        },
         variants: {
-            simple: {
-              table : {
-                bg: '#fff',
-              },
-              caption : {
-                display: 'none',
-              },
-              th: {
-                h: '40px',
-                textTransform: "none",
-                fontSize: '13px',
-                // fontWeight: '600',
-                fontFamily: 'Pretendard',
-                lineHeight: '1',
-                color: '#636D7E',
-                textAlign: 'left',
-                p: '0 10px',
-                borderBottomColor: '#dadada',
-                bg: '#f6f6f6',
-              },
-              td: {
-                fontFamily: 'Pretendard',
-                fontSize: '15px',
-                lineHeight: '1.3',
-                color: '#1B1B1B',
-                textAlign: 'left',
-                borderColor: '#ececec',
-                p: '21px 10px 18px',
-                wordBreak: 'break-all',
-                whiteSpace: 'normal',
-                fontVariantNumeric: 'normal',
+          typeList: {
+            th: {
+              fontSize: '13px',
+              fontWeight: '600',
+              p: '0 10px',
+            },
+            td: {
+              fontSize: '15px',
+              fontWeight: '500',
+              p: '21px 10px 18px',
+              _last: {
+                bgImage: "url('/assets/images/icons/ico-arrow-right.svg')",
+                bgPosition: 'calc(100% - 25px) center',
+                bgRepeat: 'no-repeat',
+              }
+            },
+            tbody: {
+              tr: {
                 _last: {
-                  bgImage: "url('/assets/images/icons/ico-arrow-right.svg')",
-                  bgPosition: 'calc(100% - 25px) center',
-                  bgRepeat: 'no-repeat',
+                  td: {
+                    border: 'none',
+                  }
                 }
               },
-              tbody: {
-                tr: {
-                  _last: {
-                    td: {
-                      border: 'none',
-                    }
+            },
+          },
+          typeView: {
+            table : {
+              borderTop: 'solid 1px #ececec',
+            },
+            th: {
+              fontSize: '15px',
+              color: '#1b1b1b',
+              fontWeight: '500',
+              p: '10px 20px',
+              borderColor: '#ececec',
+              bg: '#fafafa',
+            },
+            td: {
+              h: '60px',
+              p: '10px 20px',
+              borderColor: '#ececec',
+            },
+          },
+          simple: {
+            table : {
+              bg: '#fff',
+            },
+            caption : {
+              display: 'none',
+            },
+            th: {
+              h: '40px',
+              textTransform: "none",
+              fontSize: '13px',
+              // fontWeight: '600',
+              fontFamily: 'Pretendard',
+              lineHeight: '1',
+              color: '#636D7E',
+              textAlign: 'left',
+              p: '0 10px',
+              borderBottomColor: '#dadada',
+              bg: '#f6f6f6',
+            },
+            td: {
+              fontFamily: 'Pretendard',
+              fontSize: '15px',
+              lineHeight: '1.3',
+              color: '#1B1B1B',
+              textAlign: 'left',
+              borderColor: '#ececec',
+              p: '21px 10px 18px',
+              wordBreak: 'break-all',
+              whiteSpace: 'normal',
+              fontVariantNumeric: 'normal',
+              _last: {
+                bgImage: "url('/assets/images/icons/ico-arrow-right.svg')",
+                bgPosition: 'calc(100% - 25px) center',
+                bgRepeat: 'no-repeat',
+              }
+            },
+            tbody: {
+              tr: {
+                _last: {
+                  td: {
+                    border: 'none',
                   }
-                },
+                }
               },
-              // tr: {
-              //   '&:hover': {
-              //     td: {
-              //       backgroundColor: '#f9f9f9',
-              //     }
-              //   },
-              // },
-            }
+            },
+            // tr: {
+            //   '&:hover': {
+            //     td: {
+            //       backgroundColor: '#f9f9f9',
+            //     }
+            //   },
+            // },
+          },
         }
       },
       Badge: {
@@ -1226,7 +1321,7 @@ Select: {
 */
 
 
-/* spacing 기준 [16px]
+/* spacing 기준 [15px]
 Name	Space	Pixels
 px  	1px 	1px	
 0.5	0.125rem	2px	

@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import {
+  chakra,
   IconButton,
   Badge,
   Button,
@@ -84,8 +85,9 @@ import { Link, useNavigate } from 'react-router-dom';
 interface LinkItemProps {
   name: string;
   cate: string;
-  icon: IconType;
+  // icon: IconType;
   linkUrl: string;
+  icoSrc: string;
 }
 
 
@@ -95,16 +97,16 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
 
   
-  { name: '프로젝트', cate: 'project', icon: RiFileList2Line, linkUrl: "/project"},
-  { name: '모델', cate: 'models', icon: RiFileListLine, linkUrl: "/models"},
-  { name: '데이터', cate: '/', icon: RiFileListLine, linkUrl: "/"},
-  { name: '레이블링', cate: '/', icon: RiDatabase2Line, linkUrl: "/"},
-  { name: '실행', cate: 'execution', icon: RiPlayCircleLine, linkUrl: "/execution"},
-  { name: '테스트', cate: 'test', icon: RiDraftLine, linkUrl: "/test"},
-  { name: '모니터링', cate: '/', icon: MdOutlineScreenSearchDesktop, linkUrl: "/"},
-  { name: '사용자', cate: 'user', icon: RiUser6Line, linkUrl: "/user"},
-  { name: '클러스터', cate: 'cluster', icon: RiNodeTree, linkUrl: "/cluster"},
-  { name: '저장소', cate: 'storage', icon: RiSaveLine, linkUrl: "/storage"},
+  { name: '프로젝트', cate: 'project', icoSrc: 'ico-project', linkUrl: "/project"},
+  { name: '모델', cate: 'models', icoSrc: 'ico-models', linkUrl: "/models"},
+  { name: '데이터', cate: '/', icoSrc: 'ico-data', linkUrl: "/"},
+  { name: '레이블링', cate: '/', icoSrc: 'ico-labeling', linkUrl: "/"},
+  { name: '실행', cate: 'execution', icoSrc: 'ico-execution', linkUrl: "/execution"},
+  { name: '테스트', cate: 'test', icoSrc: 'ico-test', linkUrl: "/test"},
+  { name: '모니터링', cate: '/', icoSrc: 'ico-monitoring', linkUrl: "/"},
+  { name: '사용자', cate: 'user', icoSrc: 'ico-user', linkUrl: "/user"},
+  { name: '클러스터', cate: 'cluster', icoSrc: 'ico-cluster', linkUrl: "/cluster"},
+  { name: '저장소', cate: 'storage', icoSrc: 'ico-storage', linkUrl: "/storage"},
   // { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
   // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
   // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
@@ -139,7 +141,7 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
   return (
     <Box minW={"1600px"} minH={"100vh"} bg={'#f6f6f6'}> 
       <Flex w={{ sm: 1600}}>
-        <SidebarContent  onClose={() => onClose} w={'270px'} h={'auto'} minH={'100vh'} display={{ base: 'block' }} fontFamily={'NanumSquare'} bg={'#22252b'} onLogout={onLogout} />
+        <SidebarContent  onClose={() => onClose} w={'270px'} h={'auto'} minH={'100vh'} display={{ base: 'block' }} bg={'#22252b'} onLogout={onLogout} />
         <Drawer
           autoFocus={false}
           isOpen={isOpen}
@@ -186,21 +188,6 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
     d: "M1.343 18.129c-.373 0-.69-.131-.951-.392A1.295 1.295 0 010 16.786v-2.07l4.029-3.47v6.883H1.343zm4.028 0V14.1h8.058v4.029H5.37zm9.4 0V9.484l-4.336-3.72 3.077-2.659 4.812 4.113c.15.13.266.285.35.464.084.179.126.369.126.571v8.533c0 .373-.13.69-.392.95a1.295 1.295 0 01-.95.393H14.77zM0 12.925V8.253a1.39 1.39 0 01.476-1.035L8.533.336c.13-.112.268-.196.414-.252a1.24 1.24 0 01.9 0c.15.056.29.13.42.224l2.21 1.902L0 12.925z",
   });
 
-  // SNB icon
-// const MnModels = createIcon({
-//   displayName: "MnModels",
-//   viewBox: "0 0 19 20",
-//   d: "M4.192 8.615L9 .731l4.808 7.884H4.192zm10.308 11c-1.147 0-2.12-.399-2.918-1.197s-1.197-1.77-1.197-2.918c0-1.147.399-2.12 1.197-2.918s1.77-1.197 2.918-1.197c1.148 0 2.12.399 2.918 1.197s1.198 1.77 1.198 2.918c0 1.147-.4 2.12-1.198 2.918-.798.798-1.77 1.197-2.918 1.197zm-14.115-.5v-7.23h7.23v7.23H.385zm14.115-1c.732 0 1.351-.252 1.857-.758s.759-1.124.759-1.857c0-.732-.253-1.35-.759-1.857-.505-.506-1.124-.758-1.857-.758-.732 0-1.35.252-1.857.758-.505.506-.758 1.124-.758 1.857 0 .732.252 1.351.758 1.857s1.125.758 1.857.758zm-12.615-.5h4.23v-4.23h-4.23v4.23zm4.954-10.5h4.323L9 3.638 6.84 7.115z",
-// });
-
-// const CircleIcon = (props) => (
-//   <Icon viewBox='0 0 200 200' {...props}>
-//     <path
-//       fill='currentColor'
-//       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
-//     />
-//   </Icon>
-// )
 
   return (
     <Box
@@ -209,9 +196,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
       <Flex h={"90"} p={'0 25px'} justifyContent={"flex-start"} alignItems={"center"}>
         <Flex alignItems={"center"}>
           <Icon as={HomeAppLogo} fontSize={'19px'} color={'#fff'} mr={'15px'}  />
-          {/* <Icon as={MnModels} fontSize={'19px'} color={'#fff'} mr={'15px'}  /> */}
-          {/* <Icon name={MnModels} fontSize={'19px'} color={'#fff'} mr={'15px'}  /> */}
-          <Text fontSize={'20px'} fontWeight={'700'} fontFamily={'SUIT'} color={'#fff'}>VISION HUB</Text>
+          <Text fontSize={'20px'} fontWeight={'600'} fontFamily={'SUIT'} color={'#fff'}>VISION HUB</Text>
         </Flex>
 
         {/* <Button variant={'typeIcon'} pos={{base: 'absolute', lg: 'relative'}} bottom={{base: '95px', lg: 'auto'}} >
@@ -227,7 +212,7 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
         {/* <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} /> */}
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} cate={link.cate} icon={link.icon} linkUrl={link.linkUrl} m={'0 12px 6px 12px'}>
+        <NavItem key={link.name} cate={link.cate} icoSrc={link.icoSrc} linkUrl={link.linkUrl} m={'0 12px 6px 12px'}>
           {link.name}
         </NavItem>
       ))}
@@ -273,55 +258,38 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
 };
 
 interface NavItemProps extends FlexProps {
-  icon: IconType;
+  icoSrc: string;
   cate: string;
   linkUrl: string;
   children: ReactText;
 }
 
-const NavItem = ({cate, icon, children, linkUrl, ...rest }: NavItemProps) => {
+const NavItem = ({cate, icoSrc, children, linkUrl, ...rest }: NavItemProps) => {
   const pathname = window.location.pathname.split("/")[1];
   // console.log(children.toString().toLocaleLowerCase())
   // console.log('** menu 영문 cate >> ' + cate)
   // console.log('** url 경로임=>> ' + pathname)
   // console.log('** 폴더 경로임=>> ' + linkUrl)
 
-
-  // SNB icon
-// const MnModels = createIcon({
-//   displayName: "MnModels",
-//   viewBox: "0 0 19 20",
-//   d: "M4.192 8.615L9 .731l4.808 7.884H4.192zm10.308 11c-1.147 0-2.12-.399-2.918-1.197s-1.197-1.77-1.197-2.918c0-1.147.399-2.12 1.197-2.918s1.77-1.197 2.918-1.197c1.148 0 2.12.399 2.918 1.197s1.198 1.77 1.198 2.918c0 1.147-.4 2.12-1.198 2.918-.798.798-1.77 1.197-2.918 1.197zm-14.115-.5v-7.23h7.23v7.23H.385zm14.115-1c.732 0 1.351-.252 1.857-.758s.759-1.124.759-1.857c0-.732-.253-1.35-.759-1.857-.505-.506-1.124-.758-1.857-.758-.732 0-1.35.252-1.857.758-.505.506-.758 1.124-.758 1.857 0 .732.252 1.351.758 1.857s1.125.758 1.857.758zm-12.615-.5h4.23v-4.23h-4.23v4.23zm4.954-10.5h4.323L9 3.638 6.84 7.115z",
-// });
-
-// const CircleIcon = (props) => (
-//   <Icon viewBox='0 0 200 200' {...props}>
-//     <path
-//       fill='currentColor'
-//       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
-//     />
-//   </Icon>
-// )
-
   return (
     <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
         {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
           <Flex align={"center"} role={"group"} cursor={"pointer"} h={'45px'}  color={'#fff'}  fontSize={'15px'} fontWeight={'500'} fontFamily={'Pretendard'} p={'0 12px'} borderRadius={'4px'} bg={'#3d6dfe'}  _hover={{ bg: '#3d6dfe', color: '#fff', }}
           {...rest}>
-            {icon && (
-              <Icon mr={"3"} fontSize={"20px"} as={icon} color={'#fff'} />
+            {icoSrc && (
+              //<Icon mr={"3"} fontSize={"20px"} as={icon} color={'#fff'} />
+              <Image src={'/assets/images/icons/'+ icoSrc + '-active.svg'} alt={'icon'} mr={'13px'} />
             )}
-            {children}
+            <chakra.span>{children}</chakra.span>
           </Flex>
         ) : (
           <Flex align={"center"} role={"group"} cursor={"pointer"} h={'45px'} color={'#A8B1C0'} fontSize={'15px'} fontWeight={'500'} fontFamily={'Pretendard'} p={'0 12px'}borderRadius={'4px'} _hover={{ bg: '#1a1c21' }}
           {...rest}>
-            {icon && (
-               <Icon mr={"3"} fontSize={"20px"} as={icon} color={'#636D7E'} />
-              // <Icon />
-              // <Image as={icon} mr={"3"} fontSize={"20px"}  color={'#636D7E'}  src={'/assets/images/MnModels.svg'} />
+            {icoSrc && (
+              <Image src={'/assets/images/icons/'+ icoSrc + '.svg'} alt={'icon'} mr={'13px'} />
+              //<Icon mr={"3"} fontSize={"20px"} as={icon} color={'#636D7E'} />
             )}
-            {children}
+            <chakra.span>{children}</chakra.span>
           </Flex>
         )}
     </Link>
