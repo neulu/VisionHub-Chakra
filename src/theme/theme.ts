@@ -63,7 +63,31 @@ const theme = extendTheme(
           lineHeight: '1',
           transition: 'all 0.5s ease',
           '*': {
+            textDecoration: 'none !important',
             boxShadow: 'none !important',
+          },
+          '.nav': {
+            '.blank': {
+              '>div': {
+                backgroundImage: 'url(/assets/images/icons/ico-blank.svg)',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'calc(100% - 15px) center',
+              },
+            },
+            '.divider': {
+              pos: 'relative',
+              pt: '20px',
+              mt: '14px',
+              _before: {
+                content: '""',
+                pos: 'absolute',
+                left: '12px',
+                top: '0',
+                w: '246px',
+                h: '1px',
+                bg: '#14161a',
+              },
+            },
           },
           '&::-webkit-scrollbar': {
             width: '12px',
@@ -584,8 +608,8 @@ const theme = extendTheme(
               fontWeight: '500',
               p: '21px 10px 18px',
               _last: {
-                bgImage: "url('/assets/images/icons/ico-arrow-right.svg')",
-                bgPosition: 'calc(100% - 25px) center',
+                bgImage: "url('/assets/images/icons/ico-right.svg')",
+                bgPosition: 'calc(100% - 15px) center',
                 bgRepeat: 'no-repeat',
               }
             },
@@ -1185,6 +1209,32 @@ const theme = extendTheme(
               },
               _focus: {
                 bg: '#efefef',
+              },
+            },
+          },
+          typeAccount: {
+            list: {
+              w: '120px',
+              minW: 'auto',
+              p: '5px 0',
+              m: '-5px 0 0 -5px',
+              borderRadius: '4px',
+              bg: '#fff',
+            },
+            item: {
+              h: '36px',
+              fontSize: '14px',
+              p: '0px 20px',
+              mb: '10px',
+              color: '#323232',
+              _hover: {
+                bg: '#efefef',
+              },
+              _focus: {
+                bg: '#efefef',
+              },
+              _last: {
+                mb: '0',
               },
             },
           },

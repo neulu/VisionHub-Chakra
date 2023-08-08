@@ -75,7 +75,10 @@ import { createIcon } from "@chakra-ui/react";
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { render } from "react-dom";
+// import { useNavigate } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
+// import { MnModels } from 'theme/icons/iconMnModels'
+// import { UpDownIcon } from 'theme/icons/iconMnModels'
 
 
 
@@ -85,7 +88,6 @@ interface LinkItemProps {
   // icon: IconType;
   linkUrl: string;
   icoSrc: string;
-  addCss: string;
 }
 
 
@@ -93,17 +95,23 @@ interface LinkItemProps {
 
 
 const LinkItems: Array<LinkItemProps> = [
+
   
-  { name: '프로젝트', cate: 'project', icoSrc: 'ico-project', linkUrl: "/project", addCss: ''},
-  { name: '모델', cate: 'models', icoSrc: 'ico-models', linkUrl: "/models", addCss: ''},
-  { name: '데이터', cate: '/', icoSrc: 'ico-data', linkUrl: "/", addCss: 'blank'},
-  { name: '레이블링', cate: '/', icoSrc: 'ico-labeling', linkUrl: "/", addCss: 'blank'},
-  { name: '실행', cate: 'execution', icoSrc: 'ico-execution', linkUrl: "/execution", addCss: ''},
-  { name: '테스트', cate: 'test', icoSrc: 'ico-test', linkUrl: "/test", addCss: ''},
-  { name: '모니터링', cate: '/', icoSrc: 'ico-monitoring', linkUrl: "/", addCss: 'blank'},
-  { name: '사용자', cate: 'user', icoSrc: 'ico-user', linkUrl: "/user", addCss: 'divider'},
-  { name: '클러스터', cate: 'cluster', icoSrc: 'ico-cluster', linkUrl: "/cluster", addCss: ''},
-  { name: '저장소', cate: 'storage', icoSrc: 'ico-storage', linkUrl: "/storage", addCss: ''},
+  { name: '프로젝트', cate: 'project', icoSrc: 'ico-project', linkUrl: "/project"},
+  { name: '모델', cate: 'models', icoSrc: 'ico-models', linkUrl: "/models"},
+  { name: '데이터', cate: '/', icoSrc: 'ico-data', linkUrl: "/"},
+  { name: '레이블링', cate: '/', icoSrc: 'ico-labeling', linkUrl: "/"},
+  { name: '실행', cate: 'execution', icoSrc: 'ico-execution', linkUrl: "/execution"},
+  { name: '테스트', cate: 'test', icoSrc: 'ico-test', linkUrl: "/test"},
+  { name: '모니터링', cate: '/', icoSrc: 'ico-monitoring', linkUrl: "/"},
+  { name: '사용자', cate: 'user', icoSrc: 'ico-user', linkUrl: "/user"},
+  { name: '클러스터', cate: 'cluster', icoSrc: 'ico-cluster', linkUrl: "/cluster"},
+  { name: '저장소', cate: 'storage', icoSrc: 'ico-storage', linkUrl: "/storage"},
+  // { name: 'Catalogs', icon: RiBarChartBoxLine, linkUrl: "/catalogs" },
+  // { name: 'NeoVis1', icon: FiTrendingUp, linkUrl: "/neo4j/neoviz" },
+  // { name: 'NeoVis2', icon: FiStar, linkUrl: "/neo4j/neovis" },
+  // { name: '3D-Force', icon: FiCompass, linkUrl: "/neo4j/neoforce" },
+  // { name: 'Settings', icon: FiSettings, linkUrl: "/" },
 ];
 
 const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
@@ -119,6 +127,16 @@ const MainPage = ({ children }: { children: ReactNode }) : JSX.Element => {
     sessionStorage.setItem('isAuthenticated', "false");
     navigate("/login");
   }
+
+  // const CircleIcon = (props) => (
+  //   <Icon viewBox='0 0 200 200' {...props}>
+  //     <path
+  //       fill='currentColor'
+  //       d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+  //     />
+  //   </Icon>
+  // )
+
 
   return (
     <Box minW={"1600px"} minH={"100vh"} bg={'#f6f6f6'}> 
@@ -163,25 +181,42 @@ const SidebarContent = ({ onClose, onLogout, ...rest }: SidebarProps) => {
     navigate({pathname  : '/common/accountMng' })
   }
 
+  // home icon
+  const HomeAppLogo = createIcon({
+    displayName: "HomeAppLogo",
+    viewBox: "0 0 19 19",
+    d: "M1.343 18.129c-.373 0-.69-.131-.951-.392A1.295 1.295 0 010 16.786v-2.07l4.029-3.47v6.883H1.343zm4.028 0V14.1h8.058v4.029H5.37zm9.4 0V9.484l-4.336-3.72 3.077-2.659 4.812 4.113c.15.13.266.285.35.464.084.179.126.369.126.571v8.533c0 .373-.13.69-.392.95a1.295 1.295 0 01-.95.393H14.77zM0 12.925V8.253a1.39 1.39 0 01.476-1.035L8.533.336c.13-.112.268-.196.414-.252a1.24 1.24 0 01.9 0c.15.056.29.13.42.224l2.21 1.902L0 12.925z",
+  });
 
 
   return (
     <Box
       pos={"relative"} h={"full"}
       {...rest}>
-      <Flex h={"100px"} p={'0 0 10px 22px'} justifyContent={"flex-start"} alignItems={"center"}>
+      <Flex h={"90"} p={'0 25px'} justifyContent={"flex-start"} alignItems={"center"}>
         <Flex alignItems={"center"}>
+          {/* <Icon as={HomeAppLogo} fontSize={'19px'} color={'#fff'} mr={'15px'}  /> */}
           <Image src={'/assets/images/logo.svg'} alt={'Vision Hub'} mr={'8px'} />
           <Text fontSize={'20px'} fontWeight={'600'} fontFamily={'SUIT'} color={'#fff'}>VISION HUB</Text>
         </Flex>
+
+        {/* <Button variant={'typeIcon'} pos={{base: 'absolute', lg: 'relative'}} bottom={{base: '95px', lg: 'auto'}} >
+          <Icon as={RiNotification2Line} /> */}
+          {/* 알림 new 일때 Badge Show */}
+          {/* <Badge variant={'alarm'}>New</Badge>
+        </Button> */}
+
+        {/* <Button p={'0'} variant={'none'}> 
+          <Icon as={RiMenuLine} fontSize={'24px'} />
+        </Button> */}
+       
+        {/* <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} /> */}
       </Flex>
-      <Flex flexDirection={'column'} className={'nav'}>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} cate={link.cate} icoSrc={link.icoSrc} linkUrl={link.linkUrl} addCss={link.addCss} m={'0 12px 6px 12px'}>
+        <NavItem key={link.name} cate={link.cate} icoSrc={link.icoSrc} linkUrl={link.linkUrl} m={'0 12px 6px 12px'}>
           {link.name}
         </NavItem>
       ))}
-      </Flex>
 
       {/* account Area */}
       <Flex alignItems={"center"} pos={'absolute'} bottom={'0px'} w={'100%'} h={'95px'} p={'0 10px 0 20px'} borderTop={'solid 1px #1d1f24'}>
@@ -229,19 +264,18 @@ interface NavItemProps extends FlexProps {
   icoSrc: string;
   cate: string;
   linkUrl: string;
-  addCss: string;
   children: ReactText;
 }
 
-const NavItem = ({cate, icoSrc, children, linkUrl, addCss, ...rest }: NavItemProps) => {
+const NavItem = ({cate, icoSrc, children, linkUrl, ...rest }: NavItemProps) => {
   const pathname = window.location.pathname.split("/")[1];
   // console.log(children.toString().toLocaleLowerCase())
   // console.log('** menu 영문 cate >> ' + cate)
   // console.log('** url 경로임=>> ' + pathname)
-  // console.log('** 폴더 경로임=>> ' + addCss)
+  // console.log('** 폴더 경로임=>> ' + linkUrl)
 
   return (
-    <Link to={linkUrl} className={addCss}>
+    <Link to={linkUrl}  style={{ textDecoration: 'none'}}  >
         {cate.toString().toLowerCase().indexOf(pathname) > -1 ? (
           <Flex align={"center"} role={"group"} cursor={"pointer"} h={'45px'}  color={'#fff'}  fontSize={'15px'} fontWeight={'500'} fontFamily={'Pretendard'} p={'0 12px'} borderRadius={'4px'} bg={'#3d6dfe'}  _hover={{ bg: '#3d6dfe', color: '#fff', }}
           {...rest}>

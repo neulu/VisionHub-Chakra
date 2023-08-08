@@ -57,6 +57,8 @@ import {
   } from 'react-icons/hi';
   import {
     RiAddFill,
+    RiArrowDropLeftLine,
+    RiArrowDropRightLine,
   } from 'react-icons/ri';
   import { IconType } from 'react-icons';
   import { Link, useNavigate } from 'react-router-dom';
@@ -173,6 +175,21 @@ const ProjectList = () : JSX.Element => {
                                 </Tbody>
                             </Table>
                         </TableContainer>
+
+                        {/* pagination */}
+                        <Flex alignItems={"center"} justifyContent={"center"} w={"full"} m={'20px auto'}>
+                            <Flex alignItems={"center"} justifyContent={"center"} border={'1px solid #e5e5e5'} borderRadius={'3px'} >
+                                <Button variant={'paginationIconBtn'}>
+                                  <Icon as={RiArrowDropLeftLine} />
+                                </Button>
+                                <Button variant={'paginationBtn'}>1</Button>
+                                <Button variant={'paginationBtn'}>2</Button>
+                                <Button variant={'paginationBtn'}>3</Button>
+                                <Button variant={'paginationIconBtn'}>
+                                  <Icon as={RiArrowDropRightLine} />
+                                </Button>
+                            </Flex>
+                        </Flex>
 
                     </Box>
                 </Container>
